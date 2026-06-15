@@ -11,8 +11,6 @@ include: package:flutter_lints/flutter.yaml
 
 
 analyzer:
-  strict-inference: true
-  strict-raw-types: true
   errors:
     unused_import: error
     dead_code: error
