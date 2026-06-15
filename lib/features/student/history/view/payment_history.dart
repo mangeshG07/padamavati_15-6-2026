@@ -29,7 +29,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: controller.payHistoryList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final payment = controller.payHistoryList[index];
+                  // final payment = controller.payHistoryList[index];
                   return Container();
                   // return PaymentTile(payment: payment);
                 },

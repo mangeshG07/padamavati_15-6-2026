@@ -52,7 +52,8 @@ class OtpController extends GetxController with CodeAutoFill {
     if (!verifyKey.currentState!.validate()) return;
     try {
       isLoading(true);
-      final response = await verifyOtpUsecase.call(
+      // final response =
+      await verifyOtpUsecase.call(
         LoginRequest(number, otp: otpController.text),
       );
       // if (response.common.status == true) {
