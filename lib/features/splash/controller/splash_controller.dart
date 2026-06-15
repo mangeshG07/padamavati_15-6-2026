@@ -4,8 +4,8 @@ import 'package:padmavatiupdated/core/exporters/app_export.dart';
 class SplashController extends GetxController {
   void checkLogin() async {
     await Future.delayed(const Duration(seconds: 2));
-    final isOnboarded =
-        await LocalStorage.getBool(AppConstants.userOnboardingKey) ?? false;
+    // final isOnboarded =
+    //     await LocalStorage.getBool(AppConstants.userOnboardingKey) ?? false;
 
     final token =
         await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
