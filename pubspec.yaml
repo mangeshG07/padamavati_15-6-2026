@@ -64,6 +64,7 @@ dependencies:
   qr_flutter: ^4.1.0
   mocktail: ^1.0.5
   coverage: ^1.15.1
+  dropdown_search: ^7.0.0
 
 
 dev_dependencies:

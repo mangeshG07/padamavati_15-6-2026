@@ -34,9 +34,9 @@ class LoginController extends GetxController {
           message: response.common!.message,
         );
       }
-    } catch (e, stacktrace) {
-      print('error======>$e');
-      print('stacktrace======>$stacktrace');
+    } catch (_) {
+      // print('error======>$e');
+      // print('stacktrace======>$stacktrace');
     } finally {
       isLoading.value = false;
     }

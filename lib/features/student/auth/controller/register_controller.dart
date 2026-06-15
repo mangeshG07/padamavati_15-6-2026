@@ -133,9 +133,9 @@ class RegisterController extends GetxController {
           type: SnackbarType.error,
         );
       }
-    } catch (e, stacktrace) {
-      print('error======>$e');
-      print('stacktrace======>$stacktrace');
+    } catch (_) {
+      // print('error======>$e');
+      // print('stacktrace======>$stacktrace');
     } finally {
       isLoading(false);
     }

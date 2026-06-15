@@ -11,7 +11,7 @@ class AppConstants {
 
   /// Environment (dev, staging, prod)
   ///
-  /// Loaded from --dart-define=ENVIRONMENT= <env>
+  /// Loaded from --dart-define=ENVIRONMENT=
   static const String environment = String.fromEnvironment(
     'ENVIRONMENT',
     defaultValue: 'dev',
