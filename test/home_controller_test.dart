@@ -20,7 +20,7 @@ void main() {
   });
 
   setUp(() {
-    channel.setMockMethodCallHandler((methodCall) async {
+    channel.setMethodCallHandler((methodCall) async {
       if (methodCall.method == 'read') {
         return "1"; // fake userId
       }
@@ -34,7 +34,7 @@ void main() {
     );
   });
   tearDown(() {
-    channel.setMockMethodCallHandler(null);
+    channel.setMethodCallHandler(null);
   });
   test("fetch home success", () async {
     when(() => repo.getHome(any())).thenAnswer(
