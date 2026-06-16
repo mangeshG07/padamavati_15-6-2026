@@ -2,7 +2,7 @@ import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class MessSelectionPopup extends GetView<HomeController> {
   MessSelectionPopup({super.key}) {
-    controller.getPackage();
+    controller.fetchPackages();
   }
 
   @override
@@ -27,8 +27,12 @@ class MessSelectionPopup extends GetView<HomeController> {
               ),
             ),
             _buildStartDate(theme, context),
-            Obx(
-              () => AppDropdownField(
+
+            Obx(() {
+              if (controller.isPackageLoading.value) {
+                return AppLoader(size: 2.5, color: AppColors.lightPrimary);
+              }
+              return AppDropdownField(
                 isRequired: true,
                 isDynamic: true,
                 title: "Choose a package",
@@ -37,8 +41,9 @@ class MessSelectionPopup extends GetView<HomeController> {
                 hintText: 'Package',
                 validator: AppValidators.required,
                 onChanged: (val) => controller.selectedPackage.value = val,
-              ),
-            ),
+              );
+            }),
+
             // Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -77,7 +82,7 @@ class MessSelectionPopup extends GetView<HomeController> {
       fillColor: theme.cardColor,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
       onTap: () async {
-        final DateTime? pickedDate = await showDatePicker(
+        final pickedDate = await showDatePicker(
           context: context,
           initialDate: DateTime.now().add(const Duration(days: 1)),
           firstDate: DateTime.now().add(const Duration(days: 1)),
@@ -96,8 +101,9 @@ class MessSelectionPopup extends GetView<HomeController> {
           },
         );
         if (pickedDate != null) {
-          controller.selectedDate.text =
-              "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
+          controller.setDate(pickedDate);
+          // controller.selectedDate.text =
+          //     "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
         }
       },
       validator: AppValidators.required,

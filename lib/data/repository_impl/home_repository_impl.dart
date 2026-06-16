@@ -7,23 +7,57 @@ class HomeRepositoryImpl extends HomeRepository {
   HomeRepositoryImpl(this._apiService);
 
   @override
-  Future<BaseResponseModel<HomeResponseModel>> getHome(
+  Future<Result<BaseResponseModel<HomeResponseModel>>> getHome(
     UserRequest request,
   ) async {
-    return await _apiService.getHome(request.userId);
+    try {
+      final res = await _apiService.getHome(request.userId);
+
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (e) {
+      return Failure(e.toString());
+    }
+    // return await _apiService.getHome(request.userId);
   }
 
   @override
-  Future<BaseResponseModel<List<PackageModel>>> getPackageList() async {
-    return await _apiService.getPackageList();
+  Future<Result<BaseResponseModel<List<PackageModel>>>> getPackageList() async {
+    try {
+      final res = await _apiService.getPackageList();
+
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (e) {
+      return Failure(e.toString());
+    }
+
+    // return await _apiService.getPackageList();
   }
 
   @override
-  Future<BaseResponseModel> startMessReq(StartMessRequest request) async {
-    return await _apiService.startMessReq(
-      request.userId,
-      request.ratePackageId,
-      request.date,
-    );
+  Future<Result<BaseResponseModel>> startMessReq(
+    StartMessRequest request,
+  ) async {
+    try {
+      final res = await _apiService.startMessReq(
+        request.userId,
+        request.ratePackageId,
+        request.date,
+      );
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (e) {
+      return Failure(e.toString());
+    }
   }
 }

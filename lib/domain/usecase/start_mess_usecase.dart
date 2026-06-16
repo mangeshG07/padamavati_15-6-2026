@@ -6,7 +6,7 @@ class StartMessUsecase {
 
   StartMessUsecase(this._homeRepository);
 
-  Future<BaseResponseModel> call(StartMessRequest request) async {
+  Future<Result<BaseResponseModel>> call(StartMessRequest request) async {
     return await _homeRepository.startMessReq(request);
   }
 }

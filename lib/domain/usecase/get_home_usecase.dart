@@ -6,7 +6,9 @@ class GetHomeUsecase {
 
   GetHomeUsecase(this._homeRepository);
 
-  Future<BaseResponseModel<HomeResponseModel>> call(UserRequest request) async {
+  Future<Result<BaseResponseModel<HomeResponseModel>>> call(
+    UserRequest request,
+  ) async {
     return await _homeRepository.getHome(request);
   }
 }

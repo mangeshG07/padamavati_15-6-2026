@@ -1,76 +1,98 @@
-import 'package:padmavatiupdated/core/exporters/app_export.dart';
+import 'package:padmavatiupdated/core/exporters/app_export.dart'
+    hide DateFormat;
+import 'package:intl/intl.dart';
 
-class HomeController extends GetxController {
+class HomeController extends BaseController {
   final GetHomeUsecase _homeUseCase;
   final GetPackagesUsecase _getPackagesUsecase;
   final StartMessUsecase _startMessUsecase;
+
   HomeController(
     this._homeUseCase,
     this._getPackagesUsecase,
     this._startMessUsecase,
   );
 
-  final payDetails = [
-    {
-      'month': 'May-June',
-      'type': 'Veg',
-      'start_date': '13-05-2025',
-      'end_date': '12-06-2025',
-      'paid_amount': '₹ 2,600',
-      'pending_amount': '₹ 2,600',
-      'pending_status': 'Pending',
-    },
-    {
-      'month': 'April-May',
-      'type': 'Non-Veg',
-      'start_date': '13-04-2025',
-      'end_date': '12-05-2025',
-      'paid_amount': '₹ 2,600',
-      'pending_amount': '₹ 2,600',
-      'pending_status': 'Completed',
-    },
-  ].obs;
+  /// -------------------- STATE --------------------
 
   final sliderList = <MasterDataModel>[].obs;
   final packageList = <PackageModel>[].obs;
   final payDetailsList = <PaymentDetailsModel>[].obs;
+
   final branchName = ''.obs;
-  final isLoading = false.obs;
+
   final isPackageLoading = false.obs;
-  var selectedDate = TextEditingController();
+  final isHomeLoading = false.obs;
   final isStarting = false.obs;
+
   final isRequested = false.obs;
   final isAccepted = false.obs;
-  var selectedPackage = Rxn();
 
-  Future<void> getHome() async {
-    isLoading.value = true;
-    try {
-      final userId =
-          await SecureStorageService.read(AppConstants.userIdKey) ?? '';
-      final response = await _homeUseCase.call(UserRequest(userId));
-      if (response.common.status == true) {
-        branchName.value = response.data!.branchName ?? '';
-        sliderList.value = response.data!.sliders ?? [];
-        payDetailsList.value = response.data!.payTransactionDetails ?? [];
-        isRequested.value = response.data!.messRequest ?? false;
-        isAccepted.value = response.data!.messRequestAccepted ?? false;
-      }
-    } finally {
-      isLoading.value = false;
-    }
+  final selectedPackage = Rxn<String>();
+  final selectedDate = TextEditingController();
+
+  /// -------------------- COMPUTED --------------------
+
+  bool get isPending => isRequested.value && !isAccepted.value;
+  bool get isApproved => isRequested.value && isAccepted.value;
+
+  /// -------------------- METHODS --------------------
+
+  Future<void> fetchHomeData() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    await callApi<BaseResponseModel<HomeResponseModel>>(
+      request: () => _homeUseCase.call(UserRequest(userId)),
+      loader: isHomeLoading,
+      onSuccess: (data) {
+        branchName.value = data.data?.branchName ?? '';
+        sliderList.value = data.data!.sliders ?? [];
+        payDetailsList.value = data.data?.payTransactionDetails ?? [];
+        isRequested.value = data.data!.messRequest ?? false;
+        isAccepted.value = data.data!.messRequestAccepted ?? false;
+      },
+    );
+
+    // isLoading.value = true;
+    // try {
+    //   final userId =
+    //       await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    //
+    //   final response = await _homeUseCase.call(UserRequest(userId));
+    //
+    //   if (response.common.status == true) {
+    //     final data = response.data;
+    //
+    //     branchName.value = data?.branchName ?? '';
+    //     sliderList.value = data?.sliders ?? [];
+    //     payDetailsList.value = data?.payTransactionDetails ?? [];
+    //     isRequested.value = data?.messRequest ?? false;
+    //     isAccepted.value = data?.messRequestAccepted ?? false;
+    //   }
+    // } finally {
+    //   isLoading.value = false;
+    // }
   }
 
-  Future<void> getPackage() async {
-    isPackageLoading.value = true;
-    try {
-      final response = await _getPackagesUsecase.call();
-      if (response.common.status == true) {
-        packageList.value = response.data ?? [];
-      }
-    } finally {
-      isPackageLoading.value = false;
-    }
+  Future<void> fetchPackages() async {
+    await callApi(
+      loader: isPackageLoading,
+      request: () => _getPackagesUsecase.call(),
+      onSuccess: (data) {
+        packageList.value = data.data ?? [];
+      },
+    );
+
+    // isPackageLoading.value = true;
+    // try {
+    //   final response = await _getPackagesUsecase.call();
+    //
+    //   if (response.common.status == true) {
+    //     packageList.value = response.data ?? [];
+    //   }
+    // } finally {
+    //   isPackageLoading.value = false;
+    // }
   }
 
   void submitSelection() async {
@@ -88,34 +110,50 @@ class HomeController extends GetxController {
   }
 
   Future<void> startMessRequest() async {
-    isStarting.value = true;
-    try {
-      final userId =
-          await SecureStorageService.read(AppConstants.userIdKey) ?? '';
-
-      final response = await _startMessUsecase.call(
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    await callApi(
+      request: () => _startMessUsecase.call(
         StartMessRequest(
           userId: userId,
           date: selectedDate.text.trim(),
           ratePackageId: selectedPackage.value.toString(),
         ),
-      );
-      if (response.common.status == true) {
-        await getHome();
-        CustomSnackbar.show(
-          message: response.common.message,
-          context: Get.context!,
-          type: SnackbarType.success,
-        );
-      } else {
-        CustomSnackbar.show(
-          message: response.common.message,
-          context: Get.context!,
-          type: SnackbarType.error,
-        );
-      }
-    } finally {
-      isStarting.value = false;
-    }
+      ),
+      loader: isStarting,
+      onSuccess: (data) async {
+        await fetchHomeData();
+        showSuccess(data.common.message);
+      },
+    );
+
+    // isStarting.value = true;
+
+    // try {
+    //   final userId =
+    //       await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    //
+    //   final response = await _startMessUsecase.call(
+    //     StartMessRequest(
+    //       userId: userId,
+    //       date: selectedDate.text.trim(),
+    //       ratePackageId: selectedPackage.value.toString(),
+    //     ),
+    //   );
+    //
+    //   if (response.common.status == true) {
+    //     await fetchHomeData();
+    //     showSuccess(response.common.message);
+    //   } else {
+    //     showError(response.common.message);
+    //   }
+    // } finally {
+    //   isStarting.value = false;
+    // }
+  }
+
+  /// -------------------- HELPERS --------------------
+  void setDate(DateTime date) {
+    selectedDate.text = DateFormat('dd-MM-yyyy').format(date);
   }
 }

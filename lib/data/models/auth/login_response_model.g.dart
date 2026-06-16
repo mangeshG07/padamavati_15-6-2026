@@ -17,6 +17,7 @@ _LoginResponseModel _$LoginResponseModelFromJson(Map<String, dynamic> json) =>
       ios: json['ios'] == null
           ? null
           : AppConfigModel.fromJson(json['ios'] as Map<String, dynamic>),
+      data: LoginDataModel.fromJson(json['data'] as Map<String, dynamic>),
       userLogin: json['user_login'] as bool?,
     );
 
@@ -25,5 +26,6 @@ Map<String, dynamic> _$LoginResponseModelToJson(_LoginResponseModel instance) =>
       'common': instance.common,
       'android': instance.android,
       'ios': instance.ios,
+      'data': instance.data,
       'user_login': instance.userLogin,
     };

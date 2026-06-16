@@ -21,6 +21,7 @@ void main() {
     when(() => mockUsecase(any())).thenAnswer(
       (_) async => LoginResponseModel(
         common: CommonModel(status: true, message: "OTP Sent"),
+        data: LoginDataModel(),
       ),
     );
 

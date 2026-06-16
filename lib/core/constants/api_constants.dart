@@ -32,10 +32,10 @@ class ApiConstants {
   static Duration get receiveTimeout => connectionTimeout;
 
   /// API endpoints
-  // static const String sendOTP = '/send_otp';
-  static const String sendOTP = '/send-otp';
-  // static const String verifyOTP = '/otp_verify';
-  static const String verifyOTP = '/verify-otp';
+  static const String sendOTP = '/send_otp';
+  // static const String sendOTP = '/send-otp';
+  static const String verifyOTP = '/otp_verify';
+  // static const String verifyOTP = '/verify-otp';
   static const String getBranchList = '/get_branch_list';
   static const String getDegreeList = '/get_degree_list';
   static const String register = '/user_register';

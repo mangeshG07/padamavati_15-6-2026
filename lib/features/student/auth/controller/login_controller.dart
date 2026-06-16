@@ -26,7 +26,7 @@ class LoginController extends GetxController {
           type: SnackbarType.success,
           message: response.common!.message,
         );
-        // Get.toNamed(Routes.verifyOTP);
+        Get.toNamed(Routes.verifyOTP);
       } else {
         CustomSnackbar.show(
           context: Get.context!,

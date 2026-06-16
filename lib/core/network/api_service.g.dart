@@ -30,7 +30,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/send-otp',
+            '/send_otp',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -59,7 +59,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/verify-otp',
+            '/otp_verify',
             queryParameters: queryParameters,
             data: _data,
           )

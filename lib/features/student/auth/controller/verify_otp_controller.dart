@@ -52,42 +52,41 @@ class OtpController extends GetxController with CodeAutoFill {
     if (!verifyKey.currentState!.validate()) return;
     try {
       isLoading(true);
-      // final response =
-      await verifyOtpUsecase.call(
+      final response = await verifyOtpUsecase.call(
         LoginRequest(number, otp: otpController.text),
       );
-      // if (response.common.status == true) {
-      //   await SecureStorageService.write(
-      //     AppConstants.userTokenKey,
-      //     response.data.userDetails!.authKey,
-      //   );
-      //   await SecureStorageService.write(
-      //     AppConstants.userIdKey,
-      //     response.data.userDetails!.userId.toString(),
-      //   );
-      //   await LocalStorage.setBool(AppConstants.userOnboardingKey, true);
-      //   CustomSnackbar.show(
-      //     context: Get.context!,
-      //     type: SnackbarType.success,
-      //     message: response.common.message,
-      //   );
-      //
-      //   if (response.data.userExists == true) {
-      //     Get.find<NavigationController>().currentIndex.value = 0;
-      //     Get.offAllNamed(Routes.mainScreen);
-      //   } else {
-      //     Get.offAllNamed(Routes.registerScreen, arguments: number);
-      //   }
-      // } else {
-      //   CustomSnackbar.show(
-      //     context: Get.context!,
-      //     type: SnackbarType.error,
-      //     message: response.common.message,
-      //   );
-      //   if (response.data.userExists == false) {
-      //     Get.toNamed(Routes.registerScreen, arguments: number);
-      //   }
-      // }
+      if (response.common?.status == true) {
+        await SecureStorageService.write(
+          AppConstants.userTokenKey,
+          response.data.userDetails!.authKey,
+        );
+        await SecureStorageService.write(
+          AppConstants.userIdKey,
+          response.data.userDetails!.userId.toString(),
+        );
+        await LocalStorage.setBool(AppConstants.userOnboardingKey, true);
+        CustomSnackbar.show(
+          context: Get.context!,
+          type: SnackbarType.success,
+          message: response.common!.message,
+        );
+
+        if (response.data.userExists == true) {
+          Get.find<NavigationController>().currentIndex.value = 0;
+          Get.offAllNamed(Routes.mainScreen);
+        } else {
+          Get.offAllNamed(Routes.registerScreen, arguments: number);
+        }
+      } else {
+        CustomSnackbar.show(
+          context: Get.context!,
+          type: SnackbarType.error,
+          message: response.common!.message,
+        );
+        if (response.data.userExists == false) {
+          Get.toNamed(Routes.registerScreen, arguments: number);
+        }
+      }
     } finally {
       isLoading(false);
     }

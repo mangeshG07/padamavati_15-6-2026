@@ -55,6 +55,7 @@ export 'package:padmavatiupdated/core/utils/check_update.dart';
 export 'package:padmavatiupdated/core/constants/init_service.dart';
 export 'package:padmavatiupdated/core/network/initial_bindings.dart';
 export 'package:padmavatiupdated/features/student/history/widget/payment_tile.dart';
+export 'package:padmavatiupdated/features/student/home/widget/start_mess_dialog.dart';
 
 //Pages//
 export 'package:padmavatiupdated/main.dart';

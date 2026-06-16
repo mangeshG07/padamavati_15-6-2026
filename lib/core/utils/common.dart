@@ -378,7 +378,7 @@ BoxDecoration buildCardDecoration({bool isUsed = false}) {
   );
 }
 
-Widget buildBulletPoint(ThemeData theme,{required String text}) {
+Widget buildBulletPoint(ThemeData theme, {required String text}) {
   return Row(
     children: [
       // Bullet point
@@ -406,10 +406,25 @@ Widget buildBulletPoint(ThemeData theme,{required String text}) {
   );
 }
 
-
 Widget paddedIcon({dynamic icon, required Color color}) {
   return Padding(
     padding: const EdgeInsets.all(4.0),
     child: HugeIcon(icon: icon, color: color),
+  );
+}
+
+void showError(String message) {
+  CustomSnackbar.show(
+    message: message,
+    context: Get.context!,
+    type: SnackbarType.error,
+  );
+}
+
+void showSuccess(String message) {
+  CustomSnackbar.show(
+    message: message,
+    context: Get.context!,
+    type: SnackbarType.success,
   );
 }

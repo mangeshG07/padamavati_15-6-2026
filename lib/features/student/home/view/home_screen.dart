@@ -1,5 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:padmavatiupdated/features/student/home/widget/start_mess_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    controller.getHome();
+    controller.fetchHomeData();
   }
 
   @override
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(
-        () => controller.isLoading.isTrue
+        () => controller.isHomeLoading.isTrue
             ? AppLoader(size: 2.5, color: AppColors.lightPrimary)
             : SingleChildScrollView(
                 child: Column(
@@ -56,9 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           _buildSlider(),
-          controller.isRequested.isTrue && controller.isAccepted.isFalse
+          controller.isPending
               ? _buildRequestPending(theme)
-              : controller.isRequested.isTrue && controller.isAccepted.isTrue
+              : controller.isApproved
               ? _buildPaymentDetails(theme)
               : _buildStartMess(theme),
         ],
@@ -123,6 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPaymentDetails(ThemeData theme) {
     return Column(
+      spacing: 12.h,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
           text: 'Payment Details',

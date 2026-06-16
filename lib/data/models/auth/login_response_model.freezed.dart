@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginResponseModel {
 
- CommonModel? get common; AppConfigModel? get android; AppConfigModel? get ios;// required LoginDataModel data,
-@JsonKey(name: 'user_login') bool? get userLogin;
+ CommonModel? get common; AppConfigModel? get android; AppConfigModel? get ios; LoginDataModel get data;@JsonKey(name: 'user_login') bool? get userLogin;
 /// Create a copy of LoginResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +28,16 @@ $LoginResponseModelCopyWith<LoginResponseModel> get copyWith => _$LoginResponseM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginResponseModel&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&(identical(other.userLogin, userLogin) || other.userLogin == userLogin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginResponseModel&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&(identical(other.data, data) || other.data == data)&&(identical(other.userLogin, userLogin) || other.userLogin == userLogin));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,common,android,ios,userLogin);
+int get hashCode => Object.hash(runtimeType,common,android,ios,data,userLogin);
 
 @override
 String toString() {
-  return 'LoginResponseModel(common: $common, android: $android, ios: $ios, userLogin: $userLogin)';
+  return 'LoginResponseModel(common: $common, android: $android, ios: $ios, data: $data, userLogin: $userLogin)';
 }
 
 
@@ -49,11 +48,11 @@ abstract mixin class $LoginResponseModelCopyWith<$Res>  {
   factory $LoginResponseModelCopyWith(LoginResponseModel value, $Res Function(LoginResponseModel) _then) = _$LoginResponseModelCopyWithImpl;
 @useResult
 $Res call({
- CommonModel? common, AppConfigModel? android, AppConfigModel? ios,@JsonKey(name: 'user_login') bool? userLogin
+ CommonModel? common, AppConfigModel? android, AppConfigModel? ios, LoginDataModel data,@JsonKey(name: 'user_login') bool? userLogin
 });
 
 
-$CommonModelCopyWith<$Res>? get common;$AppConfigModelCopyWith<$Res>? get android;$AppConfigModelCopyWith<$Res>? get ios;
+$CommonModelCopyWith<$Res>? get common;$AppConfigModelCopyWith<$Res>? get android;$AppConfigModelCopyWith<$Res>? get ios;$LoginDataModelCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -66,12 +65,13 @@ class _$LoginResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of LoginResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? common = freezed,Object? android = freezed,Object? ios = freezed,Object? userLogin = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? common = freezed,Object? android = freezed,Object? ios = freezed,Object? data = null,Object? userLogin = freezed,}) {
   return _then(_self.copyWith(
 common: freezed == common ? _self.common : common // ignore: cast_nullable_to_non_nullable
 as CommonModel?,android: freezed == android ? _self.android : android // ignore: cast_nullable_to_non_nullable
 as AppConfigModel?,ios: freezed == ios ? _self.ios : ios // ignore: cast_nullable_to_non_nullable
-as AppConfigModel?,userLogin: freezed == userLogin ? _self.userLogin : userLogin // ignore: cast_nullable_to_non_nullable
+as AppConfigModel?,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as LoginDataModel,userLogin: freezed == userLogin ? _self.userLogin : userLogin // ignore: cast_nullable_to_non_nullable
 as bool?,
   ));
 }
@@ -110,6 +110,15 @@ $AppConfigModelCopyWith<$Res>? get ios {
 
   return $AppConfigModelCopyWith<$Res>(_self.ios!, (value) {
     return _then(_self.copyWith(ios: value));
+  });
+}/// Create a copy of LoginResponseModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LoginDataModelCopyWith<$Res> get data {
+  
+  return $LoginDataModelCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
   });
 }
 }
@@ -193,10 +202,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios, @JsonKey(name: 'user_login')  bool? userLogin)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios,  LoginDataModel data, @JsonKey(name: 'user_login')  bool? userLogin)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginResponseModel() when $default != null:
-return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
+return $default(_that.common,_that.android,_that.ios,_that.data,_that.userLogin);case _:
   return orElse();
 
 }
@@ -214,10 +223,10 @@ return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios, @JsonKey(name: 'user_login')  bool? userLogin)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios,  LoginDataModel data, @JsonKey(name: 'user_login')  bool? userLogin)  $default,) {final _that = this;
 switch (_that) {
 case _LoginResponseModel():
-return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
+return $default(_that.common,_that.android,_that.ios,_that.data,_that.userLogin);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -234,10 +243,10 @@ return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios, @JsonKey(name: 'user_login')  bool? userLogin)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CommonModel? common,  AppConfigModel? android,  AppConfigModel? ios,  LoginDataModel data, @JsonKey(name: 'user_login')  bool? userLogin)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginResponseModel() when $default != null:
-return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
+return $default(_that.common,_that.android,_that.ios,_that.data,_that.userLogin);case _:
   return null;
 
 }
@@ -249,13 +258,13 @@ return $default(_that.common,_that.android,_that.ios,_that.userLogin);case _:
 @JsonSerializable()
 
 class _LoginResponseModel implements LoginResponseModel {
-  const _LoginResponseModel({this.common, this.android, this.ios, @JsonKey(name: 'user_login') this.userLogin});
+  const _LoginResponseModel({this.common, this.android, this.ios, required this.data, @JsonKey(name: 'user_login') this.userLogin});
   factory _LoginResponseModel.fromJson(Map<String, dynamic> json) => _$LoginResponseModelFromJson(json);
 
 @override final  CommonModel? common;
 @override final  AppConfigModel? android;
 @override final  AppConfigModel? ios;
-// required LoginDataModel data,
+@override final  LoginDataModel data;
 @override@JsonKey(name: 'user_login') final  bool? userLogin;
 
 /// Create a copy of LoginResponseModel
@@ -271,16 +280,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginResponseModel&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&(identical(other.userLogin, userLogin) || other.userLogin == userLogin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginResponseModel&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&(identical(other.data, data) || other.data == data)&&(identical(other.userLogin, userLogin) || other.userLogin == userLogin));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,common,android,ios,userLogin);
+int get hashCode => Object.hash(runtimeType,common,android,ios,data,userLogin);
 
 @override
 String toString() {
-  return 'LoginResponseModel(common: $common, android: $android, ios: $ios, userLogin: $userLogin)';
+  return 'LoginResponseModel(common: $common, android: $android, ios: $ios, data: $data, userLogin: $userLogin)';
 }
 
 
@@ -291,11 +300,11 @@ abstract mixin class _$LoginResponseModelCopyWith<$Res> implements $LoginRespons
   factory _$LoginResponseModelCopyWith(_LoginResponseModel value, $Res Function(_LoginResponseModel) _then) = __$LoginResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
- CommonModel? common, AppConfigModel? android, AppConfigModel? ios,@JsonKey(name: 'user_login') bool? userLogin
+ CommonModel? common, AppConfigModel? android, AppConfigModel? ios, LoginDataModel data,@JsonKey(name: 'user_login') bool? userLogin
 });
 
 
-@override $CommonModelCopyWith<$Res>? get common;@override $AppConfigModelCopyWith<$Res>? get android;@override $AppConfigModelCopyWith<$Res>? get ios;
+@override $CommonModelCopyWith<$Res>? get common;@override $AppConfigModelCopyWith<$Res>? get android;@override $AppConfigModelCopyWith<$Res>? get ios;@override $LoginDataModelCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -308,12 +317,13 @@ class __$LoginResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of LoginResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? common = freezed,Object? android = freezed,Object? ios = freezed,Object? userLogin = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? common = freezed,Object? android = freezed,Object? ios = freezed,Object? data = null,Object? userLogin = freezed,}) {
   return _then(_LoginResponseModel(
 common: freezed == common ? _self.common : common // ignore: cast_nullable_to_non_nullable
 as CommonModel?,android: freezed == android ? _self.android : android // ignore: cast_nullable_to_non_nullable
 as AppConfigModel?,ios: freezed == ios ? _self.ios : ios // ignore: cast_nullable_to_non_nullable
-as AppConfigModel?,userLogin: freezed == userLogin ? _self.userLogin : userLogin // ignore: cast_nullable_to_non_nullable
+as AppConfigModel?,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as LoginDataModel,userLogin: freezed == userLogin ? _self.userLogin : userLogin // ignore: cast_nullable_to_non_nullable
 as bool?,
   ));
 }
@@ -353,6 +363,15 @@ $AppConfigModelCopyWith<$Res>? get ios {
 
   return $AppConfigModelCopyWith<$Res>(_self.ios!, (value) {
     return _then(_self.copyWith(ios: value));
+  });
+}/// Create a copy of LoginResponseModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LoginDataModelCopyWith<$Res> get data {
+  
+  return $LoginDataModelCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
   });
 }
 }

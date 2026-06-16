@@ -10,7 +10,7 @@ abstract class LoginResponseModel with _$LoginResponseModel {
     CommonModel? common,
     AppConfigModel? android,
     AppConfigModel? ios,
-    // required LoginDataModel data,
+    required LoginDataModel data,
     @JsonKey(name: 'user_login') bool? userLogin,
   }) = _LoginResponseModel;
 
