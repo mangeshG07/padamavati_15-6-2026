@@ -6,7 +6,6 @@ class MockHomeRepository extends Mock implements HomeRepository {}
 
 class FakeUserRequest extends Fake implements UserRequest {}
 
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -23,14 +22,13 @@ void main() {
 
   setUp(() {
     // ✅ NEW WAY (No deprecation)
-    TestDefaultBinaryMessengerBinding
-        .instance.defaultBinaryMessenger
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-      if (methodCall.method == 'read') {
-        return "1";
-      }
-      return null;
-    });
+          if (methodCall.method == 'read') {
+            return "1";
+          }
+          return null;
+        });
 
     repo = MockHomeRepository();
 
@@ -42,14 +40,13 @@ void main() {
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding
-        .instance.defaultBinaryMessenger
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null);
   });
 
   test("fetch home success", () async {
     when(() => repo.getHome(any())).thenAnswer(
-          (_) async => Success(
+      (_) async => Success(
         BaseResponseModel(
           common: CommonModel(status: true, message: ''),
           android: AppConfigModel(version: '1.0.0', url: ''),

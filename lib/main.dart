@@ -1,7 +1,4 @@
-import 'package:mocktail/mocktail.dart';
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-
-class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   runZonedGuarded(
@@ -9,9 +6,22 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
+      // ⚡ 1. Firebase init FIRST
+      await Firebase.initializeApp();
+
+      // ⚡ 2. Dependency Injection FIRST (important order)
+      await configureDependencies();
+
+      // ⚡ 3. Remote config via GetIt (NOT new instance)
+      await getIt<RemoteConfigService>().init();
+
+      // await Firebase.initializeApp();
+      //
+      // await RemoteConfigService().init();
+
       /// Init Dependencies (GetX)
       await initServices();
-      await configureDependencies();
+      // await configureDependencies();
 
       /// Global Flutter Error
       FlutterError.onError = (details) {

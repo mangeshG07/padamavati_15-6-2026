@@ -1,5 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class QRScreen extends StatelessWidget {
   const QRScreen({super.key});
@@ -8,9 +7,7 @@ class QRScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final title = Get.arguments['title'] ?? '';
-    final subTitle = Get.arguments['subTitle'] ?? '';
-    final status = Get.arguments['status'] ?? '';
+    final qrData = Get.arguments['qrData'] as QRModel;
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FD),
@@ -39,7 +36,12 @@ class QRScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         /// Coupon Header
-                        _buildHeader(title, theme, subTitle, status),
+                        _buildHeader(
+                          qrData.messTime,
+                          theme,
+                          qrData.messType,
+                          qrData.status!,
+                        ),
                         Divider(),
                         Padding(
                           padding: EdgeInsets.all(20.w),
@@ -63,7 +65,7 @@ class QRScreen extends StatelessWidget {
                               SizedBox(height: 24.h),
 
                               /// QR Container
-                              _buildQRCode(),
+                              _buildQRCode(qrData),
 
                               SizedBox(height: 20.h),
 
@@ -85,10 +87,11 @@ class QRScreen extends StatelessWidget {
   }
 
   Widget _buildAppBar(ThemeData theme) {
-    return GradientAppbar(title: 'Coupon QR',showBack: true,);
+    return GradientAppbar(title: 'Coupon QR', showBack: true);
   }
 
   Widget _buildHeader(title, ThemeData theme, subTitle, status) {
+    final isActive = status == 'Active';
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
@@ -117,18 +120,15 @@ class QRScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          badge(status, status == "Used" ? Colors.red : Colors.green),
+          badge(status, isActive ? Colors.green : Colors.red),
+          // badge(status, status == "Used" ? Colors.red : Colors.green),
         ],
       ),
     );
   }
 
-  Widget _buildQRCode() {
-    final qrData = jsonEncode({
-      "user_id": 1,
-      "coupon_id": 1,
-    });
+  Widget _buildQRCode(QRModel coupon) {
+    final qrData = jsonEncode({"qr_code": coupon.uuid});
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -144,16 +144,7 @@ class QRScreen extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16.r),
-        child:QrImageView(
-          data: qrData,
-          size: 250,
-        ),
-
-
-        // CustomImage(
-        //   image:
-        //       'https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg',
-        // ),
+        child: QrImageView(data: qrData, size: 250),
       ),
     );
   }

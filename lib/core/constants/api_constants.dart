@@ -42,4 +42,7 @@ class ApiConstants {
   static const String getHome = '/home';
   static const String getPackageList = '/get_ratepackage_list';
   static const String startMessRequest = '/mess_req';
+  static const String paymentHistory = '/payment_history';
+  static const String paymentReceipt = '/payment_receipt';
+  static const String getCoupon = '/coupon_code';
 }

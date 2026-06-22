@@ -102,8 +102,7 @@ class CouponDetails extends StatelessWidget {
   }
 
   Widget _buildAppbar(ThemeData theme) {
-    return GradientAppbar(title: 'Coupon Details',showBack: true,);
-
+    return GradientAppbar(title: 'Coupon Details', showBack: true);
 
     //   Container(
     //   width: Get.width,

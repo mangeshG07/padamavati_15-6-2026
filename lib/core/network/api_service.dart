@@ -56,4 +56,20 @@ abstract class ApiService {
     @Part(name: "ratepackage_id") String packageId,
     @Part(name: "date") String date,
   );
+
+  @POST(ApiConstants.paymentHistory)
+  Future<BaseResponseModel<List<PaymentDetailsModel>>> paymentHistory(
+    @Part(name: "user_id") String userId,
+  );
+
+  @POST(ApiConstants.paymentReceipt)
+  Future<BaseResponseModel<PaymentData>> paymentReceipt(
+    @Part(name: "user_id") String userId,
+    @Part(name: "transaction_id") String transId,
+  );
+
+  @POST(ApiConstants.getCoupon)
+  Future<BaseResponseModel<CouponResponseModel>> getCoupon(
+    @Part(name: "user_id") String userId,
+  );
 }

@@ -3,6 +3,6 @@ import 'package:padmavatiupdated/core/exporters/app_export.dart';
 class HistoryBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HistoryController>(() => HistoryController());
+    Get.lazyPut<HistoryController>(() => HistoryController(getIt(), getIt()));
   }
 }

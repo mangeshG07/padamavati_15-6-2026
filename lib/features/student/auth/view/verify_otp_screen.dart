@@ -16,6 +16,8 @@ class VerifyOTP extends GetView<OtpController> {
           foregroundColor: Colors.black,
           iconTheme: const IconThemeData(color: Colors.black),
         ),
+
+
         body: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 20.w),

@@ -11,6 +11,20 @@ class AddRequest extends GetView<RequestController> {
       child: Column(
         spacing: 12.h,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppText(
+                text: 'Special Food Request',
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: HugeIcon(icon: HugeIcons.strokeRoundedCancel01),
+              ),
+            ],
+          ),
           _buildDate(theme, context),
           Obx(
             () => AppDropdownField(

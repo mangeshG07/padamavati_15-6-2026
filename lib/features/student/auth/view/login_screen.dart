@@ -94,7 +94,7 @@ class LoginScreen extends GetView<LoginController> {
       children: [
         SizedBox(height: 8.h),
         AppTextField(
-          key:const Key("mobileField"),
+          key: const Key("mobileField"),
           fillColor: AppColors.textFieldBgColor,
           controller: controller.numberController,
           hint: 'Enter Mobile Number',

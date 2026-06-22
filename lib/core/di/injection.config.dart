@@ -11,21 +11,32 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:padmavatiupdated/core/config/remote_config.dart' as _i602;
 import 'package:padmavatiupdated/core/exporters/app_export.dart' as _i85;
 import 'package:padmavatiupdated/core/network/api_service.dart' as _i400;
 import 'package:padmavatiupdated/core/network/register_module.dart' as _i433;
 import 'package:padmavatiupdated/data/repository_impl/auth_repository_impl.dart'
     as _i272;
+import 'package:padmavatiupdated/data/repository_impl/coupon_repository_impl.dart'
+    as _i791;
 import 'package:padmavatiupdated/data/repository_impl/home_repository_impl.dart'
     as _i877;
+import 'package:padmavatiupdated/data/repository_impl/pay_history_repository_impl.dart'
+    as _i675;
 import 'package:padmavatiupdated/domain/usecase/get_branch_list_usecase.dart'
     as _i598;
+import 'package:padmavatiupdated/domain/usecase/get_coupon_usecase.dart'
+    as _i924;
 import 'package:padmavatiupdated/domain/usecase/get_degree_list_usecase.dart'
     as _i922;
 import 'package:padmavatiupdated/domain/usecase/get_home_usecase.dart'
     as _i1036;
 import 'package:padmavatiupdated/domain/usecase/get_packages_usecase.dart'
     as _i398;
+import 'package:padmavatiupdated/domain/usecase/get_payment_receipt.dart'
+    as _i911;
+import 'package:padmavatiupdated/domain/usecase/pay_history_usecase.dart'
+    as _i861;
 import 'package:padmavatiupdated/domain/usecase/register_student_usecase.dart'
     as _i886;
 import 'package:padmavatiupdated/domain/usecase/send_otp_usecase.dart' as _i470;
@@ -44,14 +55,25 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    gh.lazySingleton<_i602.RemoteConfigService>(
+      () => _i602.RemoteConfigService(),
+    );
     gh.lazySingleton<_i85.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i1022.SplashController>(() => _i1022.SplashController());
+    gh.lazySingleton<_i1022.SplashController>(
+      () => _i1022.SplashController(gh<_i85.RemoteConfigService>()),
+    );
     gh.factory<_i400.ApiService>(() => _i400.ApiService(gh<_i85.Dio>()));
     gh.lazySingleton<_i85.HomeRepository>(
       () => _i877.HomeRepositoryImpl(gh<_i85.ApiService>()),
     );
     gh.lazySingleton<_i85.AuthRepository>(
       () => _i272.AuthRepositoryImpl(gh<_i85.ApiService>()),
+    );
+    gh.lazySingleton<_i85.PaymentHistoryRepository>(
+      () => _i675.PaymentHistoryRepoImpl(gh<_i85.ApiService>()),
+    );
+    gh.lazySingleton<_i85.CouponRepository>(
+      () => _i791.CouponRepositoryImpl(gh<_i85.ApiService>()),
     );
     gh.lazySingleton<_i1036.GetHomeUsecase>(
       () => _i1036.GetHomeUsecase(gh<_i85.HomeRepository>()),
@@ -76,6 +98,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i886.RegisterUsecase>(
       () => _i886.RegisterUsecase(gh<_i85.AuthRepository>()),
+    );
+    gh.lazySingleton<_i911.GetPaymentReceiptUsecase>(
+      () => _i911.GetPaymentReceiptUsecase(gh<_i85.PaymentHistoryRepository>()),
+    );
+    gh.lazySingleton<_i861.PayHistoryUsecase>(
+      () => _i861.PayHistoryUsecase(gh<_i85.PaymentHistoryRepository>()),
+    );
+    gh.lazySingleton<_i924.GetCouponUsecase>(
+      () => _i924.GetCouponUsecase(gh<_i85.CouponRepository>()),
     );
     return this;
   }

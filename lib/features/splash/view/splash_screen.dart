@@ -1,3 +1,4 @@
+import 'package:padmavatiupdated/core/config/remote_config.dart';
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class SplashPage extends StatefulWidget {
@@ -66,9 +67,10 @@ class _SplashPageState extends State<SplashPage>
   }
 
   Widget _buildLogo() {
-    return Image.asset(
-      AppAssets.splashLogo,
-      width: Get.width * 0.6.h,
+    return Image.network(
+      getIt<RemoteConfigService>().splashLogo,
+      // AppAssets.splashLogo,
+      width: double.infinity,
       height: double.infinity,
       fit: BoxFit.contain,
     );

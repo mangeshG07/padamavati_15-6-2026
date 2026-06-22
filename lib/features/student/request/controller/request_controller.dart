@@ -1,4 +1,3 @@
-
 import '../../../../core/exporters/app_export.dart';
 
 class RequestController extends GetxController {
@@ -19,5 +18,25 @@ class RequestController extends GetxController {
   void resetFields() {
     dateController.clear();
     selectedFood.value = null;
+  }
+
+  ////////////////////////////////////////Leave Request///////////////////////////
+
+  final fromDate = TextEditingController();
+  final toDate = TextEditingController();
+  final leaveKey = GlobalKey<FormState>();
+  final maxDays = 8.obs;
+  final calculatedDays = 0.obs;
+
+  void calculateNumberOfDays(DateTime fromDate, DateTime toDate) {
+    final difference = toDate.difference(fromDate).inDays + 1;
+
+    if (difference < 0) {
+      calculatedDays.value = 0;
+    } else if (difference > maxDays.value) {
+      calculatedDays.value = maxDays.value;
+    } else {
+      calculatedDays.value = difference;
+    }
   }
 }

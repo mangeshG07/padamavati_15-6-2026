@@ -1,15 +1,12 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class PaymentReceipt extends StatefulWidget {
+class PaymentReceipt extends StatelessWidget {
   const PaymentReceipt({super.key});
 
   @override
-  State<PaymentReceipt> createState() => _PaymentReceiptState();
-}
-
-class _PaymentReceiptState extends State<PaymentReceipt> {
-  @override
   Widget build(BuildContext context) {
+    PaymentModel payment = Get.arguments;
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: SingleChildScrollView(
@@ -97,7 +94,7 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
                             borderRadius: BorderRadius.circular(20.r),
                           ),
                           child: AppText(
-                            text: "Receipt #PAY0626",
+                            text: "Receipt #${payment.code ?? ''}",
                             color: AppColors.lightPrimary,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
@@ -110,8 +107,11 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
 
                         SizedBox(height: 10.h),
 
-                        _detailRow("Date", "01 Apr 2026"),
-                        _detailRow("Payment Method", "Cash"),
+                        _detailRow("Date", payment.date ?? ''),
+                        _detailRow(
+                          "Payment Method",
+                          payment.paymentMethod ?? '',
+                        ),
 
                         SizedBox(height: 10.h),
 
@@ -130,7 +130,7 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
                                 fontSize: 16.sp,
                               ),
                               AppText(
-                                text: "₹ 2,500",
+                                text: "₹ ${payment.amount}",
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.sp,
@@ -168,7 +168,7 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
                                   ),
                                   SizedBox(width: 4.w),
                                   AppText(
-                                    text: "Paid",
+                                    text: payment.paymentStatus ?? '-',
                                     fontSize: 14.sp,
                                     color: Colors.green,
                                     fontWeight: FontWeight.bold,
@@ -202,24 +202,11 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
 
                         SizedBox(height: 24.h),
 
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () {},
-                                icon: const Icon(Icons.share),
-                                label: const Text("Share"),
-                              ),
-                            ),
-                            SizedBox(width: 12.w),
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () {},
-                                icon: const Icon(Icons.download),
-                                label: const Text("Download"),
-                              ),
-                            ),
-                          ],
+                        ElevatedButton.icon(
+                          onPressed: () =>
+                              downloadFile(payment.receiptUrl ?? ''),
+                          icon: const Icon(Icons.download),
+                          label: const Text("Download"),
                         ),
                       ],
                     ),
@@ -227,94 +214,6 @@ class _PaymentReceiptState extends State<PaymentReceipt> {
                 ],
               ),
             ),
-
-            // Container(
-            //   width: double.infinity,
-            //   padding: EdgeInsets.all(20.r),
-            //   margin: EdgeInsets.all(16.r),
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(20.r),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         color: Colors.black.withValues(alpha: .05),
-            //         blurRadius: 12,
-            //         offset: const Offset(0, 4),
-            //       ),
-            //     ],
-            //   ),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Center(
-            //         child: Column(
-            //           children: [
-            //             CustomImage(image: AppAssets.splashLogo, height: 50.h),
-            //             AppText(
-            //               text: 'Padmavati Mess',
-            //               fontSize: 16.sp,
-            //               style: theme.textTheme.headlineSmall!.copyWith(
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //             AppText(
-            //               text: 'Payment Receipt',
-            //               fontSize: 16.sp,
-            //               style: theme.textTheme.bodyLarge,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       _detailRow("Date", "2026-04-01"),
-            //       _detailRow("Receipt No", "PAY 0626"),
-            //       _detailRow("Payment Method", "Cash"),
-            //       const DottedLine(
-            //         dashColor: Colors.grey,
-            //         direction: Axis.horizontal,
-            //       ),
-            //       SizedBox(height: 12.h),
-            //       AppText(
-            //         text: 'Details',
-            //         fontSize: 16.sp,
-            //         style: theme.textTheme.bodyLarge,
-            //       ),
-            //       _detailRow("Pending Amount", "2500"),
-            //       _detailRow("Total Amount", "2500"),
-            //       const DottedLine(
-            //         dashColor: Colors.grey,
-            //         direction: Axis.horizontal,
-            //       ),
-            //       _detailRow("Paid Amount", "2500", isBold: true),
-            //       _detailRow(
-            //         "Payment Status",
-            //         "Paid",
-            //         isBold: true,
-            //         valueColor: AppColors.lightSecondary,
-            //       ),
-            //       SizedBox(height: 24.h),
-            //       Center(
-            //         child: Column(
-            //           children: [
-            //             AppText(
-            //               text: 'Thank You!',
-            //               fontSize: 16.sp,
-            //               style: theme.textTheme.labelMedium!.copyWith(
-            //                 color: Colors.grey,
-            //               ),
-            //             ),
-            //             AppText(
-            //               text: 'This is a system generated receipt.',
-            //               fontSize: 16.sp,
-            //               style: theme.textTheme.labelMedium!.copyWith(
-            //                 color: Colors.grey,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),

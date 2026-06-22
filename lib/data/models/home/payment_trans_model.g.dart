@@ -8,6 +8,7 @@ part of 'payment_trans_model.dart';
 
 _PaymentDetailsModel _$PaymentDetailsModelFromJson(Map<String, dynamic> json) =>
     _PaymentDetailsModel(
+      transactionId: (json['transaction_id'] as num?)?.toInt(),
       messType: json['mess_type'] as String?,
       messTypeName: json['mess_type_name'] as String?,
       startMonth: json['start_month'] as String?,
@@ -18,11 +19,15 @@ _PaymentDetailsModel _$PaymentDetailsModelFromJson(Map<String, dynamic> json) =>
       paidAmount: json['paid_amount'] as String?,
       dueAmount: (json['due_amount'] as num?)?.toInt(),
       paymentStatus: json['payment_status'] as String?,
+      payments: (json['payments'] as List<dynamic>?)
+          ?.map((e) => PaymentModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PaymentDetailsModelToJson(
   _PaymentDetailsModel instance,
 ) => <String, dynamic>{
+  'transaction_id': instance.transactionId,
   'mess_type': instance.messType,
   'mess_type_name': instance.messTypeName,
   'start_month': instance.startMonth,
@@ -33,4 +38,5 @@ Map<String, dynamic> _$PaymentDetailsModelToJson(
   'paid_amount': instance.paidAmount,
   'due_amount': instance.dueAmount,
   'payment_status': instance.paymentStatus,
+  'payments': instance.payments,
 };

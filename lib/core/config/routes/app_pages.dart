@@ -13,7 +13,7 @@ class AppPages {
     GetPage(
       name: Routes.verifyOTP,
       page: () => VerifyOTP(),
-      bindings: [OtpBinding(),NavigationBindings()],
+      bindings: [OtpBinding(), NavigationBindings()],
     ),
     GetPage(
       name: Routes.registerScreen,

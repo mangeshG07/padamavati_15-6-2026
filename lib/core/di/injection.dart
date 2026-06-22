@@ -5,4 +5,10 @@ import 'injection.config.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit()
-Future<void> configureDependencies() async => getIt.init();
+Future<void> configureDependencies() async {
+  getIt.init();
+  // getIt.registerLazySingleton(() => RemoteConfigService());
+
+}
+
+

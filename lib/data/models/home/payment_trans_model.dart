@@ -5,6 +5,7 @@ part 'payment_trans_model.g.dart';
 @freezed
 abstract class PaymentDetailsModel with _$PaymentDetailsModel {
   const factory PaymentDetailsModel({
+    @JsonKey(name: 'transaction_id') int? transactionId,
     @JsonKey(name: 'mess_type') String? messType,
     @JsonKey(name: 'mess_type_name') String? messTypeName,
     @JsonKey(name: 'start_month') String? startMonth,
@@ -15,6 +16,7 @@ abstract class PaymentDetailsModel with _$PaymentDetailsModel {
     @JsonKey(name: 'paid_amount') String? paidAmount,
     @JsonKey(name: 'due_amount') int? dueAmount,
     @JsonKey(name: 'payment_status') String? paymentStatus,
+    List<PaymentModel>? payments,
   }) = _PaymentDetailsModel;
 
   factory PaymentDetailsModel.fromJson(Map<String, dynamic> json) =>
