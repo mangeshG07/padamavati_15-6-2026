@@ -1,5 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:padmavatiupdated/data/models/auth/user_model.dart';
+import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 part 'login_data_model.freezed.dart';
 part 'login_data_model.g.dart';

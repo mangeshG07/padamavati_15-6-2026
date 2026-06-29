@@ -16,7 +16,7 @@ void main() {
       await getIt<RemoteConfigService>().init();
 
       // await Firebase.initializeApp();
-      //
+
       // await RemoteConfigService().init();
 
       /// Init Dependencies (GetX)

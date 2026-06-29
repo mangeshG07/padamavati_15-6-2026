@@ -18,7 +18,7 @@ class CouponRepositoryImpl implements CouponRepository {
         return Failure(res.common.message);
       }
     } catch (error) {
-      return Failure(error.toString());
+      return Failure('Something went wrong.');
     }
   }
 }

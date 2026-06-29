@@ -102,18 +102,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller.selectedBranch.value = val,
                           ),
                         ),
-                        Obx(
-                          () => AppDropdownField(
-                            isRequired: true,
-                            title: "Select Mess Time",
-                            value: controller.selectedMessTime.value,
-                            items: controller.messTimeList,
-                            hintText: 'Mess Time',
-                            validator: AppValidators.required,
-                            onChanged: (val) =>
-                                controller.selectedMessTime.value = val,
-                          ),
-                        ),
+                        // Obx(
+                        //   () => AppDropdownField(
+                        //     isRequired: true,
+                        //     title: "Select Mess Time",
+                        //     value: controller.selectedMessTime.value,
+                        //     items: controller.messTimeList,
+                        //     hintText: 'Mess Time',
+                        //     validator: AppValidators.required,
+                        //     onChanged: (val) =>
+                        //         controller.selectedMessTime.value = val,
+                        //   ),
+                        // ),
                         _buildFoodPreference(theme),
 
                         SizedBox(height: Get.height * 0.02),
@@ -207,6 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isRequired: true,
       labelStyle: AppTextStyles.labelMedium,
       filled: true,
+      keyboardType: isNumber ? TextInputType.number : TextInputType.text,
       textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
       focusedBorder: theme.inputDecorationTheme.focusedBorder,
       enabledBorder: theme.inputDecorationTheme.enabledBorder,

@@ -52,26 +52,6 @@ class HomeController extends BaseController {
         isAccepted.value = data.data!.messRequestAccepted ?? false;
       },
     );
-
-    // isLoading.value = true;
-    // try {
-    //   final userId =
-    //       await SecureStorageService.read(AppConstants.userIdKey) ?? '';
-    //
-    //   final response = await _homeUseCase.call(UserRequest(userId));
-    //
-    //   if (response.common.status == true) {
-    //     final data = response.data;
-    //
-    //     branchName.value = data?.branchName ?? '';
-    //     sliderList.value = data?.sliders ?? [];
-    //     payDetailsList.value = data?.payTransactionDetails ?? [];
-    //     isRequested.value = data?.messRequest ?? false;
-    //     isAccepted.value = data?.messRequestAccepted ?? false;
-    //   }
-    // } finally {
-    //   isLoading.value = false;
-    // }
   }
 
   Future<void> fetchPackages() async {

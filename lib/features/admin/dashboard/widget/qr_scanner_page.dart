@@ -40,7 +40,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
               final String rawData = barcode.rawValue ?? "";
 
               try {
-
                 /// Convert String to Object
                 final data = jsonDecode(rawData);
 
@@ -76,19 +75,15 @@ class _QRScannerPageState extends State<QRScannerPage> {
                             });
                           },
                           child: const Text("OK"),
-                        )
+                        ),
                       ],
                     );
                   },
                 );
-
               } catch (e) {
-
                 /// Invalid QR
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Invalid QR Code"),
-                  ),
+                  const SnackBar(content: Text("Invalid QR Code")),
                 );
               }
             },

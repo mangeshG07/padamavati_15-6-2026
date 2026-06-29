@@ -18,4 +18,6 @@ class Routes {
   static const String adminLogin = "/adminLogin";
   static const String adminMainScreen = "/adminMainScreen";
   static const String qrScannerScreen = "/qrScannerScreen";
+  static const String policyData = "/policyData";
+  static const String helpAndSupport = "/helpAndSupport";
 }

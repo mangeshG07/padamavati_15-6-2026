@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
       request.degreeId,
       request.branchId,
       request.messType,
-      request.messTime,
+      // request.messTime,
       profilePicture: request.profileImage,
     );
   }

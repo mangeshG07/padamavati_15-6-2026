@@ -10,7 +10,7 @@ class RegisterRequest {
   final String degreeId;
   final String branchId;
   final String messType;
-  final String messTime;
+  // final String messTime;
   final File? profileImage;
 
   RegisterRequest({
@@ -24,6 +24,6 @@ class RegisterRequest {
     required this.branchId,
     required this.profileImage,
     required this.messType,
-    required this.messTime,
+    // required this.messTime,
   });
 }

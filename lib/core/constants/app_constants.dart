@@ -100,6 +100,9 @@ class AppConstants {
   /// User id cache key
   static const String userIdKey = 'user_id';
 
+  /// Roll id cache key
+  static const String userRollIdKey = 'roll_id';
+
   /// User onboarding cache key
   static const String userOnboardingKey = 'is_onboarded';
 

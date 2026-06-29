@@ -29,21 +29,27 @@ class AddRequest extends GetView<RequestController> {
           Obx(
             () => AppDropdownField(
               isRequired: true,
+              isDynamic: true,
               title: "Select Your Food",
               value: controller.selectedFood.value,
-              items: controller.foodList,
+              items: controller.foodItemsList,
               hintText: 'Food',
               validator: AppValidators.required,
               onChanged: (val) => controller.selectedFood.value = val,
             ),
           ),
           SizedBox(height: 20.h),
-          AppButton(
-            text: 'Submit Request',
-            onTap: () {
-              if (controller.requestKey.currentState!.validate()) {}
-            },
-            backgroundColor: AppColors.lightSecondary,
+          Obx(
+            () => AppButton(
+              text: 'Submit Request',
+              loading: controller.isAddFoodLoading.value,
+              onTap: () async {
+                if (controller.requestKey.currentState!.validate()) {
+                  await controller.addFoodRequest();
+                }
+              },
+              backgroundColor: AppColors.lightSecondary,
+            ),
           ),
         ],
       ),

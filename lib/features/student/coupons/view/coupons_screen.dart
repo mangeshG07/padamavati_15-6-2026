@@ -1,5 +1,7 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
+import '../widget/empty_coupon.dart';
+
 class CouponsScreen extends StatefulWidget {
   const CouponsScreen({super.key});
 
@@ -19,6 +21,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(
@@ -59,7 +62,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () => Get.toNamed(Routes.couponDetails),
+                            // onTap: () => Get.toNamed(Routes.couponDetails),
                             child: Container(
                               width: double.infinity,
                               padding: const EdgeInsets.all(12.0),
@@ -104,7 +107,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
   ) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => Get.toNamed(Routes.couponDetails),
+        // onTap: () => Get.toNamed(Routes.couponDetails),
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -194,20 +197,22 @@ class _CouponsScreenState extends State<CouponsScreen> {
   }
 
   Widget todayCoupons(ThemeData theme) {
+    if (controller.todayQR.isEmpty) {
+      return const EmptyView();
+    }
+
     return Column(
       spacing: 12.h,
       children: controller.todayQR.map<Widget>((qr) {
         return _buildTodayCard(
           theme,
-          qr.messTime ?? '',
+          qr.messType ?? '',
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'
               : 'Used At : ${qr.scannedAt}',
           qr.status!,
-          qr.messTime == 'Morning'
-              ? HugeIcons.strokeRoundedSun03
-              : HugeIcons.strokeRoundedMoon02,
+          HugeIcons.strokeRoundedServingFood,
           qr,
         );
       }).toList(),
@@ -361,11 +366,11 @@ class _CouponsScreenState extends State<CouponsScreen> {
                     style: theme.textTheme.titleMedium,
                   ),
                   // SizedBox(height: 4.h),
-                  AppText(
-                    text: subtitle,
-                    fontSize: 12.sp,
-                    style: theme.textTheme.bodyMedium,
-                  ),
+                  // AppText(
+                  //   text: subtitle,
+                  //   fontSize: 12.sp,
+                  //   style: theme.textTheme.bodyMedium,
+                  // ),
                   // SizedBox(height: 2.h),
                   AppText(
                     text: timing,
@@ -385,6 +390,9 @@ class _CouponsScreenState extends State<CouponsScreen> {
   }
 
   Widget usedCoupons(ThemeData theme) {
+    if (controller.usedQR.isEmpty) {
+      return const EmptyView();
+    }
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -394,7 +402,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
         final qr = controller.usedQR[index];
         return _buildTodayCard(
           theme,
-          qr.messTime ?? '',
+          qr.messType ?? '',
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'

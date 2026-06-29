@@ -1,6 +1,19 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class ProfileController extends GetxController {
+class ProfileController extends BaseController {
+  final ProfileUsecase _profileUsecase;
+  final UpdateProfileUsecase _updateProfileUsecase;
+  final GetDegreeListUsecase _degreeListUsecase;
+  final GetLegalPageUsecase _legalPageUsecase;
+  final GetFacilityUsecase _facilityUsecase;
+  ProfileController(
+    this._profileUsecase,
+    this._degreeListUsecase,
+    this._updateProfileUsecase,
+    this._legalPageUsecase,
+    this._facilityUsecase,
+  );
+
   List<Map<String, dynamic>> get menuList => [
     {
       'title': 'Edit Profile',
@@ -13,9 +26,9 @@ class ProfileController extends GetxController {
       'onTap': () => Get.toNamed(Routes.facilityScreen),
     },
     {
-      'title': 'Privacy Policy',
+      'title': 'Help And Support',
       'icon': HugeIcons.strokeRoundedMailOpen,
-      // 'onTap': () => Get.toNamed(Routes.viewed),
+      'onTap': () => Get.toNamed(Routes.helpAndSupport),
     },
     {
       'title': 'Logout',
@@ -38,47 +51,98 @@ class ProfileController extends GetxController {
     },
   ];
 
+  /// ------------------Get Profile ------------------ ///
+
+  final profileData = ProfileResponseModel().obs;
+
+  Future<void> getProfile() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    await callApi<BaseResponseModel<ProfileResponseModel>>(
+      request: () => _profileUsecase.call(UserRequest(userId)),
+      loader: isLoading,
+      onSuccess: (data) {
+        profileData.value = data.data!;
+      },
+    );
+  }
+
+  /// ------------------ DegreeList ------------------ ///
+  final isDegreeLoading = false.obs;
+  final degreeList = <MasterDataModel>[].obs;
+
+  Future<void> fetchDegree() async {
+    try {
+      isDegreeLoading(true);
+      degreeList.clear();
+
+      final res = await _degreeListUsecase.call();
+
+      if (res.common.status == true) {
+        degreeList.assignAll(res.data ?? []);
+      }
+    } finally {
+      isDegreeLoading(false);
+    }
+  }
+
+  /// ------------------ UPDATE PROFILE ------------------ ///
+  final isUpdating = false.obs;
   final currentAddressController = TextEditingController();
   final permAddressController = TextEditingController();
   final selectedDegree = Rxn<String>();
-  final degreeList = ['BCom', 'BCS', 'BA', 'MCom', 'MCS', 'MA', 'PHD'].obs;
 
-  final facilityList = [
-    {
-      'image': AppAssets.aboutUs,
-      'name': 'About Us',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-    {
-      'image': AppAssets.termsNCondition,
-      'name': 'Terms And Condition',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-    {
-      'image': AppAssets.timeTable,
-      'name': 'Meal Time Table',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-    {
-      'image': AppAssets.refinedOil,
-      'name': 'Refined Oil',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-    {
-      'image': AppAssets.cleanWater,
-      'name': 'Clean Water',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-    {
-      'image': AppAssets.tiffin,
-      'name': 'Tiffin Service',
-      'short_description':
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
-    },
-  ].obs;
+  final updateForm = GlobalKey<FormState>();
+
+  Future<void> updateProfile() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    await callApi<BaseResponseModel>(
+      request: () => _updateProfileUsecase.call(
+        UpdateProfileEntity(
+          userId,
+          currentAddressController.text.trim(),
+          selectedDegree.value ?? '',
+        ),
+      ),
+      loader: isUpdating,
+      onSuccess: (data) async {
+        Get.back();
+        await getProfile();
+        CustomSnackbar.show(
+          context: Get.context!,
+          message: data.common.message,
+          type: SnackbarType.success,
+        );
+      },
+    );
+  }
+
+  /// ------------------ Facility List ------------------ ///
+  final isFacilityLoading = false.obs;
+  final facilityList = <FacilityModel>[].obs;
+
+  Future<void> fetchFacility() async {
+    await callApi<BaseResponseModel<List<FacilityModel>>>(
+      request: () => _facilityUsecase.call(),
+      loader: isFacilityLoading,
+      onSuccess: (data) {
+        facilityList.value = data.data ?? [];
+      },
+    );
+  }
+
+  /// ------------------ Legal Page List ------------------ ///
+  final isPagesLoading = false.obs;
+  final pagesList = <FacilityModel>[].obs;
+
+  Future<void> fetchLegalPage() async {
+    await callApi<BaseResponseModel<List<FacilityModel>>>(
+      request: () => _legalPageUsecase.call(),
+      loader: isFacilityLoading,
+      onSuccess: (data) {
+        pagesList.value = data.data ?? [];
+      },
+    );
+  }
 }

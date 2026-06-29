@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: Obx(
         () => controller.isHomeLoading.isTrue
-            ? AppLoader(size: 2.5, color: AppColors.lightPrimary)
+            ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
             : SingleChildScrollView(
                 child: Column(
                   spacing: 8.h,

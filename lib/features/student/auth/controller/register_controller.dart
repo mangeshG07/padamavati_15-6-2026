@@ -108,7 +108,7 @@ class RegisterController extends GetxController {
           branchId: selectedBranch.value!,
           profileImage: profileImage.value,
           messType: selectedFoodPref.value.toString(),
-          messTime: selectedMessTime.value.toString() == '1 Time' ? '1' : '2',
+          // messTime: selectedMessTime.value.toString() == '1 Time' ? '1' : '2',
         ),
       );
       if (res.common.status == true) {

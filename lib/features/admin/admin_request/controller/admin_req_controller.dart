@@ -1,7 +1,6 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class AdminReqCtrl extends GetxController {
-
   final selectedType = 0.obs;
   final requestList = [
     {'date': '12-06-2025', 'food': 'veg', 'created_at': '11-06-2025'},

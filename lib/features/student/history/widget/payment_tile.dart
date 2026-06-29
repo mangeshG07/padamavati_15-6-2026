@@ -33,8 +33,16 @@ class PaymentTile extends StatelessWidget {
               Row(
                 spacing: 12.w,
                 children: [
-                  _buildDate(theme, 'Start Date', payment?.startDate ?? ''),
-                  _buildDate(theme, 'End Date', payment?.endDate ?? ''),
+                  _buildDate(
+                    theme,
+                    'Start Date',
+                    payment?.startDate.toFormattedDate() ?? '',
+                  ),
+                  _buildDate(
+                    theme,
+                    'End Date',
+                    payment?.endDate.toFormattedDate() ?? '',
+                  ),
                 ],
               ),
               const DottedLine(

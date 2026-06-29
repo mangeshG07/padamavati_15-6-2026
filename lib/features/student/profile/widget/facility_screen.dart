@@ -1,38 +1,58 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class FacilityScreen extends GetView<ProfileController> {
+class FacilityScreen extends StatefulWidget {
   const FacilityScreen({super.key});
+
+  @override
+  State<FacilityScreen> createState() => _FacilityScreenState();
+}
+
+class _FacilityScreenState extends State<FacilityScreen> {
+  final controller = Get.find<ProfileController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchFacility();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 8.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GradientAppbar(title: 'Facility', showBack: true),
-            ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.facilityList.length,
-              itemBuilder: (_, index) {
-                final facility =
-                    controller.facilityList[index] as Map<String, dynamic>;
-                return _buildFacilityTile(facility, theme);
-              },
-            ),
-            SizedBox(height: 0.02.h),
-          ],
-        ),
+      body: Obx(
+        () => controller.isFacilityLoading.isTrue
+            ? AppLoader(strokeWidth: 2.5)
+            : controller.facilityList.isEmpty
+            ? Center(
+                child: AppText(text: 'No Data Found', fontSize: 16.sp),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  spacing: 8.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GradientAppbar(title: 'Facility', showBack: true),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: controller.facilityList.length,
+                      itemBuilder: (_, index) {
+                        final facility = controller.facilityList[index];
+                        return _buildFacilityTile(facility, theme);
+                      },
+                    ),
+                    SizedBox(height: 0.02.h),
+                  ],
+                ),
+              ),
       ),
     );
   }
 
-  Widget _buildFacilityTile(Map<String, dynamic> facility, ThemeData theme) {
+  Widget _buildFacilityTile(FacilityModel facility, ThemeData theme) {
     return Container(
       margin: EdgeInsets.all(8.w).copyWith(right: 16, left: 16),
       decoration: buildCardDecoration(),
@@ -46,14 +66,17 @@ class FacilityScreen extends GetView<ProfileController> {
             color: AppColors.lightSecondary.withValues(alpha: 0.1),
           ),
           child: CustomImage(
-            image: facility['image'] ?? '',
+            image: facility.image ?? '',
+            placeholder: Image.asset(AppAssets.defaultImage),
+            errorWidget: Image.asset(AppAssets.defaultImage),
             height: 30.h,
             width: 30.w,
           ),
         ),
         title: AppText(
-          text: facility['name'] ?? '',
+          text: facility.name,
           fontSize: 14.sp,
+          maxLines: 2,
           style: theme.textTheme.bodyMedium,
         ),
         children: [
@@ -61,11 +84,7 @@ class FacilityScreen extends GetView<ProfileController> {
             alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: AppText(
-                fontSize: 14,
-                maxLines: 100,
-                text: facility['short_description'] ?? '',
-              ),
+              child: HtmlWidget(facility.shortDescription ?? ''),
             ),
           ),
         ],

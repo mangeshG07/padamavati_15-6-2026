@@ -1,0 +1,18 @@
+import 'package:padmavatiupdated/core/exporters/app_export.dart';
+
+part 'facility_model.freezed.dart';
+part 'facility_model.g.dart';
+
+@freezed
+abstract class FacilityModel with _$FacilityModel {
+  const factory FacilityModel({
+    required int id,
+    required String name,
+    String? image,
+    @JsonKey(name: 'short_description') String? shortDescription,
+    String? description,
+  }) = _FacilityModel;
+
+  factory FacilityModel.fromJson(Map<String, dynamic> json) =>
+      _$FacilityModelFromJson(json);
+}

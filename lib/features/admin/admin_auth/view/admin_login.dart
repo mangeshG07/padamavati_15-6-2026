@@ -118,10 +118,9 @@ class AdminLogin extends GetView<AdminLoginController> {
         text: 'Login',
         loading: controller.isLoading.value,
         onTap: () async {
-          Get.offAllNamed(Routes.adminMainScreen);
-          // if (controller.adminLoginKey.currentState!.validate()) {
-          //   // await controller.sendOtpApi();
-          // }
+          if (controller.adminLoginKey.currentState!.validate()) {
+            await controller.adminLogin();
+          }
         },
       ),
     );

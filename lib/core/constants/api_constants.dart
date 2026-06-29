@@ -45,4 +45,19 @@ class ApiConstants {
   static const String paymentHistory = '/payment_history';
   static const String paymentReceipt = '/payment_receipt';
   static const String getCoupon = '/coupon_code';
+  static const String leaveRequests = '/leave_req_list';
+  static const String specialFoodItems = '/get_special_food_list';
+  static const String specialFoodRequests = '/special_food_req_list';
+  static const String addSpecialFoodReq = '/special_food_req';
+  static const String addLeaveReq = '/leave_req';
+  static const String getProfile = '/get_user_profile';
+  static const String updateProfile = '/update_user_profile';
+  static const String getFacility = '/get_facility_list';
+  static const String getLegalPage = '/get_legalpages_list';
+
+  ///////////////Pending//////////////////////
+  static const String adminLogin = '/admin_login';
+  static const String dashboard = '/admin_dashboard';
+  static const String adminRequest = '/todays_specialfood_request';
+  static const String branchUserList = '/branch_user_list';
 }

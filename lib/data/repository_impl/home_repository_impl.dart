@@ -19,7 +19,7 @@ class HomeRepositoryImpl extends HomeRepository {
         return Failure(res.common.message);
       }
     } catch (e) {
-      return Failure(e.toString());
+      return Failure('Something went wrong.');
     }
     // return await _apiService.getHome(request.userId);
   }
@@ -35,7 +35,7 @@ class HomeRepositoryImpl extends HomeRepository {
         return Failure(res.common.message);
       }
     } catch (e) {
-      return Failure(e.toString());
+      return Failure('Something went wrong.');
     }
 
     // return await _apiService.getPackageList();
@@ -57,7 +57,7 @@ class HomeRepositoryImpl extends HomeRepository {
         return Failure(res.common.message);
       }
     } catch (e) {
-      return Failure(e.toString());
+      return Failure('Something went wrong.');
     }
   }
 }

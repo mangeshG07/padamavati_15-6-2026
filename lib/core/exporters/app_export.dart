@@ -37,6 +37,10 @@ export 'package:dotted_line/dotted_line.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:padmavatiupdated/core/config/remote_config.dart';
+export 'package:flutter_widget_from_html/flutter_widget_from_html.dart'
+    hide ImageSource;
+export 'package:open_filex/open_filex.dart';
+export 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
 //Common//
 export 'package:padmavatiupdated/core/constants/app_constants.dart';
@@ -85,6 +89,9 @@ export 'package:padmavatiupdated/features/admin/dashboard/view/admin_dashboard.d
 export 'package:padmavatiupdated/features/admin/admin_request/view/admin_request_screen.dart';
 export 'package:padmavatiupdated/features/admin/people/view/people_list.dart';
 export 'package:padmavatiupdated/features/admin/admin_profile/view/admin_profile.dart';
+export 'package:padmavatiupdated/features/admin/dashboard/widget/qr_scanner_page.dart';
+export 'package:padmavatiupdated/features/student/profile/widget/policy_data.dart';
+export '../../../features/student/profile/widget/help_support.dart';
 
 //Controller//
 export 'package:padmavatiupdated/features/splash/controller/splash_controller.dart';
@@ -114,21 +121,27 @@ export 'package:padmavatiupdated/core/component/check_internet.dart';
 export 'package:padmavatiupdated/core/component/app_multi_dropdown.dart';
 export 'package:padmavatiupdated/core/component/gradient_appbar.dart';
 export 'package:padmavatiupdated/features/student/request/widget/add_leave.dart';
+export 'package:padmavatiupdated/features/student/request/widget/popup_menu.dart';
+export 'package:padmavatiupdated/core/component/date_extensions.dart';
 
 //Repository//
 export 'package:padmavatiupdated/domain/repository/auth_repository.dart';
 export 'package:padmavatiupdated/domain/repository/home_repository.dart';
 export 'package:padmavatiupdated/domain/repository/payment_history_repository.dart';
 export 'package:padmavatiupdated/domain/repository/coupon_repository.dart';
-
+export 'package:padmavatiupdated/domain/repository/request_repository.dart';
+export 'package:padmavatiupdated/domain/repository/profile_repository.dart';
+export 'package:padmavatiupdated/domain/repository/admin_auth_repository.dart';
 
 //Entity//
 export 'package:padmavatiupdated/domain/entity/login_request.dart';
 export 'package:padmavatiupdated/domain/entity/register_request.dart';
 export 'package:padmavatiupdated/domain/entity/user_request.dart';
 export 'package:padmavatiupdated/domain/entity/start_mess_request.dart';
-
-//Repository Implementation//
+export 'package:padmavatiupdated/domain/entity/add_leave_entity.dart';
+export 'package:padmavatiupdated/domain/entity/mess_req_entity.dart';
+export 'package:padmavatiupdated/domain/entity/update_profile_entity.dart';
+export 'package:padmavatiupdated/domain/entity/admin_entity.dart';
 
 //Use case//
 export 'package:padmavatiupdated/domain/usecase/send_otp_usecase.dart';
@@ -141,6 +154,14 @@ export 'package:padmavatiupdated/domain/usecase/get_packages_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/start_mess_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/pay_history_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/get_coupon_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/get_leave_requests.dart';
+export 'package:padmavatiupdated/domain/usecase/food_items_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/food_req_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/get_profile_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/update_profile_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/get_facility_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/get_legal_page_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/admin_login.dart';
 
 //Bindings//
 export 'package:padmavatiupdated/features/student/auth/bindings/login_bindings.dart';
@@ -178,3 +199,9 @@ export 'package:padmavatiupdated/data/models/payment/payment_response_model.dart
 export 'package:padmavatiupdated/data/models/coupon/coupon_summary_model.dart';
 export 'package:padmavatiupdated/data/models/coupon/qr_model.dart';
 export 'package:padmavatiupdated/data/models/coupon/coupon_response_model.dart';
+export 'package:padmavatiupdated/data/models/requests/leave_request_model.dart';
+export 'package:padmavatiupdated/data/models/requests/leave_response_model.dart';
+export 'package:padmavatiupdated/data/models/requests/food_req_model.dart';
+export 'package:padmavatiupdated/data/models/requests/food_response_model.dart';
+export 'package:padmavatiupdated/data/models/profile/profile_response_model.dart';
+export 'package:padmavatiupdated/data/models/profile/facility_model.dart';

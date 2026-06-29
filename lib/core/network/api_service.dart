@@ -40,8 +40,7 @@ abstract class ApiService {
     @Part(name: "per_address") String perAddress,
     @Part(name: "degree_id") String degreeId,
     @Part(name: "branch_id") String branchId,
-    @Part(name: "mess_type") String messType,
-    @Part(name: "mess_time") String messTime, {
+    @Part(name: "mess_type") String messType, {
     @Part(name: 'profile_image') File? profilePicture,
   });
 
@@ -71,5 +70,58 @@ abstract class ApiService {
   @POST(ApiConstants.getCoupon)
   Future<BaseResponseModel<CouponResponseModel>> getCoupon(
     @Part(name: "user_id") String userId,
+  );
+
+  @POST(ApiConstants.leaveRequests)
+  Future<BaseResponseModel<LeaveResponseModel>> leaveRequests(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.specialFoodItems)
+  Future<BaseResponseModel<List<MasterDataModel>>> specialFoodItems();
+
+  @POST(ApiConstants.specialFoodRequests)
+  Future<BaseResponseModel<FoodResponseModel>> specialFoodRequests(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.addSpecialFoodReq)
+  Future<BaseResponseModel> addSpecialFoodReq(
+    @Part(name: "user_id") String userId,
+    @Part(name: "specialfood_id") String foodId,
+    @Part(name: "date") String date,
+  );
+
+  @POST(ApiConstants.addLeaveReq)
+  Future<BaseResponseModel> addLeaveReq(
+    @Part(name: "user_id") String userId,
+    @Part(name: "from_date") String fromDate,
+    @Part(name: "to_date") String toDate,
+  );
+
+  @POST(ApiConstants.getProfile)
+  Future<BaseResponseModel<ProfileResponseModel>> getProfile(
+    @Part(name: "user_id") String userId,
+  );
+
+  @POST(ApiConstants.updateProfile)
+  Future<BaseResponseModel> updateProfile(
+    @Part(name: "user_id") String userId,
+    @Part(name: "degree_id") String degreeId,
+    @Part(name: "curr_address") String address,
+  );
+
+  @POST(ApiConstants.getFacility)
+  Future<BaseResponseModel<List<FacilityModel>>> getFacility();
+
+  @POST(ApiConstants.getLegalPage)
+  Future<BaseResponseModel<List<FacilityModel>>> getLegalPage();
+
+  @POST(ApiConstants.adminLogin)
+  Future<BaseResponseModel<UserModel>> adminLogin(
+    @Part(name: "username") String username,
+    @Part(name: "password") String password,
   );
 }

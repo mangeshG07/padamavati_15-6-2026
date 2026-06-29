@@ -11,66 +11,99 @@ class _EditProfileState extends State<EditProfile> {
   final controller = Get.find<ProfileController>();
 
   @override
+  void initState() {
+    super.initState();
+    controller.currentAddressController.text =
+        controller.profileData.value.curAddress ?? '';
+    controller.permAddressController.text =
+        controller.profileData.value.perAddress ?? '';
+    controller.selectedDegree.value =
+        controller.profileData.value.degreeId?.toString() ?? '';
+
+    controller.fetchDegree();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 8.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GradientAppbar(title: 'Edit Profile', showBack: true),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                spacing: 16.h,
-                children: [
-                  _buildProfileHeader(theme),
-                  _buildField(
-                    theme,
-                    'Current Address',
-                    'Address',
-                    controller.currentAddressController,
-                  ),
-                  _buildField(
-                    theme,
-                    'Permanent Address',
-                    'Address',
-                    isReadOnly: true,
-                    isEnabled: false,
-                    controller.permAddressController,
-                  ),
-                  Obx(
-                    () => AppDropdownField(
-                      isRequired: true,
-                      title: "Select Your Degree",
-                      value: controller.selectedDegree.value,
-                      items: controller.degreeList,
-                      hintText: 'Degree',
-                      validator: AppValidators.required,
-                      onChanged: (val) => controller.selectedDegree.value = val,
-                    ),
-                  ),
+      body: Obx(
+        () => controller.isDegreeLoading.isTrue
+            ? AppLoader(strokeWidth: 2.5)
+            : SingleChildScrollView(
+                child: Column(
+                  spacing: 8.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GradientAppbar(title: 'Edit Profile', showBack: true),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Form(
+                        key: controller.updateForm,
+                        child: Column(
+                          spacing: 16.h,
+                          children: [
+                            _buildProfileHeader(
+                              theme,
+                              controller.profileData.value,
+                            ),
+                            _buildField(
+                              theme,
+                              'Current Address',
+                              'Address',
+                              controller.currentAddressController,
+                            ),
+                            _buildField(
+                              theme,
+                              'Permanent Address',
+                              'Address',
+                              isReadOnly: true,
+                              isEnabled: false,
+                              controller.permAddressController,
+                            ),
+                            Obx(
+                              () => AppDropdownField(
+                                isRequired: true,
+                                isDynamic: true,
+                                title: "Select Your Degree",
+                                value: controller.selectedDegree.value,
+                                items: controller.degreeList,
+                                hintText: 'Degree',
+                                validator: AppValidators.required,
+                                onChanged: (val) =>
+                                    controller.selectedDegree.value = val,
+                              ),
+                            ),
 
-                  AppButton(
-                    text: 'Update Profile',
-                    onTap: () {},
-                    backgroundColor: AppColors.lightSecondary,
-                  ),
-                ],
+                            Obx(
+                              () => AppButton(
+                                text: 'Update Profile',
+                                loading: controller.isUpdating.value,
+                                onTap: () async {
+                                  if (controller.updateForm.currentState!
+                                      .validate()) {
+                                    await controller.updateProfile();
+                                  }
+                                },
+                                backgroundColor: AppColors.lightSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 0.02.h),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 0.02.h),
-          ],
-        ),
       ),
     );
   }
 
-  Widget _buildProfileHeader(ThemeData theme) {
-    final imageUrl =
-        'https://s3.ap-south-1.amazonaws.com/awsimages.imagesbazaar.com/1200x1800-old/17339/SM765734.jpg?date=Thu%20May%2028%202026%2010:47:56%20GMT+0530%20(India%20Standard%20Time)';
+  Widget _buildProfileHeader(ThemeData theme, ProfileResponseModel user) {
+    final imageUrl = user.profileImage ?? '';
+    // 'https://s3.ap-south-1.amazonaws.com/awsimages.imagesbazaar.com/1200x1800-old/17339/SM765734.jpg?date=Thu%20May%2028%202026%2010:47:56%20GMT+0530%20(India%20Standard%20Time)';
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
@@ -139,14 +172,14 @@ class _EditProfileState extends State<EditProfile> {
           ),
           SizedBox(height: 10.h),
           AppText(
-            text: capitalizeFirst('Rahul Khomane'),
+            text: capitalizeFirst(user.name ?? ''),
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             style: theme.textTheme.titleLarge?.copyWith(letterSpacing: 0.3),
           ),
           SizedBox(height: 4.h),
           AppText(
-            text: '7210053005',
+            text: user.mobileNo ?? '',
             fontSize: 12.sp,
             color: AppColors.lightTextLowColor,
           ),

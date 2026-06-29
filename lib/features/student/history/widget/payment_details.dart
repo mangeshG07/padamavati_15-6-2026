@@ -80,9 +80,15 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
                           const Divider(),
 
-                          _detailRow("Start Date", payment.startDate ?? ''),
+                          _detailRow(
+                            "Start Date",
+                            payment.startDate.toFormattedDate(),
+                          ),
 
-                          _detailRow("End Date", payment.endDate ?? ''),
+                          _detailRow(
+                            "End Date",
+                            payment.endDate.toFormattedDate(),
+                          ),
 
                           _detailRow(
                             "Paid Amount",

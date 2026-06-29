@@ -37,9 +37,9 @@ class QRScreen extends StatelessWidget {
                       children: [
                         /// Coupon Header
                         _buildHeader(
-                          qrData.messTime,
-                          theme,
                           qrData.messType,
+                          theme,
+                          qrData.expiresAt,
                           qrData.status!,
                         ),
                         Divider(),
@@ -121,7 +121,6 @@ class QRScreen extends StatelessWidget {
             ),
           ),
           badge(status, isActive ? Colors.green : Colors.red),
-          // badge(status, status == "Used" ? Colors.red : Colors.green),
         ],
       ),
     );
@@ -144,7 +143,32 @@ class QRScreen extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16.r),
-        child: QrImageView(data: qrData, size: 250),
+        child: Stack(
+          children: [
+            QrImageView(data: qrData, size: 250),
+
+            /// OVERLAY (only if used/expired)
+            if (coupon.status != 'Active')
+              Container(
+                width: 250,
+                height: 250,
+                color: Colors.red.withValues(alpha: 0.6),
+                alignment: Alignment.center,
+                child: Transform.rotate(
+                  angle: -0.4,
+                  child: Text(
+                    coupon.status ?? 'Used',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28.sp,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

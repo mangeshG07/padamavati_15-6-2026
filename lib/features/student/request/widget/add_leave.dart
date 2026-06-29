@@ -36,12 +36,27 @@ class AddLeave extends GetView<RequestController> {
             ),
           ),
           SizedBox(height: 20.h),
-          AppButton(
-            text: 'Submit Request',
-            onTap: () {
-              if (controller.leaveKey.currentState!.validate()) {}
-            },
-            backgroundColor: AppColors.lightSecondary,
+          Obx(
+            () => AppButton(
+              text: 'Submit Request',
+              loading: controller.isAddLeaveLoading.value,
+              onTap: () async {
+                if (controller.leaveKey.currentState!.validate()) {
+                  if (controller.calculatedDays.value < 5 ||
+                      controller.calculatedDays.value > 8) {
+                    Get.snackbar(
+                      'Alert',
+                      'You can apply for a minimum of 5 days and a maximum of 8 days leave.',
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: Colors.white,
+                    );
+                    return;
+                  }
+                  await controller.addLeaveRequest();
+                }
+              },
+              backgroundColor: AppColors.lightSecondary,
+            ),
           ),
         ],
       ),

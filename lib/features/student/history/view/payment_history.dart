@@ -8,8 +8,8 @@ class PaymentHistory extends StatefulWidget {
 }
 
 class _PaymentHistoryState extends State<PaymentHistory> {
-  final controller = Get.find<HistoryController>();
-
+  // final controller = Get.put<HistoryController>();
+  final controller = Get.put(HistoryController(getIt(), getIt()));
   @override
   void initState() {
     controller.fetchPaymentHistory();

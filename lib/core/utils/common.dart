@@ -1,5 +1,3 @@
-import 'package:open_filex/open_filex.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import '../exporters/app_export.dart' hide DateFormat;
 import 'package:intl/intl.dart';
 
@@ -447,8 +445,6 @@ Future<void> downloadFile(String url) async {
       await OpenFilex.open(file.path);
     },
     onDownloadError: (String errorMessage) {
-      print('errorMessage');
-      print(errorMessage);
       // Notify user about download failure
       Get.snackbar(
         'Download Failed',

@@ -18,7 +18,7 @@ class PaymentHistoryRepoImpl implements PaymentHistoryRepository {
         return Failure(res.common.message);
       }
     } catch (e) {
-      return Failure(e.toString());
+      return Failure('Something went wrong.');
     }
   }
 
@@ -38,7 +38,7 @@ class PaymentHistoryRepoImpl implements PaymentHistoryRepository {
         return Failure(res.common.message);
       }
     } catch (e) {
-      return Failure(e.toString());
+      return Failure('Something went wrong.');
     }
   }
 }

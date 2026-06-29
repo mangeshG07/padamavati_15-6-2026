@@ -1,5 +1,3 @@
-import 'package:padmavatiupdated/features/admin/dashboard/widget/qr_scanner_page.dart';
-
 import '../../exporters/app_export.dart';
 
 class AppPages {
@@ -57,5 +55,7 @@ class AppPages {
       ],
     ),
     GetPage(name: Routes.qrScannerScreen, page: () => QRScannerPage()),
+    GetPage(name: Routes.policyData, page: () => PolicyInfo()),
+    GetPage(name: Routes.helpAndSupport, page: () => HelpAndSupport()),
   ];
 }
