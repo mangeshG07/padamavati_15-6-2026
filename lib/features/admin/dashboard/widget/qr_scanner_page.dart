@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
+import 'package:padmavatiupdated/core/exporters/app_export.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScannerPage extends StatefulWidget {
@@ -11,9 +9,64 @@ class QRScannerPage extends StatefulWidget {
 }
 
 class _QRScannerPageState extends State<QRScannerPage> {
-  final MobileScannerController controller = MobileScannerController();
+  final controller = Get.find<DashboardController>();
+  final MobileScannerController scannerController = MobileScannerController();
 
-  bool isScanned = false;
+  bool isProcessing = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// 🎧 LISTENER (Replacement of ref.listen)
+    ever(controller.userData, (user) {
+      if (user.name != null) {
+        scannerController.stop();
+
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Student Details"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomImage(image: user.profileImage ?? ''),
+                Text("Name : ${user.name}"),
+                Text("Gender : ${user.gender}"),
+                Text("Type : ${user.messTime}"),
+                Text("Remaining Coupon : ${user.remainingCoupons}"),
+                Text("Last Mess Day : ${user.lastMessDay}"),
+                Text("Meal : ${controller.scanData.value.scanMessType}"),
+                Text(
+                  "Remaining payment : ${controller.paymentData.value.remainingAmount}",
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+
+                  controller.resetScanning();
+                  isProcessing = false;
+
+                  scannerController.start();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+
+    /// ❌ Error listener
+    ever(controller.isScanning, (loading) {
+      if (!loading && isProcessing) {
+        isProcessing = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,147 +77,52 @@ class _QRScannerPageState extends State<QRScannerPage> {
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 0,
       ),
       body: Stack(
         alignment: Alignment.center,
         children: [
-          /// Camera Scanner
+          /// 📷 Scanner
           MobileScanner(
-            controller: controller,
-            onDetect: (capture) {
-              if (isScanned) return;
+            controller: scannerController,
+            onDetect: (capture) async {
+              if (isProcessing) return;
+              if (controller.isScanning.value) return;
 
               final barcode = capture.barcodes.first;
-
-              final String rawData = barcode.rawValue ?? "";
+              final rawData = barcode.rawValue ?? "";
 
               try {
-                /// Convert String to Object
                 final data = jsonDecode(rawData);
+                final userId = data['userId']?.toString() ?? '';
+                final qr = data['qr_code'];
 
-                String name = data['name'];
-                String meal = data['meal'];
-                String type = data['type'];
+                isProcessing = true;
 
-                setState(() {
-                  isScanned = true;
-                });
-
-                showDialog(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      title: const Text("Student Details"),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Name : $name"),
-                          Text("Meal : $meal"),
-                          Text("Type : $type"),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-
-                            setState(() {
-                              isScanned = false;
-                            });
-                          },
-                          child: const Text("OK"),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                /// 🔥 API CALL
+                await controller.scanQr(qr, userId);
               } catch (e) {
-                /// Invalid QR
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Invalid QR Code")),
-                );
+                Get.snackbar("Error", "Invalid QR Code");
+                isProcessing = false;
               }
             },
           ),
 
-          /// Dark Overlay
-          Container(color: Colors.black.withValues(alpha: 0.5)),
+          /// Loader
+          Obx(() {
+            return controller.isScanning.value
+                ? const CircularProgressIndicator(color: Colors.white)
+                : const SizedBox();
+          }),
 
-          /// Scanner Box Cut Area
-          Center(
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.transparent,
-              ),
-              child: Stack(
-                children: [
-                  /// Transparent Center
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                  ),
-
-                  /// Top Left
-                  Positioned(top: 0, left: 0, child: buildCorner()),
-
-                  /// Top Right
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: RotatedBox(quarterTurns: 1, child: buildCorner()),
-                  ),
-
-                  /// Bottom Left
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: RotatedBox(quarterTurns: 3, child: buildCorner()),
-                  ),
-
-                  /// Bottom Right
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: RotatedBox(quarterTurns: 2, child: buildCorner()),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          /// Bottom Text
-          Positioned(
+          /// Bottom text
+          const Positioned(
             bottom: 100,
             child: Text(
               "Align QR code within the frame",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildCorner() {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.greenAccent, width: 4),
-          left: BorderSide(color: Colors.greenAccent, width: 4),
-        ),
       ),
     );
   }

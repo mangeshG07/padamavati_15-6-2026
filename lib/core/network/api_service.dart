@@ -124,4 +124,27 @@ abstract class ApiService {
     @Part(name: "username") String username,
     @Part(name: "password") String password,
   );
+
+  @POST(ApiConstants.dashboard)
+  Future<BaseResponseModel<DashboardModel>> getDashboard(
+    @Part(name: "user_id") String userId,
+  );
+
+  @POST(ApiConstants.adminFoodRequest)
+  Future<BaseResponseModel<FoodResponseModel>> adminFoodRequest(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.branchUserList)
+  Future<BaseResponseModel<PeopleResponseModel>> branchUserList(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.scanQr)
+  Future<BaseResponseModel<QRResponseModel>> scanQr(
+    @Part(name: "user_id") String userId,
+    @Part(name: "qr_code") String qrCode,
+  );
 }

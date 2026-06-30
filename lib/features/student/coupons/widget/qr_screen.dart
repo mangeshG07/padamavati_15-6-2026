@@ -127,7 +127,10 @@ class QRScreen extends StatelessWidget {
   }
 
   Widget _buildQRCode(QRModel coupon) {
-    final qrData = jsonEncode({"qr_code": coupon.uuid});
+    final qrData = jsonEncode({
+      "qr_code": coupon.uuid,
+      "userId": coupon.appId.toString(),
+    });
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

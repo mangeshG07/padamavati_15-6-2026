@@ -63,6 +63,7 @@ export 'package:padmavatiupdated/core/constants/init_service.dart';
 export 'package:padmavatiupdated/core/network/initial_bindings.dart';
 export 'package:padmavatiupdated/features/student/history/widget/payment_tile.dart';
 export 'package:padmavatiupdated/features/student/home/widget/start_mess_dialog.dart';
+export 'package:padmavatiupdated/features/admin/admin_request/widget/admin_food_requests.dart';
 
 //Pages//
 export 'package:padmavatiupdated/main.dart';
@@ -92,6 +93,8 @@ export 'package:padmavatiupdated/features/admin/admin_profile/view/admin_profile
 export 'package:padmavatiupdated/features/admin/dashboard/widget/qr_scanner_page.dart';
 export 'package:padmavatiupdated/features/student/profile/widget/policy_data.dart';
 export '../../../features/student/profile/widget/help_support.dart';
+export 'package:padmavatiupdated/features/student/request/widget/food_requests.dart';
+export 'package:padmavatiupdated/features/student/request/widget/leave_requests.dart';
 
 //Controller//
 export 'package:padmavatiupdated/features/splash/controller/splash_controller.dart';
@@ -132,6 +135,9 @@ export 'package:padmavatiupdated/domain/repository/coupon_repository.dart';
 export 'package:padmavatiupdated/domain/repository/request_repository.dart';
 export 'package:padmavatiupdated/domain/repository/profile_repository.dart';
 export 'package:padmavatiupdated/domain/repository/admin_auth_repository.dart';
+export 'package:padmavatiupdated/domain/repository/dashboard_repository.dart';
+export 'package:padmavatiupdated/domain/repository/admin_request_repository.dart';
+export 'package:padmavatiupdated/domain/repository/people_repository.dart';
 
 //Entity//
 export 'package:padmavatiupdated/domain/entity/login_request.dart';
@@ -162,6 +168,10 @@ export 'package:padmavatiupdated/domain/usecase/update_profile_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/get_facility_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/get_legal_page_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/admin_login.dart';
+export 'package:padmavatiupdated/domain/usecase/get_dashboard_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/admin_food_requests.dart';
+export 'package:padmavatiupdated/domain/usecase/get_branch_users_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/scan_qr_usecase.dart';
 
 //Bindings//
 export 'package:padmavatiupdated/features/student/auth/bindings/login_bindings.dart';
@@ -182,7 +192,6 @@ export 'package:padmavatiupdated/features/admin/people/bindings/people_bindings.
 export 'package:padmavatiupdated/features/admin/admin_profile/bindings/admin_profile_bindings.dart';
 
 //Model//
-
 export 'package:padmavatiupdated/data/models/base/app_config_model.dart';
 export 'package:padmavatiupdated/data/models/base/common_model.dart';
 export 'package:padmavatiupdated/data/models/auth/user_model.dart';
@@ -205,3 +214,11 @@ export 'package:padmavatiupdated/data/models/requests/food_req_model.dart';
 export 'package:padmavatiupdated/data/models/requests/food_response_model.dart';
 export 'package:padmavatiupdated/data/models/profile/profile_response_model.dart';
 export 'package:padmavatiupdated/data/models/profile/facility_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/overview_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/dashboard_model.dart';
+export 'package:padmavatiupdated/data/models/people/people_model.dart';
+export 'package:padmavatiupdated/data/models/people/people_response_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/qr_response_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/payment_data_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/qr_user_data.dart';
+export 'package:padmavatiupdated/data/models/dashboard/scan_data_model.dart';

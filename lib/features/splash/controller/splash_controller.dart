@@ -10,6 +10,8 @@ class SplashController extends GetxController {
 
     final token =
         await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
+    final role =
+        await SecureStorageService.read(AppConstants.userRollIdKey) ?? '';
 
     /// ✅ 1. First check onboarding
     // if (isOnboarded != true) {
@@ -22,7 +24,12 @@ class SplashController extends GetxController {
       if (token.isEmpty) {
         Get.offAllNamed(Routes.login);
       } else {
-        Get.offAllNamed(Routes.mainScreen);
+        if(role == '5'){
+          Get.offAllNamed(Routes.adminMainScreen);
+        }else{
+          Get.offAllNamed(Routes.mainScreen);
+        }
+
       }
     });
     // _loadRemoteConfig();

@@ -1,6 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:padmavatiupdated/features/student/request/widget/food_requests.dart';
-import 'package:padmavatiupdated/features/student/request/widget/leave_requests.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});

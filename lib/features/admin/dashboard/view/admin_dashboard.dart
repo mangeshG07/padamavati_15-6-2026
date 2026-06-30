@@ -1,101 +1,126 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class AdminDashboard extends GetView<DashboardController> {
+class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
+
+  @override
+  State<AdminDashboard> createState() => _AdminDashboardState();
+}
+
+class _AdminDashboardState extends State<AdminDashboard> {
+  final controller = Get.find<DashboardController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getDashboard();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 8.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GradientAppbar(title: 'Dashboard', showBack: false),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 16.h,
-                children: [
-                  _buildBranchData(theme),
-                  AppText(
-                    text: "Today's Overview",
-                    fontSize: 22.sp,
-                    maxLines: 2,
-                    style: theme.textTheme.titleLarge,
-                  ),
-                  Row(
-                    spacing: 16.w,
-                    children: [
-                      Expanded(
-                        child: _buildOverviewCard(
-                          'People\nCount',
-                          '125',
-                          HugeIcons.strokeRoundedCall02,
-                          () async {},
-                          Colors.blue,
-                          theme,
-                          isLoading: false,
-                        ),
-                      ),
-                      Expanded(
-                        child: _buildOverviewCard(
-                          'Lunch\nScans',
-                          '115',
-                          HugeIcons.strokeRoundedCall02,
-                          () async {},
-                          Colors.green,
-                          theme,
-                          isLoading: false,
-                        ),
-                      ),
-                      Expanded(
-                        child: _buildOverviewCard(
-                          'Dinner\nScans',
-                          '88',
-                          HugeIcons.strokeRoundedCall02,
-                          () async {},
-                          Colors.red,
-                          theme,
-                          isLoading: false,
-                        ),
-                      ),
-                    ],
-                  ),
+      body: Obx(
+        () => controller.isLoading.isTrue
+            ? AppLoader(strokeWidth: 2.5.w, color: AppColors.lightPrimary)
+            : SingleChildScrollView(
+                child: Column(
+                  spacing: 8.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GradientAppbar(title: 'Dashboard', showBack: false),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 16.h,
+                        children: [
+                          _buildBranchData(
+                            theme,
+                            controller.dashboardData.value,
+                          ),
+                          AppText(
+                            text: "Today's Overview",
+                            fontSize: 22.sp,
+                            maxLines: 2,
+                            style: theme.textTheme.titleLarge,
+                          ),
+                          Row(
+                            spacing: 16.w,
+                            children: [
+                              Expanded(
+                                child: _buildOverviewCard(
+                                  'People\nCount',
+                                  controller.overview.value.peopleCount
+                                          ?.toString() ??
+                                      '0',
+                                  HugeIcons.strokeRoundedCall02,
+                                  () async {},
+                                  Colors.blue,
+                                  theme,
+                                  isLoading: false,
+                                ),
+                              ),
+                              Expanded(
+                                child: _buildOverviewCard(
+                                  'Lunch\nScans',
+                                  '115',
+                                  HugeIcons.strokeRoundedCall02,
+                                  () async {},
+                                  Colors.green,
+                                  theme,
+                                  isLoading: false,
+                                ),
+                              ),
+                              Expanded(
+                                child: _buildOverviewCard(
+                                  'Dinner\nScans',
+                                  '88',
+                                  HugeIcons.strokeRoundedCall02,
+                                  () async {},
+                                  Colors.red,
+                                  theme,
+                                  isLoading: false,
+                                ),
+                              ),
+                            ],
+                          ),
 
-                  _buildSectionCard(controller.menuList, theme),
-                  SizedBox(height: 0.02.h),
-                  AppButton(
-                    icon: HugeIcon(icon: HugeIcons.strokeRoundedQrCode01),
-                    text: "Scan QR",
-                    onTap: () => Get.toNamed(Routes.qrScannerScreen),
-                    backgroundColor: AppColors.lightSecondary,
-                  ),
-                ],
+                          _buildSectionCard(controller.menuList, theme),
+                          SizedBox(height: 0.02.h),
+                          AppButton(
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedQrCode01,
+                            ),
+                            text: "Scan QR",
+                            onTap: () => Get.toNamed(Routes.qrScannerScreen),
+                            backgroundColor: AppColors.lightSecondary,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 0.02.h),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 0.02.h),
-          ],
-        ),
       ),
     );
   }
 
-  Widget _buildBranchData(ThemeData theme) {
+  Widget _buildBranchData(ThemeData theme, DashboardModel data) {
     return Card(
       child: ListTile(
         leading: CustomImage(image: AppAssets.splashLogo, width: 50.h),
         title: AppText(
-          text: 'Padmavati Mess - Main Branch',
+          text: data.name ?? '',
           fontSize: 16.sp,
           maxLines: 2,
           style: theme.textTheme.titleMedium,
         ),
         subtitle: AppText(
-          text: 'Malegaon',
+          text: data.branchName ?? '',
           fontSize: 14.sp,
           style: theme.textTheme.bodyMedium,
         ),
@@ -183,12 +208,12 @@ class AdminDashboard extends GetView<DashboardController> {
     );
   }
 
-  Widget _menuItem(dynamic menu, ThemeData theme) {
+  Widget _menuItem(DashboardMenuItem menu, ThemeData theme) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
-        onTap: menu['onTap'],
+        onTap: menu.onTap,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
           child: Row(
@@ -205,7 +230,7 @@ class AdminDashboard extends GetView<DashboardController> {
                   ),
                 ),
                 child: HugeIcon(
-                  icon: menu['icon'],
+                  icon: menu.icon,
                   color: theme.brightness == Brightness.light
                       ? AppColors.lightPrimary
                       : Colors.white,
@@ -218,13 +243,13 @@ class AdminDashboard extends GetView<DashboardController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      text: menu['title'] ?? '',
+                      text: menu.title,
                       fontSize: 14.sp,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    if (menu['isToday'] == true)
+                    if (menu.isToday == true)
                       AppText(
                         text: 'Today',
                         fontSize: 14.sp,
@@ -236,7 +261,7 @@ class AdminDashboard extends GetView<DashboardController> {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 padding: EdgeInsets.all(6.w),
-                child: AppText(text: menu['count'].toString(), fontSize: 14.sp),
+                child: AppText(text: menu.count.toString(), fontSize: 14.sp),
               ),
             ],
           ),
@@ -245,3 +270,10 @@ class AdminDashboard extends GetView<DashboardController> {
     );
   }
 }
+
+//
+// class AdminDashboard extends GetView<DashboardController> {
+//   const AdminDashboard({super.key});
+//
+//
+// }

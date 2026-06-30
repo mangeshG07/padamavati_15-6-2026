@@ -33,9 +33,7 @@ class ApiConstants {
 
   /// API endpoints
   static const String sendOTP = '/send_otp';
-  // static const String sendOTP = '/send-otp';
   static const String verifyOTP = '/otp_verify';
-  // static const String verifyOTP = '/verify-otp';
   static const String getBranchList = '/get_branch_list';
   static const String getDegreeList = '/get_degree_list';
   static const String register = '/user_register';
@@ -54,10 +52,11 @@ class ApiConstants {
   static const String updateProfile = '/update_user_profile';
   static const String getFacility = '/get_facility_list';
   static const String getLegalPage = '/get_legalpages_list';
-
-  ///////////////Pending//////////////////////
   static const String adminLogin = '/admin_login';
   static const String dashboard = '/admin_dashboard';
-  static const String adminRequest = '/todays_specialfood_request';
+  static const String adminFoodRequest = '/todays_specialfood_request';
   static const String branchUserList = '/branch_user_list';
+
+  ///////////////Pending//////////////////////
+  static const String scanQr = '/scan_qr';
 }

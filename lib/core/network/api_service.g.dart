@@ -784,6 +784,142 @@ class _ApiService implements ApiService {
     return _value;
   }
 
+  @override
+  Future<BaseResponseModel<DashboardModel>> getDashboard(String userId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    final _options = _setStreamType<BaseResponseModel<DashboardModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/admin_dashboard',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<DashboardModel> _value;
+    try {
+      _value = BaseResponseModel<DashboardModel>.fromJson(
+        _result.data!,
+        (json) => DashboardModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponseModel<FoodResponseModel>> adminFoodRequest(
+    String userId,
+    String pageNo,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('page_number', pageNo));
+    final _options = _setStreamType<BaseResponseModel<FoodResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/todays_specialfood_request',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<FoodResponseModel> _value;
+    try {
+      _value = BaseResponseModel<FoodResponseModel>.fromJson(
+        _result.data!,
+        (json) => FoodResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponseModel<PeopleResponseModel>> branchUserList(
+    String userId,
+    String pageNo,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('page_number', pageNo));
+    final _options = _setStreamType<BaseResponseModel<PeopleResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/branch_user_list',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<PeopleResponseModel> _value;
+    try {
+      _value = BaseResponseModel<PeopleResponseModel>.fromJson(
+        _result.data!,
+        (json) => PeopleResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponseModel<QRResponseModel>> scanQr(
+    String userId,
+    String qrCode,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('qr_code', qrCode));
+    final _options = _setStreamType<BaseResponseModel<QRResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/scan_qr',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<QRResponseModel> _value;
+    try {
+      _value = BaseResponseModel<QRResponseModel>.fromJson(
+        _result.data!,
+        (json) => QRResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

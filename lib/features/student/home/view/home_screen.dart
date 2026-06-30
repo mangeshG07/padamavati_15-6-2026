@@ -1,3 +1,4 @@
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildMainData(theme),
                     SizedBox(height: 0.02.h),
                   ],
-                ),
+                ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
               ),
       ),
     );
@@ -139,7 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: controller.payDetailsList.length,
           itemBuilder: (BuildContext context, int index) {
             final payment = controller.payDetailsList[index];
-            return PaymentTile(payment: payment);
+            return PaymentTile(
+              payment: payment,
+            ).animate().fade(duration: 100.ms);
           },
         ),
       ],
@@ -188,6 +191,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
+    ).animate().fade(duration: 500.ms).slideY(begin: 0.3);
   }
 }
