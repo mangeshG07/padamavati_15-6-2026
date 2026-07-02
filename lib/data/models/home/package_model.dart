@@ -12,6 +12,7 @@ abstract class PackageModel with _$PackageModel {
     int? days,
     String? gender,
     @JsonKey(name: 'mess_time') String? messTime,
+    @JsonKey(name: 'total_coupons') int? totalCoupons,
   }) = _PackageModel;
 
   factory PackageModel.fromJson(Map<String, dynamic> json) =>

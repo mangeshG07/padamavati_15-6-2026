@@ -58,9 +58,9 @@ class MyApp extends StatelessWidget {
         initialRoute: Routes.splash,
 
         /// Theme configuration
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
+        // theme: AppTheme.lightTheme,
+        // darkTheme: AppTheme.darkTheme,
+        // themeMode: ThemeMode.system,
 
         /// Transitions
         defaultTransition: Transition.fadeIn,

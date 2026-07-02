@@ -10,7 +10,7 @@ class AdminLogin extends GetView<AdminLoginController> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppbar(),
+        appBar: CustomAppbar(backgroundColor: Colors.white),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -39,6 +39,7 @@ class AdminLogin extends GetView<AdminLoginController> {
                           fontSize: 24.sp,
                           style: theme.textTheme.headlineSmall!.copyWith(
                             fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                         AppText(

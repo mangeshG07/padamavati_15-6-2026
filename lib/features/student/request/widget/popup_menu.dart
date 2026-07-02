@@ -8,13 +8,19 @@ class PopupMenuRequest extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
-      title: Text("Choose an Option"),
+      title: Text("Choose an Option", style: TextStyle(color: Colors.black)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: HugeIcon(icon: HugeIcons.strokeRoundedHamburger01),
-            title: Text("Add Special Food Request"),
+            leading: HugeIcon(
+              icon: HugeIcons.strokeRoundedHamburger01,
+              color: Colors.black,
+            ),
+            title: Text(
+              "Add Special Food Request",
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
               Get.back();
               AppBottomSheet.show(
@@ -27,8 +33,14 @@ class PopupMenuRequest extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: HugeIcon(icon: HugeIcons.strokeRoundedLogout01),
-            title: Text("Add Leave Request"),
+            leading: HugeIcon(
+              icon: HugeIcons.strokeRoundedLogout01,
+              color: Colors.black,
+            ),
+            title: Text(
+              "Add Leave Request",
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
               Get.back();
               AppBottomSheet.show(

@@ -103,19 +103,13 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _buildProfileHeader(ThemeData theme, ProfileResponseModel user) {
     final imageUrl = user.profileImage ?? '';
-    // 'https://s3.ap-south-1.amazonaws.com/awsimages.imagesbazaar.com/1200x1800-old/17339/SM765734.jpg?date=Thu%20May%2028%202026%2010:47:56%20GMT+0530%20(India%20Standard%20Time)';
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         gradient: LinearGradient(
-          colors: [
-            theme.scaffoldBackgroundColor,
-            theme.brightness == Brightness.light
-                ? Colors.grey.shade50
-                : AppColors.grey800,
-          ],
+          colors: [Colors.white, Colors.grey.shade50],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -175,7 +169,10 @@ class _EditProfileState extends State<EditProfile> {
             text: capitalizeFirst(user.name ?? ''),
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
-            style: theme.textTheme.titleLarge?.copyWith(letterSpacing: 0.3),
+            style: theme.textTheme.titleLarge?.copyWith(
+              letterSpacing: 0.3,
+              color: Colors.black,
+            ),
           ),
           SizedBox(height: 4.h),
           AppText(
@@ -198,16 +195,17 @@ class _EditProfileState extends State<EditProfile> {
   }) {
     return AppTextField(
       label: label,
+
       hint: hint,
       enabled: isEnabled,
       readOnly: isReadOnly,
       isRequired: true,
-      labelStyle: AppTextStyles.labelMedium,
+      labelStyle: AppTextStyles.labelMedium.copyWith(color: Colors.black),
       filled: true,
-      textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
-      focusedBorder: theme.inputDecorationTheme.focusedBorder,
-      enabledBorder: theme.inputDecorationTheme.enabledBorder,
-      fillColor: theme.cardColor,
+      textStyle: TextStyle(color: Colors.black, fontSize: 14.sp),
+      focusedBorder: buildOutlineInputBorder(),
+      enabledBorder: buildOutlineInputBorder(),
+      fillColor: Colors.white,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
       controller: tController,
       validator: AppValidators.required,

@@ -14,6 +14,7 @@ abstract class ProfileResponseModel with _$ProfileResponseModel {
     @JsonKey(name: 'degree_id') int? degreeId,
     String? degree,
     String? branch,
+    String? position,
   }) = _ProfileResponseModel;
 
   factory ProfileResponseModel.fromJson(Map<String, dynamic> json) =>

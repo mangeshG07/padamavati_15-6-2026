@@ -68,8 +68,9 @@ class _SplashPageState extends State<SplashPage>
   Widget _buildLogo() {
     return Image.asset(
       // getIt<RemoteConfigService>().splashLogo,
+      // 'http://192.168.29.139:5000/uploads/splash/splash-image.jpg',
       AppAssets.splashLogo,
-      width: Get.width *0.8,
+      width: Get.width * 0.8.w,
       height: double.infinity,
       fit: BoxFit.contain,
     );

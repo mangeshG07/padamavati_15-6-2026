@@ -13,7 +13,7 @@ class QRScreen extends StatelessWidget {
       backgroundColor: const Color(0xffF8F9FD),
       body: Column(
         children: [
-          _buildAppBar(theme),
+          GradientAppbar(title: 'Coupon QR', showBack: true),
 
           Expanded(
             child: SingleChildScrollView(
@@ -39,7 +39,9 @@ class QRScreen extends StatelessWidget {
                         _buildHeader(
                           qrData.messType,
                           theme,
-                          qrData.expiresAt,
+                          qrData.scannedAt == null
+                              ? 'Valid Till : ${qrData.expiresAt}'
+                              : 'Used At : ${qrData.scannedAt}',
                           qrData.status!,
                         ),
                         Divider(),
@@ -50,7 +52,9 @@ class QRScreen extends StatelessWidget {
                               AppText(
                                 text: "Scan QR Code",
                                 fontSize: 18.sp,
-                                style: theme.textTheme.titleMedium,
+                                style: theme.textTheme.titleMedium!.copyWith(
+                                  color: Colors.black,
+                                ),
                               ),
 
                               SizedBox(height: 6.h),
@@ -59,7 +63,9 @@ class QRScreen extends StatelessWidget {
                                 text:
                                     "Present this code at the billing counter",
                                 fontSize: 13.sp,
-                                style: theme.textTheme.bodySmall,
+                                style: theme.textTheme.bodySmall!.copyWith(
+                                  color: Colors.black,
+                                ),
                               ),
 
                               SizedBox(height: 24.h),
@@ -86,10 +92,6 @@ class QRScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(ThemeData theme) {
-    return GradientAppbar(title: 'Coupon QR', showBack: true);
-  }
-
   Widget _buildHeader(title, ThemeData theme, subTitle, status) {
     final isActive = status == 'Active';
     return Container(
@@ -109,13 +111,17 @@ class QRScreen extends StatelessWidget {
                 AppText(
                   text: title,
                   fontSize: 18.sp,
-                  style: theme.textTheme.titleMedium,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: Colors.black,
+                  ),
                 ),
                 SizedBox(height: 4.h),
                 AppText(
                   text: subTitle,
                   fontSize: 13.sp,
-                  style: theme.textTheme.bodySmall,
+                  style: theme.textTheme.bodySmall!.copyWith(
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
@@ -196,7 +202,7 @@ class QRScreen extends StatelessWidget {
                   "Show this QR code at the counter. Once scanned, the coupon will be marked as used and cannot be redeemed again.",
               fontSize: 13.sp,
               maxLines: 4,
-              style: theme.textTheme.bodyMedium,
+              style: theme.textTheme.bodyMedium!.copyWith(color: Colors.black),
             ),
           ),
         ],

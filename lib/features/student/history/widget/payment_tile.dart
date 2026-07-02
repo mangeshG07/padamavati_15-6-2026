@@ -23,6 +23,7 @@ class PaymentTile extends StatelessWidget {
                     text: '${payment!.startMonth}- ${payment!.endMonth}',
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                   badge(
                     payment?.messTypeName ?? '',
@@ -112,13 +113,13 @@ class PaymentTile extends StatelessWidget {
           contentPadding: EdgeInsets.all(8.r),
           filled: false,
           isDense: true,
-          border: theme.inputDecorationTheme.enabledBorder,
-          enabledBorder:
-              (theme.inputDecorationTheme.enabledBorder as OutlineInputBorder)
-                  .copyWith(borderRadius: BorderRadius.circular(40.r)),
-          label: AppText(text: title, fontSize: 14.sp),
+          border: buildOutlineInputBorder(),
+          enabledBorder: buildOutlineInputBorder().copyWith(
+            borderRadius: BorderRadius.circular(40.r),
+          ),
+          label: AppText(text: title, fontSize: 14.sp, color: Colors.black),
         ),
-        child: AppText(text: date, fontSize: 16.sp),
+        child: AppText(text: date, fontSize: 16.sp, color: Colors.black),
       ),
     );
   }

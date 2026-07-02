@@ -10,7 +10,7 @@ class EmptyView extends StatelessWidget {
         SizedBox(height: 50),
         Icon(Icons.inbox, size: 60, color: Colors.grey),
         SizedBox(height: 10),
-        Text("No Coupons Found"),
+        Text("No Coupons Found", style: TextStyle(color: Colors.black)),
       ],
     );
   }

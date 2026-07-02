@@ -40,7 +40,48 @@ class MessSelectionPopup extends GetView<HomeController> {
                 items: controller.packageList,
                 hintText: 'Package',
                 validator: AppValidators.required,
-                onChanged: (val) => controller.selectedPackage.value = val,
+                onChanged: (val) {
+                  controller.selectedPackage.value = val;
+                  controller.updatePackageDetails(); // 🔥 important
+                },
+              );
+            }),
+
+            // AppText(text: '60 Coupons', fontSize: 14.sp),
+            // AppText(text: 'Monthly', fontSize: 14.sp),
+            // AppText(text: '30 Days', fontSize: 14.sp),
+            // AppText(text: 'mess Time 2-times', fontSize: 14.sp),
+            // AppText(text: 'Total Amount 2500/-', fontSize: 14.sp),
+
+            /// 🔥 PACKAGE DETAILS CARD
+            Obx(() {
+              final pkg = controller.selectedPackageDetails.value;
+
+              if (pkg == null) return const SizedBox();
+
+              return Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.lightPrimary.withValues(alpha: 0.08),
+                ),
+                child: Column(
+                  children: [
+                    _infoRow(
+                      Icons.confirmation_number,
+                      "${pkg.totalCoupons} Coupons",
+                    ),
+                    _infoRow(Icons.calendar_month, "${pkg.days} Days"),
+                    _infoRow(Icons.schedule, "${pkg.messTime} Times/Day"),
+                    _infoRow(Icons.repeat, pkg.type ?? ''), // Monthly/Weekly
+                    const Divider(),
+                    _infoRow(
+                      Icons.currency_rupee,
+                      "₹${pkg.amount}",
+                      isBold: true,
+                    ),
+                  ],
+                ),
               );
             }),
 
@@ -68,6 +109,27 @@ class MessSelectionPopup extends GetView<HomeController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// 🔹 INFO ROW WIDGET
+  Widget _infoRow(IconData icon, String text, {bool isBold = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        spacing: 10.w,
+        children: [
+          Icon(icon, size: 18, color: AppColors.lightPrimary),
+          // 10.width,
+          Expanded(
+            child: AppText(
+              text: text,
+              fontSize: 13.sp,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -77,14 +77,17 @@ class _FacilityScreenState extends State<FacilityScreen> {
           text: facility.name,
           fontSize: 14.sp,
           maxLines: 2,
-          style: theme.textTheme.bodyMedium,
+          style: theme.textTheme.bodyMedium!.copyWith(color: Colors.black),
         ),
         children: [
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: HtmlWidget(facility.shortDescription ?? ''),
+              child: HtmlWidget(
+                facility.shortDescription ?? '',
+                textStyle: TextStyle(color: Colors.black),
+              ),
             ),
           ),
         ],

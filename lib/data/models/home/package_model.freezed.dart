@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PackageModel {
 
- int? get id; String? get name; int? get amount; String? get type; int? get days; String? get gender;@JsonKey(name: 'mess_time') String? get messTime;
+ int? get id; String? get name; int? get amount; String? get type; int? get days; String? get gender;@JsonKey(name: 'mess_time') String? get messTime;@JsonKey(name: 'total_coupons') int? get totalCoupons;
 /// Create a copy of PackageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PackageModelCopyWith<PackageModel> get copyWith => _$PackageModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PackageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.days, days) || other.days == days)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.messTime, messTime) || other.messTime == messTime));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PackageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.days, days) || other.days == days)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.messTime, messTime) || other.messTime == messTime)&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,amount,type,days,gender,messTime);
+int get hashCode => Object.hash(runtimeType,id,name,amount,type,days,gender,messTime,totalCoupons);
 
 @override
 String toString() {
-  return 'PackageModel(id: $id, name: $name, amount: $amount, type: $type, days: $days, gender: $gender, messTime: $messTime)';
+  return 'PackageModel(id: $id, name: $name, amount: $amount, type: $type, days: $days, gender: $gender, messTime: $messTime, totalCoupons: $totalCoupons)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PackageModelCopyWith<$Res>  {
   factory $PackageModelCopyWith(PackageModel value, $Res Function(PackageModel) _then) = _$PackageModelCopyWithImpl;
 @useResult
 $Res call({
- int? id, String? name, int? amount, String? type, int? days, String? gender,@JsonKey(name: 'mess_time') String? messTime
+ int? id, String? name, int? amount, String? type, int? days, String? gender,@JsonKey(name: 'mess_time') String? messTime,@JsonKey(name: 'total_coupons') int? totalCoupons
 });
 
 
@@ -65,7 +65,7 @@ class _$PackageModelCopyWithImpl<$Res>
 
 /// Create a copy of PackageModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? type = freezed,Object? days = freezed,Object? gender = freezed,Object? messTime = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? type = freezed,Object? days = freezed,Object? gender = freezed,Object? messTime = freezed,Object? totalCoupons = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as int?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_no
 as String?,days: freezed == days ? _self.days : days // ignore: cast_nullable_to_non_nullable
 as int?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as String?,messTime: freezed == messTime ? _self.messTime : messTime // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,totalCoupons: freezed == totalCoupons ? _self.totalCoupons : totalCoupons // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'total_coupons')  int? totalCoupons)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PackageModel() when $default != null:
-return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime);case _:
+return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime,_that.totalCoupons);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gen
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'total_coupons')  int? totalCoupons)  $default,) {final _that = this;
 switch (_that) {
 case _PackageModel():
-return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime);case _:
+return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime,_that.totalCoupons);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gen
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String? name,  int? amount,  String? type,  int? days,  String? gender, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'total_coupons')  int? totalCoupons)?  $default,) {final _that = this;
 switch (_that) {
 case _PackageModel() when $default != null:
-return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime);case _:
+return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gender,_that.messTime,_that.totalCoupons);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.id,_that.name,_that.amount,_that.type,_that.days,_that.gen
 @JsonSerializable()
 
 class _PackageModel implements PackageModel {
-  const _PackageModel({this.id, this.name, this.amount, this.type, this.days, this.gender, @JsonKey(name: 'mess_time') this.messTime});
+  const _PackageModel({this.id, this.name, this.amount, this.type, this.days, this.gender, @JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'total_coupons') this.totalCoupons});
   factory _PackageModel.fromJson(Map<String, dynamic> json) => _$PackageModelFromJson(json);
 
 @override final  int? id;
@@ -225,6 +226,7 @@ class _PackageModel implements PackageModel {
 @override final  int? days;
 @override final  String? gender;
 @override@JsonKey(name: 'mess_time') final  String? messTime;
+@override@JsonKey(name: 'total_coupons') final  int? totalCoupons;
 
 /// Create a copy of PackageModel
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PackageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.days, days) || other.days == days)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.messTime, messTime) || other.messTime == messTime));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PackageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.days, days) || other.days == days)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.messTime, messTime) || other.messTime == messTime)&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,amount,type,days,gender,messTime);
+int get hashCode => Object.hash(runtimeType,id,name,amount,type,days,gender,messTime,totalCoupons);
 
 @override
 String toString() {
-  return 'PackageModel(id: $id, name: $name, amount: $amount, type: $type, days: $days, gender: $gender, messTime: $messTime)';
+  return 'PackageModel(id: $id, name: $name, amount: $amount, type: $type, days: $days, gender: $gender, messTime: $messTime, totalCoupons: $totalCoupons)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$PackageModelCopyWith<$Res> implements $PackageModelCopyWi
   factory _$PackageModelCopyWith(_PackageModel value, $Res Function(_PackageModel) _then) = __$PackageModelCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String? name, int? amount, String? type, int? days, String? gender,@JsonKey(name: 'mess_time') String? messTime
+ int? id, String? name, int? amount, String? type, int? days, String? gender,@JsonKey(name: 'mess_time') String? messTime,@JsonKey(name: 'total_coupons') int? totalCoupons
 });
 
 
@@ -276,7 +278,7 @@ class __$PackageModelCopyWithImpl<$Res>
 
 /// Create a copy of PackageModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? type = freezed,Object? days = freezed,Object? gender = freezed,Object? messTime = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? type = freezed,Object? days = freezed,Object? gender = freezed,Object? messTime = freezed,Object? totalCoupons = freezed,}) {
   return _then(_PackageModel(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -285,7 +287,8 @@ as int?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_no
 as String?,days: freezed == days ? _self.days : days // ignore: cast_nullable_to_non_nullable
 as int?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as String?,messTime: freezed == messTime ? _self.messTime : messTime // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,totalCoupons: freezed == totalCoupons ? _self.totalCoupons : totalCoupons // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

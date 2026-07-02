@@ -15,6 +15,7 @@ _PackageModel _$PackageModelFromJson(Map<String, dynamic> json) =>
       days: (json['days'] as num?)?.toInt(),
       gender: json['gender'] as String?,
       messTime: json['mess_time'] as String?,
+      totalCoupons: (json['total_coupons'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PackageModelToJson(_PackageModel instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$PackageModelToJson(_PackageModel instance) =>
       'days': instance.days,
       'gender': instance.gender,
       'mess_time': instance.messTime,
+      'total_coupons': instance.totalCoupons,
     };

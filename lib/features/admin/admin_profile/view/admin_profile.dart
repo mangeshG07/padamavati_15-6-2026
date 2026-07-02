@@ -11,45 +11,50 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   final controller = Get.find<AdminProfileController>();
 
   @override
+  void initState() {
+    super.initState();
+    controller.getAdminProfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 8.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GradientAppbar(title: 'Profile', showBack: false),
-            Column(
-              // spacing: 16.h,
-              children: [
-                _buildProfileHeader(theme),
-                _buildSectionCard(controller.menuList, theme),
-              ],
-            ),
-            SizedBox(height: 0.02.h),
-          ],
-        ),
+      body: Obx(
+        () => controller.isLoading.isTrue
+            ? AppLoader(strokeWidth: 2.5)
+            : SingleChildScrollView(
+                child: Column(
+                  spacing: 8.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GradientAppbar(title: 'Profile', showBack: false),
+                    Column(
+                      // spacing: 16.h,
+                      children: [
+                        _buildProfileHeader(theme),
+                        _buildSectionCard(controller.menuList, theme),
+                      ],
+                    ),
+                    SizedBox(height: 0.02.h),
+                  ],
+                ),
+              ),
       ),
     );
   }
 
   Widget _buildProfileHeader(ThemeData theme) {
-    final imageUrl =
-        'https://s3.ap-south-1.amazonaws.com/awsimages.imagesbazaar.com/1200x1800-old/17339/SM765734.jpg?date=Thu%20May%2028%202026%2010:47:56%20GMT+0530%20(India%20Standard%20Time)';
+    final imageUrl = controller.userData.value.profileImage ?? '';
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         gradient: LinearGradient(
-          colors: [
-            theme.scaffoldBackgroundColor,
-            theme.brightness == Brightness.light
-                ? Colors.grey.shade50
-                : AppColors.grey800,
-          ],
+          colors: [Colors.white, Colors.grey.shade50],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -106,14 +111,14 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
           ),
           SizedBox(height: 10.h),
           AppText(
-            text: capitalizeFirst('Rahul Khomane'),
+            text: capitalizeFirst(controller.userData.value.name ?? ''),
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             style: theme.textTheme.titleLarge?.copyWith(letterSpacing: 0.3),
           ),
           SizedBox(height: 4.h),
           AppText(
-            text: '7210053005',
+            text: controller.userData.value.mobileNo ?? '',
             fontSize: 12.sp,
             color: AppColors.lightTextLowColor,
           ),
@@ -128,7 +133,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w).copyWith(bottom: 16),
         decoration: BoxDecoration(
-          color: theme.cardColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(

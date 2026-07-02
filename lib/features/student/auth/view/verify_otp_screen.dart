@@ -88,12 +88,12 @@ class VerifyOTP extends GetView<OtpController> {
       height: 50.h,
       textStyle: TextStyle(
         fontSize: 22.sp,
-        color: theme.textTheme.bodySmall!.color,
+        color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey300),
-        color: theme.scaffoldBackgroundColor,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10.r),
       ),
     );

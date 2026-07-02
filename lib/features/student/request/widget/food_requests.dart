@@ -48,6 +48,7 @@ class FoodRequests extends StatelessWidget {
                               AppIconButton(
                                 backgroundColor: Colors.orange.shade50,
                                 icon: HugeIcons.strokeRoundedPaella,
+                                iconColor: Colors.black,
                               ),
                               SizedBox(width: 12.w),
                               Expanded(
@@ -58,17 +59,20 @@ class FoodRequests extends StatelessWidget {
                                       text: request.foodType ?? '',
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     SizedBox(height: 6.h),
                                     AppText(
                                       text:
                                           "🍽️ For Date: ${request.forDate ?? '-'}",
                                       fontSize: 13.sp,
+                                      color: Colors.black,
                                     ),
                                     AppText(
                                       text:
                                           "📝 Requested On: ${request.requestDate ?? '-'}",
                                       fontSize: 13.sp,
+                                      color: Colors.black,
                                     ),
                                   ],
                                 ),

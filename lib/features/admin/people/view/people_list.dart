@@ -52,44 +52,50 @@ class _PeopleListState extends State<PeopleList> {
                         itemCount: controller.items.length,
                         itemBuilder: (BuildContext context, int index) {
                           final people = controller.items[index];
-                          return Container(
-                            decoration: buildCardDecoration(),
-                            padding: EdgeInsets.all(16.w),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  child: CustomImage(
-                                    image: people.profileImage ?? '',
-                                    placeholder: Image.asset(
-                                      AppAssets.defaultImage,
-                                    ),
-                                    errorWidget: Image.asset(
-                                      AppAssets.defaultImage,
-                                    ),
-                                    width: 50.w,
-                                  ),
-                                ),
-                                SizedBox(width: 12.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AppText(
-                                        text: people.name ?? '',
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
+                          return GestureDetector(
+                            onTap: () => Get.toNamed(
+                              Routes.scannedUsersDetails,
+                              // arguments: {'id': people.i.toString()},
+                            ),
+                            child: Container(
+                              decoration: buildCardDecoration(),
+                              padding: EdgeInsets.all(16.w),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    child: CustomImage(
+                                      image: people.profileImage ?? '',
+                                      placeholder: Image.asset(
+                                        AppAssets.defaultImage,
                                       ),
-                                      SizedBox(height: 6.h),
-                                      AppText(
-                                        text: people.code ?? '-',
-                                        fontSize: 13.sp,
+                                      errorWidget: Image.asset(
+                                        AppAssets.defaultImage,
                                       ),
-                                    ],
+                                      width: 50.w,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 12.w),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppText(
+                                          text: people.name ?? '',
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        SizedBox(height: 6.h),
+                                        AppText(
+                                          text: people.code ?? '-',
+                                          fontSize: 13.sp,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

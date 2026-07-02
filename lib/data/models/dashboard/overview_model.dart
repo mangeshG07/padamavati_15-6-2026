@@ -10,6 +10,8 @@ abstract class OverViewModel with _$OverViewModel {
     @JsonKey(name: 'today_leave_count') int? todayLeaveCount,
     @JsonKey(name: 'tomorrow_leave_count') int? tomorrowLeaveCount,
     @JsonKey(name: 'tomorrow_special_count') int? tomorrowFoodCount,
+    @JsonKey(name: 'today_lunch_scan_count') int? todayLunchScans,
+    @JsonKey(name: 'today_dinner_scan_count') int? todayDinnerScans,
   }) = _OverViewModel;
 
   factory OverViewModel.fromJson(Map<String, dynamic> json) =>

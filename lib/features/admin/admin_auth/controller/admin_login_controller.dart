@@ -8,7 +8,7 @@ class AdminLoginController extends BaseController {
   final passwordController = TextEditingController();
   final adminLoginKey = GlobalKey<FormState>();
 
-  final isObscure = false.obs;
+  final isObscure = true.obs;
 
   Future<void> adminLogin() async {
     await callApi<BaseResponseModel<UserModel>>(

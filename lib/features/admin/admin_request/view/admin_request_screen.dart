@@ -1,4 +1,5 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
+import 'package:padmavatiupdated/features/admin/admin_request/widget/admin_leave_requests.dart';
 
 class AdminRequestScreen extends StatefulWidget {
   const AdminRequestScreen({super.key});
@@ -14,6 +15,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
   void initState() {
     super.initState();
     controller.getFoodRequestList(isRefresh: true);
+    controller.getLeaveRequestList(isRefresh: true);
   }
 
   @override
@@ -45,21 +47,20 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
           child: TabBarView(
             children: [
               /// 🍽️ FOOD REQUEST TAB
-              _buildFoodList(),
-
-              /// 🏖️ LEAVE REQUEST TAB
-              Container(),
+              AdminFoodRequests(
+                foodData: controller.foodPagination,
+                controller: controller,
+              ),
+              AdminLeaveRequests(
+                leaveData: controller.leavePagination,
+                controller: controller,
+              ),
               // _buildLeaveList(),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget _buildFoodList() {
-    final foodData = controller.foodPagination;
-    return AdminFoodRequests(foodData: foodData, controller: controller);
   }
 
   Widget _buildToggle(bool isLight, ThemeData theme) {
@@ -80,7 +81,6 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
               onTap: () async {
                 controller.selectedType.value = 0;
               },
-              isLight: isLight,
             ),
             SizedBox(width: 8.w),
             toggleItem(
@@ -89,7 +89,6 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
               onTap: () async {
                 controller.selectedType.value = 1;
               },
-              isLight: isLight,
             ),
           ],
         ),

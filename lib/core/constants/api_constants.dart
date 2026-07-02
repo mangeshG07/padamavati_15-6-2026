@@ -39,6 +39,7 @@ class ApiConstants {
   static const String register = '/user_register';
   static const String getHome = '/home';
   static const String getPackageList = '/get_ratepackage_list';
+  static const String getPackageDetails = '/ratepackage_popup';
   static const String startMessRequest = '/mess_req';
   static const String paymentHistory = '/payment_history';
   static const String paymentReceipt = '/payment_receipt';
@@ -56,7 +57,12 @@ class ApiConstants {
   static const String dashboard = '/admin_dashboard';
   static const String adminFoodRequest = '/todays_specialfood_request';
   static const String branchUserList = '/branch_user_list';
+  static const String scanQr = '/scan_qr';
+  static const String adminProfile = '/admin_profile';
+  static const String adminLeaveRequest = '/todays_leave_request';
+  static const String scannedUserData = '/scanned_users_data';
+  static const String scannedUserDetailsData = '/scanned_user_details';
+  static const String usedQrData = '/used_qr_list';
 
   ///////////////Pending//////////////////////
-  static const String scanQr = '/scan_qr';
 }

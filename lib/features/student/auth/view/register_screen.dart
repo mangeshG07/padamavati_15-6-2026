@@ -22,10 +22,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppbar(title: 'User Registration'),
+      appBar: CustomAppbar(
+        title: 'User Registration',
+        backgroundColor: Colors.white,
+      ),
       body: Obx(
         () => controller.isPageLoading.isTrue
-            ? AppLoader(color: AppColors.lightPrimary, size: 2.5)
+            ? AppLoader(color: AppColors.lightPrimary, strokeWidth: 2.5)
             : SafeArea(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -205,13 +208,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       label: label,
       hint: hint,
       isRequired: true,
-      labelStyle: AppTextStyles.labelMedium,
+      labelStyle: AppTextStyles.labelMedium.copyWith(color: Colors.black),
       filled: true,
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-      textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
-      focusedBorder: theme.inputDecorationTheme.focusedBorder,
-      enabledBorder: theme.inputDecorationTheme.enabledBorder,
-      fillColor: theme.cardColor,
+      textStyle: TextStyle(color: Colors.black, fontSize: 14.sp),
+      focusedBorder: buildOutlineInputBorder(),
+      enabledBorder: buildOutlineInputBorder(),
+      fillColor: Colors.white,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
       controller: tController,
       validator: (v) => isNumber
@@ -222,12 +225,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildDOB(ThemeData theme, BuildContext context) {
     return AppTextField(
-      labelStyle: AppTextStyles.labelMedium,
+      labelStyle: AppTextStyles.labelMedium.copyWith(color: Colors.black),
       isRequired: true,
       textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
-      focusedBorder: theme.inputDecorationTheme.focusedBorder,
-      enabledBorder: theme.inputDecorationTheme.enabledBorder,
-      fillColor: theme.cardColor,
+      focusedBorder: buildOutlineInputBorder(),
+      enabledBorder: buildOutlineInputBorder(),
+      fillColor: Colors.white,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
       onTap: () async {
         final DateTime? pickedDate = await showDatePicker(

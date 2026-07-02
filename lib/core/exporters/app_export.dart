@@ -95,6 +95,8 @@ export 'package:padmavatiupdated/features/student/profile/widget/policy_data.dar
 export '../../../features/student/profile/widget/help_support.dart';
 export 'package:padmavatiupdated/features/student/request/widget/food_requests.dart';
 export 'package:padmavatiupdated/features/student/request/widget/leave_requests.dart';
+export 'package:padmavatiupdated/features/admin/dashboard/widget/scanned_users_list.dart';
+export 'package:padmavatiupdated/features/admin/dashboard/widget/user_details_page.dart';
 
 //Controller//
 export 'package:padmavatiupdated/features/splash/controller/splash_controller.dart';
@@ -138,6 +140,7 @@ export 'package:padmavatiupdated/domain/repository/admin_auth_repository.dart';
 export 'package:padmavatiupdated/domain/repository/dashboard_repository.dart';
 export 'package:padmavatiupdated/domain/repository/admin_request_repository.dart';
 export 'package:padmavatiupdated/domain/repository/people_repository.dart';
+export 'package:padmavatiupdated/domain/repository/admin_profile.dart';
 
 //Entity//
 export 'package:padmavatiupdated/domain/entity/login_request.dart';
@@ -172,6 +175,11 @@ export 'package:padmavatiupdated/domain/usecase/get_dashboard_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/admin_food_requests.dart';
 export 'package:padmavatiupdated/domain/usecase/get_branch_users_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/scan_qr_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/admin_profile_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/admin_leave_usecase.dart';
+export '../../../../domain/usecase/scanned_user_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/scanned_user_details_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/used_qr_list.dart';
 
 //Bindings//
 export 'package:padmavatiupdated/features/student/auth/bindings/login_bindings.dart';
@@ -222,3 +230,8 @@ export 'package:padmavatiupdated/data/models/dashboard/qr_response_model.dart';
 export 'package:padmavatiupdated/data/models/dashboard/payment_data_model.dart';
 export 'package:padmavatiupdated/data/models/dashboard/qr_user_data.dart';
 export 'package:padmavatiupdated/data/models/dashboard/scan_data_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/scanned_response_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/scanned_user_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/user_details_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/used_qr_response_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/used_qr_model.dart';

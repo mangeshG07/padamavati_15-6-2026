@@ -50,19 +50,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileHeader(ThemeData theme, ProfileResponseModel user) {
     final imageUrl = user.profileImage ?? '';
-    // 'https://s3.ap-south-1.amazonaws.com/awsimages.imagesbazaar.com/1200x1800-old/17339/SM765734.jpg?date=Thu%20May%2028%202026%2010:47:56%20GMT+0530%20(India%20Standard%20Time)';
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         gradient: LinearGradient(
-          colors: [
-            theme.scaffoldBackgroundColor,
-            theme.brightness == Brightness.light
-                ? Colors.grey.shade50
-                : AppColors.grey800,
-          ],
+          colors: [Colors.white, Colors.grey.shade50],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -122,7 +116,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             text: capitalizeFirst(user.name ?? ''),
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
-            style: theme.textTheme.titleLarge?.copyWith(letterSpacing: 0.3),
+            style: theme.textTheme.titleLarge?.copyWith(
+              letterSpacing: 0.3,
+              color: Colors.black,
+            ),
           ),
           SizedBox(height: 4.h),
           AppText(
@@ -141,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w).copyWith(bottom: 16),
         decoration: BoxDecoration(
-          color: theme.cardColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
@@ -186,9 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 padding: EdgeInsets.all(10.w),
                 decoration: BoxDecoration(
-                  color: theme.brightness == Brightness.light
-                      ? AppColors.lightPrimary.withValues(alpha: 0.08)
-                      : AppColors.lightPink.withValues(alpha: 0.2),
+                  color: AppColors.lightPrimary.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(14.r),
                   border: Border.all(
                     color: theme.dividerColor.withValues(alpha: 0.1),
@@ -196,9 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: HugeIcon(
                   icon: menu['icon'],
-                  color: theme.brightness == Brightness.light
-                      ? AppColors.lightPrimary
-                      : Colors.white,
+                  color: AppColors.lightPrimary,
                   size: 20.r,
                 ),
               ),
@@ -209,6 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 14.sp,
                   style: theme.textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -218,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: HugeIcon(
                   icon: HugeIcons.strokeRoundedArrowRight01,
                   size: 18.r,
-                  color: theme.hintColor,
+                  color: Colors.grey,
                 ),
               ),
             ],

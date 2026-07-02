@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: AppText(
               text: 'Welcome To Padmavati Mess ${controller.branchName.value}',
               fontSize: 14.sp,
-              style: theme.textTheme.bodySmall,
+              style: theme.textTheme.bodySmall!.copyWith(color: Colors.black),
             ),
           ),
 
@@ -82,11 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
           fontSize: 14.sp,
           maxLines: 2,
           textAlign: TextAlign.center,
-          style: theme.textTheme.titleLarge,
+          style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
         ),
         AppButton(
           text: 'Start Mess',
           onTap: () {
+            controller.selectedPackage.value = null;
+            controller.selectedDate.clear();
+            controller.selectedPackageDetails.value = null;
             Get.dialog(MessSelectionPopup(), barrierDismissible: true);
           },
           backgroundColor: AppColors.lightSecondary,
@@ -129,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
         AppText(
           text: 'Payment Details',
           fontSize: 14.sp,
-          style: theme.textTheme.titleLarge,
+          style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
         ),
 
         ListView.separated(

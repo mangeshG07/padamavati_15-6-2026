@@ -38,7 +38,7 @@ class AppDropdownField extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(title, style: AppTextStyles.labelMedium),
+            Text(title, style: AppTextStyles.labelMedium.copyWith(color: Colors.black)),
             if (isRequired)
               Text(
                 " *",
@@ -54,7 +54,6 @@ class AppDropdownField extends StatelessWidget {
           materialTapTargetSize: MaterialTapTargetSize.padded,
           child: DropdownButtonFormField(
             borderRadius: BorderRadius.circular(12.r),
-            // initialValue: value,
             initialValue: _getSafeValue(),
             icon: const Icon(
               Icons.keyboard_arrow_down,
@@ -72,7 +71,7 @@ class AppDropdownField extends StatelessWidget {
                 minHeight: 50.h,
               ),
               filled: true,
-              fillColor: Theme.of(Get.context!).scaffoldBackgroundColor,
+              fillColor:  Colors.white,
               focusedBorder: buildOutlineInputBorder(),
               enabledBorder: buildOutlineInputBorder(),
               errorBorder: OutlineInputBorder(
@@ -86,9 +85,7 @@ class AppDropdownField extends StatelessWidget {
               errorMaxLines: 1,
             ),
             validator: validator,
-            dropdownColor: Get.isDarkMode
-                ? AppColors.grey800
-                : AppColors.grey300,
+            dropdownColor: Colors.white,
             hint: Text(
               hintText,
               style: TextStyle(fontSize: 13.sp, color: Colors.grey),
@@ -103,7 +100,7 @@ class AppDropdownField extends StatelessWidget {
                       child: AppText(
                         textAlign: TextAlign.start,
                         text: value.name,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: Colors.black,
                         fontSize: 14.sp,
                       ),
                     );
@@ -114,7 +111,7 @@ class AppDropdownField extends StatelessWidget {
                       child: AppText(
                         text: value,
                         fontSize: 14.sp,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: Colors.black,
                       ),
                     );
                   }).toList(),

@@ -37,6 +37,7 @@ class _RequestScreenState extends State<RequestScreen>
                 labelColor: AppColors.lightPrimary,
                 unselectedLabelColor: Colors.grey,
                 indicatorColor: AppColors.lightPrimary,
+                dividerColor: Colors.grey,
                 tabs: const [
                   Tab(text: "Food Request"),
                   Tab(text: "Leave Request"),

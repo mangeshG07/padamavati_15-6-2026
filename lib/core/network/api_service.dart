@@ -147,4 +147,35 @@ abstract class ApiService {
     @Part(name: "user_id") String userId,
     @Part(name: "qr_code") String qrCode,
   );
+
+  @POST(ApiConstants.adminProfile)
+  Future<BaseResponseModel<ProfileResponseModel>> adminProfile(
+    @Part(name: "user_id") String userId,
+  );
+
+  @POST(ApiConstants.adminLeaveRequest)
+  Future<BaseResponseModel<LeaveResponseModel>> adminLeaveRequest(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.scannedUserData)
+  Future<BaseResponseModel<ScannedResponseModel>> scannedUserData(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+    @Part(name: "mess_time") String messType,
+  );
+
+  @POST(ApiConstants.scannedUserDetailsData)
+  Future<BaseResponseModel<UserDetailsModel>> scannedUserDetailsData(
+    @Part(name: "user_id") String userId,
+    @Part(name: "student_id") String studentId,
+  );
+
+  @POST(ApiConstants.usedQrData)
+  Future<BaseResponseModel<UsedQRResponseModel>> usedQrData(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+    @Part(name: "student_id") String studentId,
+  );
 }

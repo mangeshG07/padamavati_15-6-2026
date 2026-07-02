@@ -19,10 +19,14 @@ class AddLeave extends GetView<RequestController> {
                 text: 'Leave Request',
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
               GestureDetector(
                 onTap: () => Get.back(),
-                child: HugeIcon(icon: HugeIcons.strokeRoundedCancel01),
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedCancel01,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
@@ -32,7 +36,10 @@ class AddLeave extends GetView<RequestController> {
             () => AppText(
               text: 'Leave Days: ${controller.calculatedDays.value}',
               fontSize: 14.sp,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
           SizedBox(height: 20.h),
@@ -72,12 +79,12 @@ class AddLeave extends GetView<RequestController> {
     final isFromDate = title == 'From Date:';
 
     return AppTextField(
-      labelStyle: AppTextStyles.labelMedium,
+      labelStyle: AppTextStyles.labelMedium.copyWith(color: Colors.black),
       isRequired: true,
-      textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
-      focusedBorder: theme.inputDecorationTheme.focusedBorder,
-      enabledBorder: theme.inputDecorationTheme.enabledBorder,
-      fillColor: theme.cardColor,
+      textStyle: TextStyle(color: Colors.black, fontSize: 14.sp),
+      focusedBorder: buildOutlineInputBorder(),
+      enabledBorder: buildOutlineInputBorder(),
+      fillColor: Colors.white,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
 
       onTap: () async {

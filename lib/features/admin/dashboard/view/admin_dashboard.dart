@@ -22,86 +22,84 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.h),
+        child: GradientAppbar(title: 'Dashboard', showBack: false),
+      ),
       body: Obx(
         () => controller.isLoading.isTrue
             ? AppLoader(strokeWidth: 2.5.w, color: AppColors.lightPrimary)
             : SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 16.h,
                   children: [
-                    GradientAppbar(title: 'Dashboard', showBack: false),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 16.h,
-                        children: [
-                          _buildBranchData(
-                            theme,
-                            controller.dashboardData.value,
-                          ),
-                          AppText(
-                            text: "Today's Overview",
-                            fontSize: 22.sp,
-                            maxLines: 2,
-                            style: theme.textTheme.titleLarge,
-                          ),
-                          Row(
-                            spacing: 16.w,
-                            children: [
-                              Expanded(
-                                child: _buildOverviewCard(
-                                  'People\nCount',
-                                  controller.overview.value.peopleCount
-                                          ?.toString() ??
-                                      '0',
-                                  HugeIcons.strokeRoundedCall02,
-                                  () async {},
-                                  Colors.blue,
-                                  theme,
-                                  isLoading: false,
-                                ),
-                              ),
-                              Expanded(
-                                child: _buildOverviewCard(
-                                  'Lunch\nScans',
-                                  '115',
-                                  HugeIcons.strokeRoundedCall02,
-                                  () async {},
-                                  Colors.green,
-                                  theme,
-                                  isLoading: false,
-                                ),
-                              ),
-                              Expanded(
-                                child: _buildOverviewCard(
-                                  'Dinner\nScans',
-                                  '88',
-                                  HugeIcons.strokeRoundedCall02,
-                                  () async {},
-                                  Colors.red,
-                                  theme,
-                                  isLoading: false,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          _buildSectionCard(controller.menuList, theme),
-                          SizedBox(height: 0.02.h),
-                          AppButton(
-                            icon: HugeIcon(
-                              icon: HugeIcons.strokeRoundedQrCode01,
-                            ),
-                            text: "Scan QR",
-                            onTap: () => Get.toNamed(Routes.qrScannerScreen),
-                            backgroundColor: AppColors.lightSecondary,
-                          ),
-                        ],
-                      ),
+                    _buildBranchData(theme, controller.dashboardData.value),
+                    AppText(
+                      text: "Today's Overview",
+                      fontSize: 22.sp,
+                      maxLines: 2,
+                      style: theme.textTheme.titleLarge,
                     ),
+                    Row(
+                      spacing: 16.w,
+                      children: [
+                        Expanded(
+                          child: _buildOverviewCard(
+                            'People\nCount',
+                            controller.overview.value.peopleCount?.toString() ??
+                                '0',
+                            HugeIcons.strokeRoundedCall02,
+                            () async {},
+                            Colors.blue,
+                            theme,
+                            isLoading: false,
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildOverviewCard(
+                            'Lunch\nScans',
+                            controller.overview.value.todayLunchScans
+                                    ?.toString() ??
+                                '0',
+                            HugeIcons.strokeRoundedCall02,
+                            () {
+                              controller.selectedType.value = 1;
+                              Get.toNamed(Routes.scannedUsers);
+                            },
+                            Colors.green,
+                            theme,
+                            isLoading: false,
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildOverviewCard(
+                            'Dinner\nScans',
+                            controller.overview.value.todayDinnerScans
+                                    ?.toString() ??
+                                '0',
+                            HugeIcons.strokeRoundedCall02,
+                            () {
+                              controller.selectedType.value = 2;
+                              Get.toNamed(Routes.scannedUsers);
+                            },
+                            Colors.red,
+                            theme,
+                            isLoading: false,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    _buildSectionCard(controller.menuList, theme),
                     SizedBox(height: 0.02.h),
+                    AppButton(
+                      icon: HugeIcon(icon: HugeIcons.strokeRoundedQrCode01),
+                      text: "Scan QR",
+                      onTap: () => Get.toNamed(Routes.qrScannerScreen),
+                      backgroundColor: AppColors.lightSecondary,
+                    ),
                   ],
                 ),
               ),
@@ -111,6 +109,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Widget _buildBranchData(ThemeData theme, DashboardModel data) {
     return Card(
+      color: Colors.white,
       child: ListTile(
         leading: CustomImage(image: AppAssets.splashLogo, width: 50.h),
         title: AppText(
@@ -181,7 +180,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget _buildSectionCard(List<dynamic> list, ThemeData theme) {
     return Container(
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8),

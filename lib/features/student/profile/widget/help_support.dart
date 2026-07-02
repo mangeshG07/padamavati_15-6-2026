@@ -23,7 +23,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.h),
         child: GradientAppbar(title: 'Help And Support', showBack: true),

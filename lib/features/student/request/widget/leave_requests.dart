@@ -35,10 +35,8 @@ class LeaveRequest extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.separated(
-                      // shrinkWrap: true,
                       padding: EdgeInsets.symmetric(horizontal: 12.w),
                       separatorBuilder: (_, __) => SizedBox(height: 12.h),
-                      // physics: const NeverScrollableScrollPhysics(),
                       itemCount: leaveData.items.length,
                       itemBuilder: (BuildContext context, int index) {
                         final request = leaveData.items[index];
@@ -49,7 +47,7 @@ class LeaveRequest extends StatelessWidget {
                             children: [
                               AppIconButton(
                                 backgroundColor: Colors.orange.shade50,
-                                icon: HugeIcons.strokeRoundedCalendar03,
+                                icon: HugeIcons.strokeRoundedCalendar03,iconColor: Colors.black,
                               ),
                               SizedBox(width: 12.w),
                               Expanded(
@@ -61,7 +59,7 @@ class LeaveRequest extends StatelessWidget {
                                       text:
                                           '${request.fromDate} - ${request.toDate}',
                                       fontSize: 14.sp,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.bold,color: Colors.black,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -71,7 +69,7 @@ class LeaveRequest extends StatelessWidget {
                                         AppText(
                                           text:
                                               "Total Days: ${request.totalDays}",
-                                          fontSize: 13.sp,
+                                          fontSize: 13.sp,color: Colors.black,
                                         ),
                                         badge(
                                           request.statusText ?? '',

@@ -23,18 +23,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor:
           backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
-      surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      surfaceTintColor: Colors.white,
       titleSpacing: titleSpacing,
       centerTitle: centerTitle,
       title: AppText(
         text: title,
         fontSize: 22.sp,
-        style: Theme.of(
-          context,
-        ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+        color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
-      leading: BackButton(color: Theme.of(context).colorScheme.onSurface),
+      leading: BackButton(color: Colors.black),
       actions: actions,
       elevation: 0,
     );

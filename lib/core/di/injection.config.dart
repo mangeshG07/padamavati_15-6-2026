@@ -17,6 +17,8 @@ import 'package:padmavatiupdated/core/network/api_service.dart' as _i400;
 import 'package:padmavatiupdated/core/network/register_module.dart' as _i433;
 import 'package:padmavatiupdated/data/repository_impl/admin_auth_repo_impl.dart'
     as _i403;
+import 'package:padmavatiupdated/data/repository_impl/admin_profile_repo_impl.dart'
+    as _i833;
 import 'package:padmavatiupdated/data/repository_impl/admin_req_repo_impl.dart'
     as _i237;
 import 'package:padmavatiupdated/data/repository_impl/auth_repository_impl.dart'
@@ -41,7 +43,11 @@ import 'package:padmavatiupdated/domain/usecase/add_leave_usecase.dart'
     as _i667;
 import 'package:padmavatiupdated/domain/usecase/admin_food_requests.dart'
     as _i752;
+import 'package:padmavatiupdated/domain/usecase/admin_leave_usecase.dart'
+    as _i876;
 import 'package:padmavatiupdated/domain/usecase/admin_login.dart' as _i647;
+import 'package:padmavatiupdated/domain/usecase/admin_profile_usecase.dart'
+    as _i569;
 import 'package:padmavatiupdated/domain/usecase/food_items_usecase.dart'
     as _i376;
 import 'package:padmavatiupdated/domain/usecase/food_req_usecase.dart' as _i348;
@@ -74,11 +80,16 @@ import 'package:padmavatiupdated/domain/usecase/pay_history_usecase.dart'
 import 'package:padmavatiupdated/domain/usecase/register_student_usecase.dart'
     as _i886;
 import 'package:padmavatiupdated/domain/usecase/scan_qr_usecase.dart' as _i289;
+import 'package:padmavatiupdated/domain/usecase/scanned_user_details_usecase.dart'
+    as _i957;
+import 'package:padmavatiupdated/domain/usecase/scanned_user_usecase.dart'
+    as _i586;
 import 'package:padmavatiupdated/domain/usecase/send_otp_usecase.dart' as _i470;
 import 'package:padmavatiupdated/domain/usecase/start_mess_usecase.dart'
     as _i765;
 import 'package:padmavatiupdated/domain/usecase/update_profile_usecase.dart'
     as _i370;
+import 'package:padmavatiupdated/domain/usecase/used_qr_list.dart' as _i446;
 import 'package:padmavatiupdated/domain/usecase/verify_otp_usecase.dart'
     as _i1039;
 import 'package:padmavatiupdated/features/splash/controller/splash_controller.dart'
@@ -133,6 +144,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i85.AdminRequestRepository>(
       () => _i237.AdminRequestRepositoryImpl(gh<_i85.ApiService>()),
     );
+    gh.lazySingleton<_i85.AdminProfileRepository>(
+      () => _i833.AdminProfileRepositoryImpl(gh<_i85.ApiService>()),
+    );
     gh.lazySingleton<_i85.CouponRepository>(
       () => _i791.CouponRepositoryImpl(gh<_i85.ApiService>()),
     );
@@ -150,6 +164,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i86.GetLeaveRequests>(
       () => _i86.GetLeaveRequests(gh<_i85.RequestRepository>()),
+    );
+    gh.lazySingleton<_i569.AdminProfileUsecase>(
+      () => _i569.AdminProfileUsecase(gh<_i85.AdminProfileRepository>()),
     );
     gh.lazySingleton<_i538.GetFacilityUsecase>(
       () => _i538.GetFacilityUsecase(gh<_i85.ProfileRepository>()),
@@ -178,6 +195,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i289.ScanQRUsecase>(
       () => _i289.ScanQRUsecase(gh<_i85.DashboardRepository>()),
     );
+    gh.lazySingleton<_i957.ScannedUserDetailsUsecase>(
+      () => _i957.ScannedUserDetailsUsecase(gh<_i85.DashboardRepository>()),
+    );
+    gh.lazySingleton<_i586.ScannedUserUsecase>(
+      () => _i586.ScannedUserUsecase(gh<_i85.DashboardRepository>()),
+    );
+    gh.lazySingleton<_i446.UsedQrListUsecase>(
+      () => _i446.UsedQrListUsecase(gh<_i85.DashboardRepository>()),
+    );
     gh.lazySingleton<_i1039.VerifyOtpUsecase>(
       () => _i1039.VerifyOtpUsecase(gh<_i85.AuthRepository>()),
     );
@@ -201,6 +227,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i752.GetAdminFoodRequests>(
       () => _i752.GetAdminFoodRequests(gh<_i85.AdminRequestRepository>()),
+    );
+    gh.lazySingleton<_i876.GetAdminLeaveRequests>(
+      () => _i876.GetAdminLeaveRequests(gh<_i85.AdminRequestRepository>()),
     );
     gh.lazySingleton<_i924.GetCouponUsecase>(
       () => _i924.GetCouponUsecase(gh<_i85.CouponRepository>()),

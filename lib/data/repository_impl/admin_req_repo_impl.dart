@@ -24,4 +24,24 @@ class AdminRequestRepositoryImpl implements AdminRequestRepository {
       return Failure('Something went wrong.');
     }
   }
+
+  @override
+  Future<Result<BaseResponseModel<LeaveResponseModel>>> adminLeaveRequest(
+    UserRequest request,
+  ) async {
+    try {
+      final res = await _apiService.adminLeaveRequest(
+        request.userId,
+        request.pageNo,
+      );
+
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (error) {
+      return Failure('Something went wrong.');
+    }
+  }
 }

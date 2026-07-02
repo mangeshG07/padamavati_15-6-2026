@@ -17,6 +17,8 @@ class HomeController extends BaseController {
 
   final sliderList = <MasterDataModel>[].obs;
   final packageList = <PackageModel>[].obs;
+  Rx<PackageModel?> selectedPackageDetails = Rx<PackageModel?>(null);
+
   final payDetailsList = <PaymentDetailsModel>[].obs;
 
   final branchName = ''.obs;
@@ -35,6 +37,12 @@ class HomeController extends BaseController {
 
   bool get isPending => isRequested.value && !isAccepted.value;
   bool get isApproved => isRequested.value && isAccepted.value;
+
+  void updatePackageDetails() {
+    selectedPackageDetails.value = packageList.firstWhereOrNull(
+      (e) => e.id.toString() == selectedPackage.value.toString(),
+    )!;
+  }
 
   /// -------------------- METHODS --------------------
 
@@ -62,24 +70,13 @@ class HomeController extends BaseController {
         packageList.value = data.data ?? [];
       },
     );
-
-    // isPackageLoading.value = true;
-    // try {
-    //   final response = await _getPackagesUsecase.call();
-    //
-    //   if (response.common.status == true) {
-    //     packageList.value = response.data ?? [];
-    //   }
-    // } finally {
-    //   isPackageLoading.value = false;
-    // }
   }
 
   void submitSelection() async {
-    if (selectedPackage.value == null) {
+    if (selectedPackage.value == null || selectedDate.text.isEmpty) {
       Get.snackbar(
         'Error',
-        'Please select a mess package',
+        'Please select a mess package and mess start date',
         snackPosition: SnackPosition.BOTTOM,
       );
       return;

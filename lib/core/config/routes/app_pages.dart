@@ -52,10 +52,13 @@ class AppPages {
         AdminReqBindings(),
         PeopleBindings(),
         AdminProfileBindings(),
+        ProfileBindings(),
       ],
     ),
     GetPage(name: Routes.qrScannerScreen, page: () => QRScannerPage()),
     GetPage(name: Routes.policyData, page: () => PolicyInfo()),
     GetPage(name: Routes.helpAndSupport, page: () => HelpAndSupport()),
+    GetPage(name: Routes.scannedUsers, page: () => ScannedUsersList()),
+    GetPage(name: Routes.scannedUsersDetails, page: () => UserDetailsPage()),
   ];
 }

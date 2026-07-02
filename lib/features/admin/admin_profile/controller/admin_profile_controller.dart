@@ -1,21 +1,24 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class AdminProfileController extends GetxController {
+class AdminProfileController extends BaseController {
+  final AdminProfileUsecase _profileUsecase;
+  AdminProfileController(this._profileUsecase);
+
   List<Map<String, dynamic>> get menuList => [
-    {
-      'title': 'Edit Profile',
-      'icon': HugeIcons.strokeRoundedUserCircle,
-      'onTap': () => Get.toNamed(Routes.editProfile),
-    },
-    {
-      'title': 'Facility',
-      'icon': HugeIcons.strokeRoundedSpoonAndKnife,
-      'onTap': () => Get.toNamed(Routes.facilityScreen),
-    },
+    // {
+    //   'title': 'Edit Profile',
+    //   'icon': HugeIcons.strokeRoundedUserCircle,
+    //   'onTap': () => Get.toNamed(Routes.editProfile),
+    // },
+    // {
+    //   'title': 'Facility',
+    //   'icon': HugeIcons.strokeRoundedSpoonAndKnife,
+    //   'onTap': () => Get.toNamed(Routes.facilityScreen),
+    // },
     {
       'title': 'Privacy Policy',
       'icon': HugeIcons.strokeRoundedMailOpen,
-      // 'onTap': () => Get.toNamed(Routes.viewed),
+      'onTap': () => Get.toNamed(Routes.helpAndSupport),
     },
     {
       'title': 'Logout',
@@ -37,4 +40,19 @@ class AdminProfileController extends GetxController {
       },
     },
   ];
+
+  final userData = ProfileResponseModel().obs;
+
+  Future<void> getAdminProfile() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+
+    await callApi<BaseResponseModel<ProfileResponseModel>>(
+      request: () => _profileUsecase.call(UserRequest(userId)),
+      onSuccess: (data) {
+        userData.value = data.data!;
+      },
+      loader: isLoading,
+    );
+  }
 }

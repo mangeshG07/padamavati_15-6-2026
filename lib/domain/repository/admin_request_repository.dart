@@ -4,4 +4,8 @@ abstract class AdminRequestRepository {
   Future<Result<BaseResponseModel<FoodResponseModel>>> specialFoodRequests(
     UserRequest request,
   );
+
+  Future<Result<BaseResponseModel<LeaveResponseModel>>> adminLeaveRequest(
+    UserRequest request,
+  );
 }

@@ -163,8 +163,8 @@ class AllDialogs {
       // Android / Material Dialog
       Get.dialog(
         Dialog(
-          surfaceTintColor: Theme.of(Get.context!).scaffoldBackgroundColor,
-          backgroundColor: Theme.of(Get.context!).scaffoldBackgroundColor,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
@@ -197,6 +197,9 @@ class AllDialogs {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey.shade200,
+                      ),
                       onPressed: () => Get.back(),
                       child: const Text(
                         'Cancel',

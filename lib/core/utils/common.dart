@@ -86,22 +86,15 @@ Widget buildSectionHeader(
   bool isPrimary = false,
 }) {
   final theme = Theme.of(Get.context!);
-  final isLight = theme.brightness == Brightness.light;
   return Row(
     children: [
       Container(
         padding: EdgeInsets.all(4.w),
         decoration: BoxDecoration(
-          color: isLight
-              ? AppColors.lightPrimary.withValues(alpha: 0.1)
-              : AppColors.lightPink.withValues(alpha: 0.2),
+          color: AppColors.lightPrimary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(10.r),
         ),
-        child: HugeIcon(
-          icon: icon,
-          size: 14.r,
-          color: isLight ? AppColors.lightPrimary : Colors.white,
-        ),
+        child: HugeIcon(icon: icon, size: 14.r, color: AppColors.lightPrimary),
       ),
       SizedBox(width: 4.w),
       AppText(
@@ -109,7 +102,7 @@ Widget buildSectionHeader(
         fontSize: 14.sp,
         maxLines: 2,
         style: theme.textTheme.labelMedium!.copyWith(
-          color: isPrimary ? AppColors.lightPrimary : null,
+          color: AppColors.lightPrimary,
         ),
       ),
     ],
@@ -255,7 +248,6 @@ Widget buildSection(
 Widget toggleItem({
   required String title,
   required bool isSelected,
-  required bool isLight,
   required VoidCallback onTap,
 }) {
   return Expanded(
@@ -265,16 +257,10 @@ Widget toggleItem({
         duration: const Duration(milliseconds: 250),
         padding: EdgeInsets.symmetric(vertical: 10.h),
         decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(Get.context!).scaffoldBackgroundColor
-              : isLight
-              ? AppColors.grey100
-              : AppColors.grey900,
+          color: isSelected ? Colors.white : AppColors.grey100,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
-            color: isSelected
-                ? Theme.of(Get.context!).dividerTheme.color!
-                : Colors.transparent,
+            color: isSelected ? AppColors.grey300 : Colors.transparent,
           ),
           boxShadow: isSelected
               ? [
@@ -346,6 +332,8 @@ Future<void> openWhatsApp(String number, String msg) async {
 Color getStatusColor(String status) {
   switch (status) {
     case 'Pending':
+      return Colors.orange;
+    case 'Not Approved':
       return Colors.orange;
     case 'Approved':
       return Colors.green;

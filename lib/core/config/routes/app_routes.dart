@@ -20,4 +20,6 @@ class Routes {
   static const String qrScannerScreen = "/qrScannerScreen";
   static const String policyData = "/policyData";
   static const String helpAndSupport = "/helpAndSupport";
+  static const String scannedUsers = "/scannedUsers";
+  static const String scannedUsersDetails = "/scannedUsersDetails";
 }

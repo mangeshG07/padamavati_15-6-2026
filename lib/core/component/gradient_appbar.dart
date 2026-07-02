@@ -35,7 +35,7 @@ class GradientAppbar extends StatelessWidget {
             AppText(
               text: title,
               fontSize: 22.sp,
-              style: theme.textTheme.titleLarge,
+              style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
             ),
           ],
         ),

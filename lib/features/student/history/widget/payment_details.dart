@@ -65,6 +65,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                             text: '${payment.startMonth}- ${payment.endMonth}',
                             fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
 
                           SizedBox(height: 10.h),
@@ -83,11 +84,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           _detailRow(
                             "Start Date",
                             payment.startDate.toFormattedDate(),
+                            valueColor: Colors.black,
                           ),
 
                           _detailRow(
                             "End Date",
                             payment.endDate.toFormattedDate(),
+                            valueColor: Colors.black,
                           ),
 
                           _detailRow(
@@ -108,6 +111,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                             "Total Amount",
                             "₹ ${total.toStringAsFixed(0)}",
                             isBold: true,
+                            valueColor: Colors.black,
                           ),
                         ],
                       ),
