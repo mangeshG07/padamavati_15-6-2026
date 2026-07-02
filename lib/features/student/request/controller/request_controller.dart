@@ -1,5 +1,4 @@
-import 'package:padmavatiupdated/domain/usecase/add_food_request_usecase.dart';
-import 'package:padmavatiupdated/domain/usecase/add_leave_usecase.dart';
+
 
 import '../../../../core/exporters/app_export.dart';
 
@@ -80,6 +79,7 @@ class RequestController extends BaseController {
           leavePagination.handleSuccess(list);
 
         case Failure(:final message):
+          debugPrint(message);
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {
@@ -126,6 +126,7 @@ class RequestController extends BaseController {
           foodPagination.handleSuccess(list);
 
         case Failure(:final message):
+          debugPrint(message);
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {

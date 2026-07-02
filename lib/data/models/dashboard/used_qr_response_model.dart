@@ -1,5 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:padmavatiupdated/data/models/dashboard/used_qr_model.dart';
 
 part 'used_qr_response_model.freezed.dart';
 part 'used_qr_response_model.g.dart';

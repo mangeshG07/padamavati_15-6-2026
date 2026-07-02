@@ -46,7 +46,7 @@ class AdminReqCtrl extends BaseController {
           foodPagination.handleSuccess(list);
 
         case Failure(:final message):
-          print(message);
+          debugPrint(message);
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {
@@ -80,7 +80,7 @@ class AdminReqCtrl extends BaseController {
           leavePagination.handleSuccess(list);
 
         case Failure(:final message):
-          print(message);
+          debugPrint(message);
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {

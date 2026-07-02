@@ -63,36 +63,36 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
     );
   }
 
-  Widget _buildToggle(bool isLight, ThemeData theme) {
-    return Obx(
-      () => Container(
-        width: Get.width,
-        padding: const EdgeInsets.all(6.0),
-        decoration: BoxDecoration(
-          color: isLight ? AppColors.grey100 : AppColors.grey800,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            toggleItem(
-              title: "Special Food Request",
-              isSelected: controller.selectedType.value == 0,
-              onTap: () async {
-                controller.selectedType.value = 0;
-              },
-            ),
-            SizedBox(width: 8.w),
-            toggleItem(
-              title: "Leave Request",
-              isSelected: controller.selectedType.value == 1,
-              onTap: () async {
-                controller.selectedType.value = 1;
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildToggle(bool isLight, ThemeData theme) {
+  //   return Obx(
+  //     () => Container(
+  //       width: Get.width,
+  //       padding: const EdgeInsets.all(6.0),
+  //       decoration: BoxDecoration(
+  //         color: isLight ? AppColors.grey100 : AppColors.grey800,
+  //         borderRadius: BorderRadius.circular(12.r),
+  //       ),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           toggleItem(
+  //             title: "Special Food Request",
+  //             isSelected: controller.selectedType.value == 0,
+  //             onTap: () async {
+  //               controller.selectedType.value = 0;
+  //             },
+  //           ),
+  //           SizedBox(width: 8.w),
+  //           toggleItem(
+  //             title: "Leave Request",
+  //             isSelected: controller.selectedType.value == 1,
+  //             onTap: () async {
+  //               controller.selectedType.value = 1;
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

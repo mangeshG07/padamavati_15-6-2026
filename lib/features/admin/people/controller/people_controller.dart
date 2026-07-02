@@ -35,7 +35,7 @@ class PeopleController extends GetxController
           handleSuccess(list);
 
         case Failure(:final message):
-          print(message);
+          debugPrint(message);
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {

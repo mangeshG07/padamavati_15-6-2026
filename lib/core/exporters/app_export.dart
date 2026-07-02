@@ -97,6 +97,8 @@ export 'package:padmavatiupdated/features/student/request/widget/food_requests.d
 export 'package:padmavatiupdated/features/student/request/widget/leave_requests.dart';
 export 'package:padmavatiupdated/features/admin/dashboard/widget/scanned_users_list.dart';
 export 'package:padmavatiupdated/features/admin/dashboard/widget/user_details_page.dart';
+export 'package:padmavatiupdated/domain/usecase/add_food_request_usecase.dart';
+export 'package:padmavatiupdated/domain/usecase/add_leave_usecase.dart';
 
 //Controller//
 export 'package:padmavatiupdated/features/splash/controller/splash_controller.dart';
