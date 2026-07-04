@@ -36,14 +36,7 @@ class QRScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         /// Coupon Header
-                        _buildHeader(
-                          qrData.messType,
-                          theme,
-                          qrData.scannedAt == null
-                              ? 'Valid Till : ${qrData.expiresAt}'
-                              : 'Used At : ${qrData.scannedAt}',
-                          qrData.status!,
-                        ),
+                        _buildHeader(theme, qrData),
                         Divider(),
                         Padding(
                           padding: EdgeInsets.all(20.w),
@@ -92,8 +85,8 @@ class QRScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(title, ThemeData theme, subTitle, status) {
-    final isActive = status == 'Active';
+  Widget _buildHeader(ThemeData theme, QRModel qr) {
+    final isActive = qr.status == 'Active';
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
@@ -109,7 +102,7 @@ class QRScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  text: title,
+                  text: qr.messType ?? '',
                   fontSize: 18.sp,
                   style: theme.textTheme.titleMedium!.copyWith(
                     color: Colors.black,
@@ -117,7 +110,9 @@ class QRScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 AppText(
-                  text: subTitle,
+                  text: qr.scannedAt == null
+                      ? 'Valid Till: ${qr.expiresAt}'
+                      : 'Used At: ${qr.scannedAt}',
                   fontSize: 13.sp,
                   style: theme.textTheme.bodySmall!.copyWith(
                     color: Colors.black,
@@ -126,7 +121,7 @@ class QRScreen extends StatelessWidget {
               ],
             ),
           ),
-          badge(status, isActive ? Colors.green : Colors.red),
+          badge(qr.status ?? '', isActive ? Colors.green : Colors.red),
         ],
       ),
     );

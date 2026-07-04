@@ -6,12 +6,19 @@ class SplashController extends GetxController {
   SplashController(this.remoteConfig);
 
   void checkLogin() async {
-    await Future.delayed(const Duration(seconds: 2));
+    final tokenFuture = SecureStorageService.read(AppConstants.userTokenKey);
+    final roleFuture = SecureStorageService.read(AppConstants.userRollIdKey);
 
-    final token =
-        await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
-    final role =
-        await SecureStorageService.read(AppConstants.userRollIdKey) ?? '';
+    final results = await Future.wait([tokenFuture, roleFuture]);
+    final token = results[0] ?? '';
+    final role = results[1] ?? '';
+
+    _navigate(token, role);
+
+    // final token =
+    //     await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
+    // final role =
+    //     await SecureStorageService.read(AppConstants.userRollIdKey) ?? '';
 
     /// ✅ 1. First check onboarding
     // if (isOnboarded != true) {
@@ -19,19 +26,18 @@ class SplashController extends GetxController {
     //   return;
     // }
 
-    /// ✅ 2. Then check auth
-    Future.microtask(() {
-      if (token.isEmpty) {
-        Get.offAllNamed(Routes.login);
-      } else {
-        if(role == '5'){
-          Get.offAllNamed(Routes.adminMainScreen);
-        }else{
-          Get.offAllNamed(Routes.mainScreen);
-        }
-
-      }
-    });
+    // /// ✅ 2. Then check auth
+    // Future.microtask(() {
+    //   if (token.isEmpty) {
+    //     Get.offAllNamed(Routes.login);
+    //   } else {
+    //     if (role == '5') {
+    //       Get.offAllNamed(Routes.adminMainScreen);
+    //     } else {
+    //       Get.offAllNamed(Routes.mainScreen);
+    //     }
+    //   }
+    // });
     // _loadRemoteConfig();
   }
 
@@ -51,4 +57,19 @@ class SplashController extends GetxController {
   //     // fallback safe mode
   //   }
   // }
+
+  void _navigate(String token, String role) {
+    if (token.isEmpty) {
+      Get.offAllNamed(Routes.login);
+      return;
+    }
+
+    switch (role) {
+      case '5':
+        Get.offAllNamed(Routes.adminMainScreen);
+        break;
+      default:
+        Get.offAllNamed(Routes.mainScreen);
+    }
+  }
 }

@@ -4,6 +4,7 @@ class RegisterController extends GetxController {
   final GetDegreeListUsecase _degreeListUsecase;
   final GetBranchListUsecase _getBranchListUsecase;
   final RegisterUsecase _registerUsecase;
+
   RegisterController(
     this._degreeListUsecase,
     this._getBranchListUsecase,
@@ -11,20 +12,10 @@ class RegisterController extends GetxController {
   );
 
   final isPageLoading = false.obs;
-
-  Future<void> fetchInitialData() async {
-    try {
-      isPageLoading(true);
-
-      await Future.wait([fetchDegree(), fetchBranch()]);
-    } finally {
-      isPageLoading(false);
-    }
-  }
+  final isLoading = false.obs;
 
   /// ------------------ FORM ------------------ ///
   final registerKey = GlobalKey<FormState>();
-  final isLoading = false.obs;
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final currentAddressController = TextEditingController();
@@ -38,54 +29,51 @@ class RegisterController extends GetxController {
   final selectedBranch = Rxn<String>();
   final selectedFoodPref = 0.obs;
 
-  final profileImage = Rx<File?>(null);
-
+  /// ------------------ DATA ------------------ ///
   final degreeList = <MasterDataModel>[].obs;
+  final branchList = <MasterDataModel>[].obs;
 
   final genderList = ['Male', 'Female'].obs;
-  final branchList = <MasterDataModel>[].obs;
   final messTimeList = ['1 Time', '2 Times'].obs;
 
-  void pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  final profileImage = Rx<File?>(null);
+
+  /// ------------------ INITIAL LOAD ------------------ ///
+  Future<void> fetchInitialData() async {
+    try {
+      isPageLoading(true);
+
+      await Future.wait([fetchDegree(), fetchBranch()]);
+    } finally {
+      isPageLoading(false);
+    }
+  }
+
+  /// ------------------ IMAGE PICK ------------------ ///
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+    );
     if (pickedFile != null) {
       profileImage.value = File(pickedFile.path);
     }
   }
 
-  /// ------------------ DegreeList ------------------ ///
-  final isDegreeLoading = false.obs;
-
+  /// ------------------ DEGREE  ------------------ ///
   Future<void> fetchDegree() async {
-    try {
-      isDegreeLoading(true);
-      degreeList.clear();
+    final res = await _degreeListUsecase.call();
 
-      final res = await _degreeListUsecase.call();
-
-      if (res.common.status == true) {
-        degreeList.assignAll(res.data ?? []);
-      }
-    } finally {
-      isDegreeLoading(false);
+    if (res.common.status == true) {
+      degreeList.assignAll(res.data ?? []);
     }
   }
 
-  /// ------------------ BranchList ------------------ ///
-  final isBranchLoading = false.obs;
+  /// ------------------ BRANCH  ------------------ ///
   Future<void> fetchBranch() async {
-    try {
-      isBranchLoading(true);
-      branchList.clear();
-      final res = await _getBranchListUsecase.call();
+    final res = await _getBranchListUsecase.call();
 
-      if (res.common.status == true) {
-        branchList.assignAll(res.data ?? []);
-      }
-    } catch (_) {
-    } finally {
-      isBranchLoading(false);
+    if (res.common.status == true) {
+      branchList.assignAll(res.data ?? []);
     }
   }
 
@@ -139,5 +127,18 @@ class RegisterController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  Color get foodColor =>
+      selectedFoodPref.value == 0 ? Colors.green : Colors.red;
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    numberController.dispose();
+    currentAddressController.dispose();
+    permAddressController.dispose();
+    dobController.dispose();
+    super.onClose();
   }
 }

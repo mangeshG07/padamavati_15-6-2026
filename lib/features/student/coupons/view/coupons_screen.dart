@@ -1,7 +1,5 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-import '../widget/empty_coupon.dart';
-
 class CouponsScreen extends StatefulWidget {
   const CouponsScreen({super.key});
 
@@ -33,49 +31,13 @@ class _CouponsScreenState extends State<CouponsScreen> {
             ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
             : SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(12),
                   child: Column(
                     spacing: 12.h,
                     children: [
-                      Row(
-                        spacing: 8.h,
-                        children: [
-                          _buildCouponCard(
-                            theme,
-                            controller.couponSummary.value.todayCoupons
-                                    ?.toString() ??
-                                '0',
-                            'Total: ${controller.couponSummary.value.totalCoupons?.toString() ?? '0'} Coupons',
-                            'Today’s Coupons',
-                            HugeIcons.strokeRoundedTicketStar,
-                          ),
-                          _buildCouponCard(
-                            theme,
-                            controller.couponSummary.value.remainingCoupons
-                                    ?.toString() ??
-                                '0',
-                            'Valid til: ${controller.couponSummary.value.expiryDate?.toString() ?? ''}',
-                            'Remaining Coupons',
-                            HugeIcons.strokeRoundedTags,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        // onTap: () => Get.toNamed(Routes.couponDetails),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(12.0),
-                          alignment: Alignment.center,
-                          decoration: buildCardDecoration(),
-                          child: AppText(
-                            text:
-                                'Total: ${controller.couponSummary.value.totalCoupons?.toString() ?? '0'} Coupons',
-                            fontSize: 18.sp,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      _buildToggle(theme.brightness == Brightness.light, theme),
+                      _summaryRow(theme),
+                      _totalCard(),
+                      _buildToggle(),
                       Obx(
                         () => controller.selectedType.value == 0
                             ? todayCoupons(theme)
@@ -86,6 +48,31 @@ class _CouponsScreenState extends State<CouponsScreen> {
                 ),
               ),
       ),
+    );
+  }
+
+  /// ================= SUMMARY =================
+  Widget _summaryRow(ThemeData theme) {
+    final summary = controller.couponSummary.value;
+
+    return Row(
+      spacing: 8.h,
+      children: [
+        _buildCouponCard(
+          theme,
+          summary.todayCoupons?.toString() ?? '0',
+          'Total: ${summary.totalCoupons?.toString() ?? '0'} Coupons',
+          'Today’s Coupons',
+          HugeIcons.strokeRoundedTicketStar,
+        ),
+        _buildCouponCard(
+          theme,
+          summary.remainingCoupons?.toString() ?? '0',
+          'Valid til: ${summary.expiryDate?.toString() ?? ''}',
+          'Remaining Coupons',
+          HugeIcons.strokeRoundedTags,
+        ),
+      ],
     );
   }
 
@@ -152,7 +139,25 @@ class _CouponsScreenState extends State<CouponsScreen> {
     );
   }
 
-  Widget _buildToggle(bool isLight, ThemeData theme) {
+  /// ================= TOTAL =================
+  Widget _totalCard() {
+    final total =
+        controller.couponSummary.value.totalCoupons?.toString() ?? '0';
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12.0),
+      alignment: Alignment.center,
+      decoration: buildCardDecoration(),
+      child: AppText(
+        text: 'Total: $total Coupons',
+        fontSize: 18.sp,
+        color: Colors.black,
+      ),
+    );
+  }
+
+  /// ================= TOGGLE =================
+  Widget _buildToggle() {
     return Obx(
       () => Container(
         width: Get.width,
@@ -185,6 +190,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
     );
   }
 
+  /// ================= LIST =================
   Widget todayCoupons(ThemeData theme) {
     if (controller.todayQR.isEmpty) {
       return const EmptyView();
@@ -300,9 +306,10 @@ class _CouponsScreenState extends State<CouponsScreen> {
               ? 'Valid Till : ${qr.expiresAt}'
               : 'Used At : ${qr.scannedAt}',
           qr.status!,
-          qr.messTime == 'Morning'
-              ? HugeIcons.strokeRoundedSun03
-              : HugeIcons.strokeRoundedMoon02,
+          HugeIcons.strokeRoundedServingFood,
+          // qr.messTime == 'Morning'
+          //     ? HugeIcons.strokeRoundedSun03
+          //     : HugeIcons.strokeRoundedMoon02,
           qr,
         );
       },

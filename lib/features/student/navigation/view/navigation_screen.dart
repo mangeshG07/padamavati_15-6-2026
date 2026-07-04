@@ -19,23 +19,15 @@ class NavigationScreen extends GetView<NavigationController> {
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.r),
-              topRight: Radius.circular(16.r),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
             boxShadow: [
-              if (theme.brightness == Brightness.light)
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.07),
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
-                )
-              else
-                BoxShadow(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
-                ),
+              BoxShadow(
+                color: theme.brightness == Brightness.light
+                    ? Colors.black.withValues(alpha: 0.07)
+                    : Colors.white.withValues(alpha: 0.08),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+              ),
             ],
           ),
           child: ClipRRect(
@@ -50,34 +42,38 @@ class NavigationScreen extends GetView<NavigationController> {
               ),
               currentIndex: controller.currentIndex.value,
               onTap: controller.changePage,
-
               items: [
-                _buildNavItem(
-                  HugeIcons.strokeRoundedHome04,
-                  'Home',
-                  controller.currentIndex.value == 0,
-                ),
-                _buildNavItem(
-                  HugeIcons.strokeRoundedTicketStar,
-                  'Coupens',
-                  controller.currentIndex.value == 1,
-                ),
-                _buildNavItem(
-                  HugeIcons.strokeRoundedTransactionHistory,
-                  'History',
-                  controller.currentIndex.value == 2,
-                ),
-                _buildNavItem(
-                  HugeIcons.strokeRoundedValidationApproval,
-                  'Requests',
-                  controller.currentIndex.value == 3,
-                ),
-                _buildNavItem(
-                  HugeIcons.strokeRoundedUser03,
-                  'Profile',
-                  controller.currentIndex.value == 4,
-                  iconSize: Get.width * 0.05,
-                ),
+                _item(0, HugeIcons.strokeRoundedHome04, 'Home'),
+                _item(1, HugeIcons.strokeRoundedTicketStar, 'Coupons'),
+                _item(2, HugeIcons.strokeRoundedTransactionHistory, 'History'),
+                _item(3, HugeIcons.strokeRoundedValidationApproval, 'Requests'),
+                _item(4, HugeIcons.strokeRoundedUser03, 'Profile'),
+                // _buildNavItem(
+                //   HugeIcons.strokeRoundedHome04,
+                //   'Home',
+                //   controller.currentIndex.value == 0,
+                // ),
+                // _buildNavItem(
+                //   HugeIcons.strokeRoundedTicketStar,
+                //   'Coupens',
+                //   controller.currentIndex.value == 1,
+                // ),
+                // _buildNavItem(
+                //   HugeIcons.strokeRoundedTransactionHistory,
+                //   'History',
+                //   controller.currentIndex.value == 2,
+                // ),
+                // _buildNavItem(
+                //   HugeIcons.strokeRoundedValidationApproval,
+                //   'Requests',
+                //   controller.currentIndex.value == 3,
+                // ),
+                // _buildNavItem(
+                //   HugeIcons.strokeRoundedUser03,
+                //   'Profile',
+                //   controller.currentIndex.value == 4,
+                //   iconSize: Get.width * 0.05,
+                // ),
               ],
             ),
           ),
@@ -86,23 +82,37 @@ class NavigationScreen extends GetView<NavigationController> {
     );
   }
 
-  BottomNavigationBarItem _buildNavItem(
-    dynamic icon,
-    String label,
-    bool isSelected, {
-    double? iconSize,
-  }) {
+  BottomNavigationBarItem _item(int index, dynamic icon, String label) {
+    final isSelected = controller.currentIndex.value == index;
+
     return BottomNavigationBarItem(
       backgroundColor: Colors.white,
-      icon: Padding(
-        padding: const EdgeInsets.only(bottom: 4.0),
-        child: HugeIcon(
-          size: iconSize ?? Get.width * 0.06,
-          icon: icon,
-          color: isSelected ? AppColors.lightPrimary : Colors.grey.shade500,
-        ),
+      icon: HugeIcon(
+        icon: icon,
+        size: Get.width * 0.06,
+        color: isSelected ? AppColors.lightPrimary : Colors.grey.shade500,
       ),
       label: label,
     );
   }
+
+  // BottomNavigationBarItem _buildNavItem(
+  //   dynamic icon,
+  //   String label,
+  //   bool isSelected, {
+  //   double? iconSize,
+  // }) {
+  //   return BottomNavigationBarItem(
+  //     backgroundColor: Colors.white,
+  //     icon: Padding(
+  //       padding: const EdgeInsets.only(bottom: 4.0),
+  //       child: HugeIcon(
+  //         size: iconSize ?? Get.width * 0.06,
+  //         icon: icon,
+  //         color: isSelected ? AppColors.lightPrimary : Colors.grey.shade500,
+  //       ),
+  //     ),
+  //     label: label,
+  //   );
+  // }
 }

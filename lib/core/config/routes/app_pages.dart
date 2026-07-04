@@ -32,8 +32,8 @@ class AppPages {
     ),
     GetPage(name: Routes.couponDetails, page: () => CouponDetails()),
     GetPage(name: Routes.qrDetails, page: () => QRScreen()),
-    GetPage(name: Routes.paymentDetails, page: () => PaymentDetailsScreen()),
-    GetPage(name: Routes.paymentReceipt, page: () => PaymentReceipt()),
+    GetPage(name: Routes.paymentDetails, page: () => PaymentDetailsScreen(),binding: HistoryBindings()),
+    GetPage(name: Routes.paymentReceipt, page: () => PaymentReceipt(),binding: HistoryBindings()),
     GetPage(name: Routes.editProfile, page: () => EditProfile()),
     GetPage(name: Routes.facilityScreen, page: () => FacilityScreen()),
 

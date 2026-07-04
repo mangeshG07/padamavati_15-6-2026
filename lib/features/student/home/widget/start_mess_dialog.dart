@@ -8,11 +8,12 @@ class MessSelectionPopup extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         padding: const EdgeInsets.all(20),
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: Get.width * 0.8.w,
         child: Column(
           spacing: 16.h,
           mainAxisSize: MainAxisSize.min,
@@ -42,16 +43,10 @@ class MessSelectionPopup extends GetView<HomeController> {
                 validator: AppValidators.required,
                 onChanged: (val) {
                   controller.selectedPackage.value = val;
-                  controller.updatePackageDetails(); // 🔥 important
+                  controller.updatePackageDetails();
                 },
               );
             }),
-
-            // AppText(text: '60 Coupons', fontSize: 14.sp),
-            // AppText(text: 'Monthly', fontSize: 14.sp),
-            // AppText(text: '30 Days', fontSize: 14.sp),
-            // AppText(text: 'mess Time 2-times', fontSize: 14.sp),
-            // AppText(text: 'Total Amount 2500/-', fontSize: 14.sp),
 
             /// 🔥 PACKAGE DETAILS CARD
             Obx(() {

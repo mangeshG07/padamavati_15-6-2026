@@ -1,5 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:padmavatiupdated/domain/usecase/get_payment_receipt.dart';
 
 class HistoryController extends BaseController {
   final PayHistoryUsecase _historyUsecase;
@@ -9,32 +8,11 @@ class HistoryController extends BaseController {
 
   final isHistoryLoading = false.obs;
   final paymentHistoryList = <PaymentDetailsModel>[].obs;
-  final paymentReceiptList = <PaymentModel>[].obs;
+
   final isReceiptLoading = false.obs;
+  final paymentReceiptList = <PaymentModel>[].obs;
 
-  final payHistoryList = [
-    {
-      'month': 'May-June',
-      'type': 'Veg',
-      'start_date': '13-05-2025',
-      'end_date': '12-06-2025',
-      'paid_amount': '₹ 2,600',
-      'pending_amount': '₹ 2,600',
-      'pending_status': 'Pending',
-    },
-    {
-      'month': 'April-May',
-      'type': 'Non-Veg',
-      'start_date': '13-04-2025',
-      'end_date': '12-05-2025',
-      'paid_amount': '₹ 2,600',
-      'pending_amount': '₹ 2,600',
-      'pending_status': 'Completed',
-    },
-  ].obs;
-
-  /// -------------------- METHODS --------------------
-
+  /// -------------------- HISTORY --------------------
   Future<void> fetchPaymentHistory() async {
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';
@@ -47,6 +25,7 @@ class HistoryController extends BaseController {
     );
   }
 
+  /// -------------------- RECEIPT --------------------
   Future<void> fetchPaymentReceipt(String transId) async {
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';

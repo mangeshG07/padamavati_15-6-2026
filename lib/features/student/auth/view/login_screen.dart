@@ -98,7 +98,8 @@ class LoginScreen extends GetView<LoginController> {
           fillColor: AppColors.textFieldBgColor,
           controller: controller.numberController,
           hint: 'Enter Mobile Number',
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.done,
           label: label,
           filled: true,
           focusedBorder: theme.inputDecorationTheme.focusedBorder,
@@ -127,14 +128,16 @@ class LoginScreen extends GetView<LoginController> {
         backgroundColor: AppColors.lightPrimary,
         text: 'Send OTP',
         loading: controller.isLoading.value,
-        onTap: () async {
-          // Get.toNamed(Routes.verifyOTP);
-          if (controller.loginKey.currentState!.validate()) {
-            await controller.sendOTP();
-          }
-        },
+        onTap: _onSendOtpTap,
       ),
     );
+  }
+
+  Future<void> _onSendOtpTap() async {
+    FocusScope.of(Get.context!).unfocus();
+    if (controller.loginKey.currentState!.validate()) {
+      await controller.sendOTP();
+    }
   }
 
   Widget _buildSignUpText() {

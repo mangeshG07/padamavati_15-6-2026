@@ -12,9 +12,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
+    super.initState();
     controller.numberController.text = Get.arguments ?? '';
     controller.fetchInitialData();
-    super.initState();
   }
 
   @override
@@ -31,9 +31,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ? AppLoader(color: AppColors.lightPrimary, strokeWidth: 2.5)
             : SafeArea(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Form(
                     key: controller.registerKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       spacing: 16.h,
                       children: [
@@ -126,24 +129,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Obx(
-          () => Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: AppButton(
-              text: 'Register & Continue',
-              onTap: () async => await controller.registerUser(
-                controller.numberController.text.trim(),
-              ),
-              backgroundColor: AppColors.lightPrimary,
-              loading: controller.isLoading.value,
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: _buildSubmitButton(),
     );
   }
 
+  /// ---------------- PROFILE IMAGE ---------------- ///
   Widget _buildProfileImage() {
     return GestureDetector(
       onTap: controller.pickImage,
@@ -235,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       onTap: () async {
         final DateTime? pickedDate = await showDatePicker(
           context: context,
-          initialDate: DateTime.now(),
+          initialDate: DateTime(2000),
           firstDate: DateTime(1900),
           lastDate: DateTime.now(),
           builder: (context, child) {
@@ -275,6 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       () => Column(
         spacing: 6.h,
         children: [
+          AppLabel.required(text: 'Food Preference'),
           Row(
             children: [
               Text('Food Preference', style: AppTextStyles.labelMedium),
@@ -295,9 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               borderColor: Colors.transparent,
               borderRadius: BorderRadius.circular(12.r),
               backgroundColor: Colors.grey.shade200,
-              indicatorColor: controller.selectedFoodPref.value == 0
-                  ? Colors.green
-                  : Colors.red,
+              indicatorColor: controller.foodColor,
             ),
             onChanged: (value) {
               controller.selectedFoodPref.value = value;
@@ -324,6 +313,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return SafeArea(
+      child: Obx(
+        () => Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: AppButton(
+            text: 'Register & Continue',
+            onTap: () async => await controller.registerUser(
+              controller.numberController.text.trim(),
+            ),
+            backgroundColor: AppColors.lightPrimary,
+            loading: controller.isLoading.value,
+          ),
+        ),
       ),
     );
   }

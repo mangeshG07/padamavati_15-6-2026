@@ -5,13 +5,13 @@ class AppColors {
   AppColors._();
 
   // Light Theme Colors
-  static const Color lightPrimary = Color(0xFF602823);
+  static const Color lightPrimary = Color(0xFFe51d2b);
   static const Color lightMidPrimary = Color(0xFFEF7F1A);
   static const Color lightLowPrimary = Color(0xFFFFE1BC);
   static const Color lightPink = Color(0xFFFFEBF6);
   static const Color lightCardPink = Color(0xFFFFEAEA);
   static const Color lightBorderPink = Color(0xFFF69CCF);
-  static const Color lightSecondary = Color(0xFFF79E3B);
+  static const Color lightSecondary = Color(0xFF114829);
   static const Color lightMidSecondary = Color(0xFFCF985B);
   static const Color lightLowSecondary = Color(0xFFFFEBD4);
   static const Color lightTextColor = Color(0xFF202020);

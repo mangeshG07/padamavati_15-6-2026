@@ -6,6 +6,7 @@ class VerifyOTP extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -16,7 +17,6 @@ class VerifyOTP extends GetView<OtpController> {
           foregroundColor: Colors.black,
           iconTheme: const IconThemeData(color: Colors.black),
         ),
-
 
         body: SafeArea(
           child: SingleChildScrollView(
@@ -39,7 +39,7 @@ class VerifyOTP extends GetView<OtpController> {
                         Image.asset(
                           AppAssets.splashLogo,
                           height: 180.h,
-                          width: 180.w,
+                          // width: 180.w,
                         ),
                         SizedBox(height: 20.h),
                         AppText(
@@ -51,26 +51,29 @@ class VerifyOTP extends GetView<OtpController> {
                         ),
                         AppText(
                           text:
-                              'We have sent OTP to +91 ${Get.find<LoginController>().numberController.text.trim()}',
+                              'We have sent OTP to +91 ${controller.mobileNumber}',
                           fontSize: 14.sp,
                           maxLines: 2,
                           style: theme.textTheme.titleSmall!.copyWith(
                             color: AppColors.grey500,
                           ),
                         ),
-                        const SizedBox(height: 22),
+                        SizedBox(height: 25.h),
+
+                        /// OTP FIELD
                         _buildOTPField('OTP', theme, context),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 10.h),
+
                         _buildResendOtp(),
-                        const SizedBox(height: 22),
+                        SizedBox(height: 20.h),
                         _buildVerifyButton(),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 10.h),
                         _buildChangeNumber(),
                       ],
                     ),
 
                     /// Bottom Text
-                    _buildDevelopedByText(theme),
+                    _buildFooter(theme),
                   ],
                 ),
               ),
@@ -87,7 +90,7 @@ class VerifyOTP extends GetView<OtpController> {
       width: 50.w,
       height: 50.h,
       textStyle: TextStyle(
-        fontSize: 22.sp,
+        fontSize: 20.sp,
         color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
@@ -109,7 +112,7 @@ class VerifyOTP extends GetView<OtpController> {
             length: 6,
             keyboardType: TextInputType.number,
             validator: (value) =>
-                value == null || value.isEmpty ? 'OTP is required' : null,
+                value == null || value.isEmpty ? 'Enter valid OTP' : null,
             defaultPinTheme: defaultPinTheme,
             focusedPinTheme: defaultPinTheme.copyWith(
               decoration: defaultPinTheme.decoration!.copyWith(
@@ -135,20 +138,21 @@ class VerifyOTP extends GetView<OtpController> {
     return Align(
       alignment: Alignment.topLeft,
       child: Obx(() {
-        return controller.start.value > 0
+        final t = controller.timer.value;
+
+        return t > 0
             ? AppText(
-                text:
-                    'Didn’t receive it? Resend OTP in (${controller.start.value}s)',
-                color: AppColors.lightTextLowColor,
                 fontSize: 14.sp,
+                text: 'Resend OTP in ($t s)',
+                color: Colors.black,
               )
             : GestureDetector(
-                // onTap: () => Get.find<LoginController>().auth(),
+                onTap: controller.resendOtp,
                 child: AppText(
                   text: 'Resend OTP',
-                  color: AppColors.lightPrimary,
                   fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               );
       }),
@@ -161,10 +165,7 @@ class VerifyOTP extends GetView<OtpController> {
       () => AppButton(
         text: 'Verify OTP',
         loading: controller.isLoading.value,
-        // onTap: () => Get.offAllNamed(Routes.mainScreen),
-        onTap: () async => await controller.verifyOTP(
-          Get.find<LoginController>().numberController.text,
-        ),
+        onTap: controller.verifyOTP,
         backgroundColor: AppColors.lightPrimary,
       ),
     );
@@ -173,28 +174,26 @@ class VerifyOTP extends GetView<OtpController> {
   /// ---------------- Change Number ----------------
   Widget _buildChangeNumber() {
     return GestureDetector(
-      onTap: () => AllDialogs().changeNumber(
-        Get.find<LoginController>().numberController.text,
-      ),
+      onTap: () => AllDialogs().changeNumber(controller.mobileNumber),
       child: Align(
         alignment: Alignment.topRight,
         child: AppText(
           text: "Change Mobile Number",
           fontSize: 14.sp,
-          // textAlign: TextAlign.end,
           style: TextStyle(
             fontSize: 14.sp,
-            color: AppColors.lightPrimary,
+            color: Colors.black,
             fontWeight: FontWeight.w600,
             decoration: TextDecoration.underline,
-            decorationColor: AppColors.lightPrimary,
+            decorationColor: Colors.black,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildDevelopedByText(ThemeData theme) {
+  /// ---------------- FOOTER ----------------
+  Widget _buildFooter(ThemeData theme) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h, top: 20.h),
       child: Center(

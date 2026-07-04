@@ -8,6 +8,7 @@ abstract class PeopleModel with _$PeopleModel {
   const factory PeopleModel({
     String? code,
     String? name,
+    @JsonKey(name: 'app_id') int? id,
     @JsonKey(name: 'profile_image') String? profileImage,
   }) = _PeopleModel;
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PeopleModel {
 
- String? get code; String? get name;@JsonKey(name: 'profile_image') String? get profileImage;
+ String? get code; String? get name;@JsonKey(name: 'app_id') int? get id;@JsonKey(name: 'profile_image') String? get profileImage;
 /// Create a copy of PeopleModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PeopleModelCopyWith<PeopleModel> get copyWith => _$PeopleModelCopyWithImpl<Peop
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PeopleModel&&(identical(other.code, code) || other.code == code)&&(identical(other.name, name) || other.name == name)&&(identical(other.profileImage, profileImage) || other.profileImage == profileImage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PeopleModel&&(identical(other.code, code) || other.code == code)&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.profileImage, profileImage) || other.profileImage == profileImage));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,code,name,profileImage);
+int get hashCode => Object.hash(runtimeType,code,name,id,profileImage);
 
 @override
 String toString() {
-  return 'PeopleModel(code: $code, name: $name, profileImage: $profileImage)';
+  return 'PeopleModel(code: $code, name: $name, id: $id, profileImage: $profileImage)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PeopleModelCopyWith<$Res>  {
   factory $PeopleModelCopyWith(PeopleModel value, $Res Function(PeopleModel) _then) = _$PeopleModelCopyWithImpl;
 @useResult
 $Res call({
- String? code, String? name,@JsonKey(name: 'profile_image') String? profileImage
+ String? code, String? name,@JsonKey(name: 'app_id') int? id,@JsonKey(name: 'profile_image') String? profileImage
 });
 
 
@@ -65,11 +65,12 @@ class _$PeopleModelCopyWithImpl<$Res>
 
 /// Create a copy of PeopleModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? code = freezed,Object? name = freezed,Object? profileImage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? code = freezed,Object? name = freezed,Object? id = freezed,Object? profileImage = freezed,}) {
   return _then(_self.copyWith(
 code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,profileImage: freezed == profileImage ? _self.profileImage : profileImage // ignore: cast_nullable_to_non_nullable
+as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,profileImage: freezed == profileImage ? _self.profileImage : profileImage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? code,  String? name, @JsonKey(name: 'profile_image')  String? profileImage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? code,  String? name, @JsonKey(name: 'app_id')  int? id, @JsonKey(name: 'profile_image')  String? profileImage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PeopleModel() when $default != null:
-return $default(_that.code,_that.name,_that.profileImage);case _:
+return $default(_that.code,_that.name,_that.id,_that.profileImage);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.code,_that.name,_that.profileImage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? code,  String? name, @JsonKey(name: 'profile_image')  String? profileImage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? code,  String? name, @JsonKey(name: 'app_id')  int? id, @JsonKey(name: 'profile_image')  String? profileImage)  $default,) {final _that = this;
 switch (_that) {
 case _PeopleModel():
-return $default(_that.code,_that.name,_that.profileImage);case _:
+return $default(_that.code,_that.name,_that.id,_that.profileImage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.code,_that.name,_that.profileImage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? code,  String? name, @JsonKey(name: 'profile_image')  String? profileImage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? code,  String? name, @JsonKey(name: 'app_id')  int? id, @JsonKey(name: 'profile_image')  String? profileImage)?  $default,) {final _that = this;
 switch (_that) {
 case _PeopleModel() when $default != null:
-return $default(_that.code,_that.name,_that.profileImage);case _:
+return $default(_that.code,_that.name,_that.id,_that.profileImage);case _:
   return null;
 
 }
@@ -211,11 +212,12 @@ return $default(_that.code,_that.name,_that.profileImage);case _:
 @JsonSerializable()
 
 class _PeopleModel implements PeopleModel {
-  const _PeopleModel({this.code, this.name, @JsonKey(name: 'profile_image') this.profileImage});
+  const _PeopleModel({this.code, this.name, @JsonKey(name: 'app_id') this.id, @JsonKey(name: 'profile_image') this.profileImage});
   factory _PeopleModel.fromJson(Map<String, dynamic> json) => _$PeopleModelFromJson(json);
 
 @override final  String? code;
 @override final  String? name;
+@override@JsonKey(name: 'app_id') final  int? id;
 @override@JsonKey(name: 'profile_image') final  String? profileImage;
 
 /// Create a copy of PeopleModel
@@ -231,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PeopleModel&&(identical(other.code, code) || other.code == code)&&(identical(other.name, name) || other.name == name)&&(identical(other.profileImage, profileImage) || other.profileImage == profileImage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PeopleModel&&(identical(other.code, code) || other.code == code)&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.profileImage, profileImage) || other.profileImage == profileImage));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,code,name,profileImage);
+int get hashCode => Object.hash(runtimeType,code,name,id,profileImage);
 
 @override
 String toString() {
-  return 'PeopleModel(code: $code, name: $name, profileImage: $profileImage)';
+  return 'PeopleModel(code: $code, name: $name, id: $id, profileImage: $profileImage)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$PeopleModelCopyWith<$Res> implements $PeopleModelCopyWith
   factory _$PeopleModelCopyWith(_PeopleModel value, $Res Function(_PeopleModel) _then) = __$PeopleModelCopyWithImpl;
 @override @useResult
 $Res call({
- String? code, String? name,@JsonKey(name: 'profile_image') String? profileImage
+ String? code, String? name,@JsonKey(name: 'app_id') int? id,@JsonKey(name: 'profile_image') String? profileImage
 });
 
 
@@ -268,11 +270,12 @@ class __$PeopleModelCopyWithImpl<$Res>
 
 /// Create a copy of PeopleModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? code = freezed,Object? name = freezed,Object? profileImage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? code = freezed,Object? name = freezed,Object? id = freezed,Object? profileImage = freezed,}) {
   return _then(_PeopleModel(
 code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,profileImage: freezed == profileImage ? _self.profileImage : profileImage // ignore: cast_nullable_to_non_nullable
+as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,profileImage: freezed == profileImage ? _self.profileImage : profileImage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

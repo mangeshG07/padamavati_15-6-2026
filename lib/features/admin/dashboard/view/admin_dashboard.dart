@@ -269,10 +269,3 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 }
-
-//
-// class AdminDashboard extends GetView<DashboardController> {
-//   const AdminDashboard({super.key});
-//
-//
-// }

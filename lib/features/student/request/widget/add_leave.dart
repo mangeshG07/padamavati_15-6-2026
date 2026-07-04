@@ -49,16 +49,16 @@ class AddLeave extends GetView<RequestController> {
               loading: controller.isAddLeaveLoading.value,
               onTap: () async {
                 if (controller.leaveKey.currentState!.validate()) {
-                  if (controller.calculatedDays.value < 5 ||
-                      controller.calculatedDays.value > 8) {
-                    Get.snackbar(
-                      'Alert',
-                      'You can apply for a minimum of 5 days and a maximum of 8 days leave.',
-                      snackPosition: SnackPosition.TOP,
-                      backgroundColor: Colors.white,
-                    );
-                    return;
-                  }
+                  // if (controller.calculatedDays.value < 5 ||
+                  //     controller.calculatedDays.value > 8) {
+                  //   Get.snackbar(
+                  //     'Alert',
+                  //     'You can apply for a minimum of 5 days and a maximum of 8 days leave.',
+                  //     snackPosition: SnackPosition.TOP,
+                  //     backgroundColor: Colors.white,
+                  //   );
+                  //   return;
+                  // }
                   await controller.addLeaveRequest();
                 }
               },

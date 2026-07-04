@@ -10,30 +10,45 @@ class AdminLoginController extends BaseController {
 
   final isObscure = true.obs;
 
+  void togglePassword() => isObscure.toggle();
+
   Future<void> adminLogin() async {
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
+
     await callApi<BaseResponseModel<UserModel>>(
-      request: () => _loginUsecase.call(
-        AdminEntity(
-          usernameController.text.trim(),
-          passwordController.text.trim(),
-        ),
-      ),
+      request: () => _loginUsecase.call(AdminEntity(username, password)),
       loader: isLoading,
       showError: true,
       onSuccess: (data) async {
-        await SecureStorageService.write(
-          AppConstants.userTokenKey,
-          data.data!.authKey,
-        );
-        await SecureStorageService.write(
-          AppConstants.userIdKey,
-          data.data!.userId.toString(),
-        );
-        await SecureStorageService.write(
-          AppConstants.userRollIdKey,
-          data.data!.roleId.toString(),
-        );
+        final user = data.data!;
+
+        await Future.wait([
+          SecureStorageService.write(AppConstants.userTokenKey, user.authKey),
+          SecureStorageService.write(
+            AppConstants.userIdKey,
+            user.userId.toString(),
+          ),
+          SecureStorageService.write(
+            AppConstants.userRollIdKey,
+            user.roleId.toString(),
+          ),
+        ]);
+
+        // await SecureStorageService.write(
+        //   AppConstants.userTokenKey,
+        //   data.data!.authKey,
+        // );
+        // await SecureStorageService.write(
+        //   AppConstants.userIdKey,
+        //   data.data!.userId.toString(),
+        // );
+        // await SecureStorageService.write(
+        //   AppConstants.userRollIdKey,
+        //   data.data!.roleId.toString(),
+        // );
         Get.offAllNamed(Routes.adminMainScreen);
+
         CustomSnackbar.show(
           context: Get.context!,
           message: data.common.message,
@@ -41,8 +56,19 @@ class AdminLoginController extends BaseController {
         );
       },
       onError: (msg) {
-        CustomSnackbar.show(context: Get.context!, message: msg);
+        CustomSnackbar.show(
+          context: Get.context!,
+          message: msg,
+          type: SnackbarType.error,
+        );
       },
     );
+  }
+
+  @override
+  void onClose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

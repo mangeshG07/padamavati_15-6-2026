@@ -11,8 +11,6 @@ class LoginController extends GetxController {
   final isLoading = false.obs;
 
   Future<void> sendOTP() async {
-    if (!loginKey.currentState!.validate()) return;
-
     try {
       isLoading.value = true;
 
@@ -26,7 +24,7 @@ class LoginController extends GetxController {
           type: SnackbarType.success,
           message: response.common!.message,
         );
-        Get.toNamed(Routes.verifyOTP);
+        Get.toNamed(Routes.verifyOTP, arguments: numberController.text.trim());
       } else {
         CustomSnackbar.show(
           context: Get.context!,
@@ -35,8 +33,11 @@ class LoginController extends GetxController {
         );
       }
     } catch (_) {
-      // print('error======>$e');
-      // print('stacktrace======>$stacktrace');
+      CustomSnackbar.show(
+        context: Get.context!,
+        type: SnackbarType.error,
+        message: 'Something went wrong.',
+      );
     } finally {
       isLoading.value = false;
     }

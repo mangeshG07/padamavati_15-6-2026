@@ -7,7 +7,7 @@ class AdminLogin extends GetView<AdminLoginController> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: CustomAppbar(backgroundColor: Colors.white),
@@ -34,6 +34,7 @@ class AdminLogin extends GetView<AdminLoginController> {
                           height: 180.h,
                           width: 180.w,
                         ),
+                        SizedBox(height: 16.h),
                         AppText(
                           text: 'Admin Login',
                           fontSize: 24.sp,
@@ -98,9 +99,7 @@ class AdminLogin extends GetView<AdminLoginController> {
         validator: (value) =>
             value!.trim().isEmpty ? 'Please enter password'.tr : null,
         suffixIcon: GestureDetector(
-          onTap: () {
-            controller.isObscure.value = !controller.isObscure.value;
-          },
+          onTap: controller.togglePassword,
           child: paddedIcon(
             icon: controller.isObscure.isTrue
                 ? HugeIcons.strokeRoundedViewOff
@@ -115,7 +114,7 @@ class AdminLogin extends GetView<AdminLoginController> {
   Widget _buildLoginButton() {
     return Obx(
       () => AppButton(
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: Colors.black,
         text: 'Login',
         loading: controller.isLoading.value,
         onTap: () async {

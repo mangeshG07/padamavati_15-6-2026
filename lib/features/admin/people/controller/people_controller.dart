@@ -5,13 +5,6 @@ class PeopleController extends GetxController
   final GetBranchUsersUsecase _branchUsersUsecase;
   PeopleController(this._branchUsersUsecase);
 
-  final peopleList = [
-    {'image': AppAssets.defaultImage, 'name': 'Rohit Patil', 'id': 'PDM01'},
-    {'image': AppAssets.defaultImage, 'name': 'Sneha Joshi', 'id': 'PDM02'},
-    {'image': AppAssets.defaultImage, 'name': 'Amit Shewale', 'id': 'PDM03'},
-    {'image': AppAssets.defaultImage, 'name': 'Pooja Khot', 'id': 'PDM04'},
-  ].obs;
-
   Future<void> getBranchUserList({
     bool isRefresh = false,
     bool showLoading = true,

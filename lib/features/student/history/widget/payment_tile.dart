@@ -1,107 +1,70 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class PaymentTile extends StatelessWidget {
-  final PaymentDetailsModel? payment;
-  const PaymentTile({super.key, this.payment});
+  final PaymentDetailsModel payment;
+  const PaymentTile({super.key, required this.payment});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.paymentDetails, arguments: payment),
       child: Container(
         decoration: _buildCardDecoration(),
-        child: Padding(
-          padding: EdgeInsets.all(16.r),
-          child: Column(
-            spacing: 12.h,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AppText(
-                    text: '${payment!.startMonth}- ${payment!.endMonth}',
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  badge(
-                    payment?.messTypeName ?? '',
-                    payment?.messTypeName == 'Veg' ? Colors.green : Colors.red,
-                  ),
-                ],
-              ),
-              Row(
-                spacing: 12.w,
-                children: [
-                  _buildDate(
-                    theme,
-                    'Start Date',
-                    payment?.startDate.toFormattedDate() ?? '',
-                  ),
-                  _buildDate(
-                    theme,
-                    'End Date',
-                    payment?.endDate.toFormattedDate() ?? '',
-                  ),
-                ],
-              ),
-              const DottedLine(
-                dashColor: Colors.grey,
-                direction: Axis.horizontal,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        size: 16.sp,
-                        color: Colors.green,
-                      ),
-                      SizedBox(width: 6.w),
-                      AppText(
-                        text: 'Paid',
-                        fontSize: 14.sp,
-                        color: AppColors.grey600,
-                      ),
-                    ],
-                  ),
-                  AppText(
-                    text: payment?.paidAmount ?? '',
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.pending, size: 16.sp, color: Colors.orange),
-                      SizedBox(width: 6.w),
-                      AppText(
-                        text: 'Pending',
-                        fontSize: 14.sp,
-                        color: AppColors.grey600,
-                      ),
-                    ],
-                  ),
-                  AppText(
-                    text: payment?.dueAmount?.toString() ?? '',
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.orange,
-                  ),
-                ],
-              ),
-            ],
-          ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          spacing: 12.h,
+          children: [
+            _buildHeader(),
+            _dates(theme),
+            const DottedLine(
+              dashColor: Colors.grey,
+              direction: Axis.horizontal,
+            ),
+            _buildAmountRow(
+              'Paid',
+              payment.paidAmount ?? '',
+              Colors.green,
+              Icons.check_circle,
+            ),
+            _buildAmountRow(
+              'Pending',
+              payment.dueAmount?.toString() ?? '',
+              Colors.orange,
+              Icons.pending,
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        AppText(
+          text: '${payment.startMonth} - ${payment.endMonth}',
+          fontSize: 16.sp,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        badge(
+          payment.messTypeName ?? '',
+          payment.messTypeName == 'Veg' ? Colors.green : Colors.red,
+        ),
+      ],
+    );
+  }
+
+  Widget _dates(ThemeData theme) {
+    return Row(
+      spacing: 12.w,
+      children: [
+        _buildDate(theme, 'Start Date', payment.startDate.toFormattedDate()),
+        _buildDate(theme, 'End Date', payment.endDate.toFormattedDate()),
+      ],
     );
   }
 
@@ -121,6 +84,33 @@ class PaymentTile extends StatelessWidget {
         ),
         child: AppText(text: date, fontSize: 16.sp, color: Colors.black),
       ),
+    );
+  }
+
+  Widget _buildAmountRow(
+    String title,
+    String? value,
+    Color color,
+    IconData icon,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 16.sp, color: color),
+            SizedBox(width: 6.w),
+            AppText(text: title, fontSize: 14.sp, color: AppColors.grey600),
+          ],
+        ),
+        AppText(
+          // text: payment.paidAmount ?? '',
+          text: value ?? '',
+          fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
+          color: color,
+        ),
+      ],
     );
   }
 

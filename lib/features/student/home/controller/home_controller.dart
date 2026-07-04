@@ -17,7 +17,7 @@ class HomeController extends BaseController {
 
   final sliderList = <MasterDataModel>[].obs;
   final packageList = <PackageModel>[].obs;
-  Rx<PackageModel?> selectedPackageDetails = Rx<PackageModel?>(null);
+  final selectedPackageDetails = Rx<PackageModel?>(null);
 
   final payDetailsList = <PaymentDetailsModel>[].obs;
 
@@ -38,12 +38,6 @@ class HomeController extends BaseController {
   bool get isPending => isRequested.value && !isAccepted.value;
   bool get isApproved => isRequested.value && isAccepted.value;
 
-  void updatePackageDetails() {
-    selectedPackageDetails.value = packageList.firstWhereOrNull(
-      (e) => e.id.toString() == selectedPackage.value.toString(),
-    )!;
-  }
-
   /// -------------------- METHODS --------------------
 
   Future<void> fetchHomeData() async {
@@ -53,11 +47,15 @@ class HomeController extends BaseController {
       request: () => _homeUseCase.call(UserRequest(userId)),
       loader: isHomeLoading,
       onSuccess: (data) {
-        branchName.value = data.data?.branchName ?? '';
-        sliderList.value = data.data!.sliders ?? [];
-        payDetailsList.value = data.data?.payTransactionDetails ?? [];
-        isRequested.value = data.data!.messRequest ?? false;
-        isAccepted.value = data.data!.messRequestAccepted ?? false;
+        final res = data.data;
+
+        branchName.value = res?.branchName ?? '';
+        sliderList.value = res!.sliders ?? [];
+
+        payDetailsList.value = res.payTransactionDetails ?? [];
+
+        isRequested.value = res.messRequest ?? false;
+        isAccepted.value = res.messRequestAccepted ?? false;
       },
     );
   }
@@ -72,23 +70,28 @@ class HomeController extends BaseController {
     );
   }
 
+  void updatePackageDetails() {
+    selectedPackageDetails.value = packageList.firstWhereOrNull(
+      (e) => e.id.toString() == selectedPackage.value,
+    );
+  }
+
   void submitSelection() async {
     if (selectedPackage.value == null || selectedDate.text.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please select a mess package and mess start date',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      Get.snackbar('Error', 'Please select package & date');
       return;
     }
 
-    await startMessRequest();
-    Get.back();
+    final success = await startMessRequest();
+    if (success) Get.back();
   }
 
-  Future<void> startMessRequest() async {
+  Future<bool> startMessRequest() async {
+    bool isSuccess = false;
+
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+
     await callApi(
       request: () => _startMessUsecase.call(
         StartMessRequest(
@@ -99,11 +102,12 @@ class HomeController extends BaseController {
       ),
       loader: isStarting,
       onSuccess: (data) async {
+        isSuccess = true;
         await fetchHomeData();
         showSuccess(data.common.message);
       },
     );
-
+    return isSuccess;
     // isStarting.value = true;
 
     // try {

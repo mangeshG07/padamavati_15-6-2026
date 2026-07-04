@@ -71,10 +71,10 @@ class LeaveRequest extends StatelessWidget {
                                               "Total Days: ${request.totalDays}",
                                           fontSize: 13.sp,color: Colors.black,
                                         ),
-                                        badge(
-                                          request.statusText ?? '',
-                                          getStatusColor(request.statusText!),
-                                        ),
+                                        // badge(
+                                        //   request.statusText ?? '',
+                                        //   getStatusColor(request.statusText!),
+                                        // ),
                                       ],
                                     ),
                                   ],

@@ -1,4 +1,3 @@
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,29 +19,92 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.h),
+        child: _buildAppbar(),
+      ),
       body: Obx(
         () => controller.isHomeLoading.isTrue
             ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
-            : SingleChildScrollView(
-                child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildAppbar(),
-                    _buildMainData(theme),
-                    SizedBox(height: 0.02.h),
-                  ],
-                ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
+            : RefreshIndicator(
+                onRefresh: controller.fetchHomeData,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: _buildMainData(theme),
+                ),
               ),
-      ),
+      ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
+      //
+      // Expanded(
+      //   child: Obx(
+      //     () => controller.isHomeLoading.isTrue
+      //         ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
+      //         : RefreshIndicator(
+      //             onRefresh: controller.fetchHomeData,
+      //             child: SingleChildScrollView(
+      //               physics: const AlwaysScrollableScrollPhysics(),
+      //               child: _buildMainData(theme),
+      //             ),
+      //           ),
+      //   ),
+      // ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
+
+      // Column(
+      //   spacing: 8.h,
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     Expanded(
+      //       child: Obx(
+      //         () => controller.isHomeLoading.isTrue
+      //             ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
+      //             : RefreshIndicator(
+      //                 onRefresh: controller.fetchHomeData,
+      //                 child: SingleChildScrollView(
+      //                   physics: const AlwaysScrollableScrollPhysics(),
+      //                   child: _buildMainData(theme),
+      //                 ),
+      //               ),
+      //       ),
+      //     ),
+      //     SizedBox(height: 0.02.h),
+      //   ],
+      // ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
     );
+  }
+
+  Widget _buildAppbar() {
+    return Container(
+      width: Get.width,
+      padding: EdgeInsets.symmetric(horizontal: 8.w).copyWith(top: 16.h),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.appBgColor, Colors.white],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomImage(image: AppAssets.splashLogo, height: 50.h),
+            AppIconButton(
+              icon: HugeIcons.strokeRoundedNotification01,
+              backgroundColor: Colors.grey.shade50,
+              iconColor: Colors.black,
+            ),
+          ],
+        ),
+      ),
+    ).animate().fade(duration: 500.ms).slideY(begin: 0.3);
   }
 
   Widget _buildMainData(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 16.h,
@@ -62,6 +124,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ? _buildPaymentDetails(theme)
               : _buildStartMess(theme),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSlider() {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.r),
+        child: AppCarouselSlider(
+          placeholder: CustomImage(image: AppAssets.defaultImage),
+          errorWidget: CustomImage(image: AppAssets.defaultImage),
+          imageUrls: controller.sliderList.map((e) => e.image ?? '').toList(),
+          height: Get.height * 0.45.h,
+          margin: EdgeInsets.zero,
+          activeIndicatorColor: Colors.transparent,
+          inactiveIndicatorColor: Colors.transparent,
+        ),
       ),
     );
   }
@@ -125,6 +205,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPaymentDetails(ThemeData theme) {
+    if (controller.payDetailsList.isEmpty) {
+      return const Center(
+        child: AppText(text: "No payments yet", fontSize: 14),
+      );
+    }
+
     return Column(
       spacing: 12.h,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,50 +236,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
-  }
-
-  Widget _buildSlider() {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.r),
-        child: AppCarouselSlider(
-          placeholder: CustomImage(image: AppAssets.defaultImage),
-          errorWidget: CustomImage(image: AppAssets.defaultImage),
-          imageUrls: controller.sliderList.map((e) => e.image ?? '').toList(),
-          height: Get.height * 0.45.h,
-          margin: EdgeInsets.zero,
-          activeIndicatorColor: Colors.transparent,
-          inactiveIndicatorColor: Colors.transparent,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAppbar() {
-    return Container(
-      width: Get.width,
-      padding: EdgeInsets.symmetric(horizontal: 8.w).copyWith(top: 16.h),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.appBgColor, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomImage(image: AppAssets.splashLogo, height: 50.h),
-            AppIconButton(
-              icon: HugeIcons.strokeRoundedNotification01,
-              backgroundColor: Colors.grey.shade50,
-              iconColor: Colors.black,
-            ),
-          ],
-        ),
-      ),
-    ).animate().fade(duration: 500.ms).slideY(begin: 0.3);
   }
 }

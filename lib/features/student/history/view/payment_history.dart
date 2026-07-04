@@ -8,18 +8,23 @@ class PaymentHistory extends StatefulWidget {
 }
 
 class _PaymentHistoryState extends State<PaymentHistory> {
-  // final controller = Get.put<HistoryController>();
+  // final controller = Get.find<HistoryController>();
   final controller = Get.put(HistoryController(getIt(), getIt()));
+
   @override
   void initState() {
-    controller.fetchPaymentHistory();
     super.initState();
+    controller.fetchPaymentHistory();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.h),
+        child: GradientAppbar(title: 'Payment History', showBack: false),
+      ),
       body: Obx(
         () => controller.isHistoryLoading.isTrue
             ? AppLoader(size: 2.5, color: AppColors.lightPrimary)
@@ -27,28 +32,16 @@ class _PaymentHistoryState extends State<PaymentHistory> {
             ? Center(
                 child: AppText(text: 'No Data Found.', fontSize: 16.sp),
               )
-            : SingleChildScrollView(
-                child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GradientAppbar(title: 'Payment History', showBack: false),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        separatorBuilder: (_, __) => SizedBox(height: 12.h),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.paymentHistoryList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final payment = controller.paymentHistoryList[index];
-                          return PaymentTile(payment: payment);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+            : ListView.separated(
+                // shrinkWrap: true,
+                padding: const EdgeInsets.all(12),
+                separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                // physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.paymentHistoryList.length,
+                itemBuilder: (_, i) {
+                  final payment = controller.paymentHistoryList[i];
+                  return PaymentTile(payment: payment);
+                },
               ),
       ),
     );

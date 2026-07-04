@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage>
     _setupAnimations();
   }
 
-  void _setupAnimations() {
+  void _setupAnimations() async {
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -34,7 +34,8 @@ class _SplashPageState extends State<SplashPage>
       CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack),
     );
 
-    _animationController.forward();
+    await _animationController.forward();
+
     controller.checkLogin();
   }
 
@@ -70,8 +71,8 @@ class _SplashPageState extends State<SplashPage>
       // getIt<RemoteConfigService>().splashLogo,
       // 'http://192.168.29.139:5000/uploads/splash/splash-image.jpg',
       AppAssets.splashLogo,
-      width: Get.width * 0.8.w,
-      height: double.infinity,
+      width: Get.width * 0.6.w,
+      // height: double.infinity,
       fit: BoxFit.contain,
     );
   }

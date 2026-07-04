@@ -7,7 +7,6 @@ class CouponController extends BaseController {
 
   final selectedType = 0.obs;
 
-
   final couponSummary = CouponSummaryModel().obs;
   final todayQR = <QRModel>[].obs;
   final usedQR = <QRModel>[].obs;

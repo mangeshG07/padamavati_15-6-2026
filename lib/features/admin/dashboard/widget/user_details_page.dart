@@ -1,5 +1,3 @@
-import 'package:padmavatiupdated/features/admin/dashboard/widget/used_qr_sheet.dart';
-
 import '../../../../core/exporters/app_export.dart';
 
 class UserDetailsPage extends StatefulWidget {
@@ -52,6 +50,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
                     /// 🔹 PAYMENT
                     _buildPaymentSection(controller.scannedPayData.value),
+                    SizedBox(height: 20.h),
                   ],
                 ),
               ),
