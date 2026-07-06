@@ -53,6 +53,7 @@ class RegisterController extends GetxController {
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
+      imageQuality: 70,
     );
     if (pickedFile != null) {
       profileImage.value = File(pickedFile.path);
