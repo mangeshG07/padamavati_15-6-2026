@@ -10,6 +10,9 @@ class AdminNavController extends GetxController {
     const AdminProfileScreen(),
   ];
 
+  /// Track loaded tabs
+  final _loadedTabs = <int>{};
+
   Widget get currentPage => _pages[currentIndex.value];
 
   void changePage(int index) {

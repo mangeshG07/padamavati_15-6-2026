@@ -14,7 +14,6 @@ void main() {
 
       // ⚡ 3. Remote config via GetIt (NOT new instance)
       await getIt<RemoteConfigService>().init();
-
       // await Firebase.initializeApp();
 
       // await RemoteConfigService().init();

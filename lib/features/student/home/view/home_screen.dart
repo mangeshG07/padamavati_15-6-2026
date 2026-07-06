@@ -26,52 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(80.h),
         child: _buildAppbar(),
       ),
-      body: Obx(
-        () => controller.isHomeLoading.isTrue
-            ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
-            : RefreshIndicator(
-                onRefresh: controller.fetchHomeData,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: _buildMainData(theme),
-                ),
-              ),
-      ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
-      //
-      // Expanded(
-      //   child: Obx(
-      //     () => controller.isHomeLoading.isTrue
-      //         ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
-      //         : RefreshIndicator(
-      //             onRefresh: controller.fetchHomeData,
-      //             child: SingleChildScrollView(
-      //               physics: const AlwaysScrollableScrollPhysics(),
-      //               child: _buildMainData(theme),
-      //             ),
-      //           ),
-      //   ),
-      // ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
-
-      // Column(
-      //   spacing: 8.h,
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Expanded(
-      //       child: Obx(
-      //         () => controller.isHomeLoading.isTrue
-      //             ? AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary)
-      //             : RefreshIndicator(
-      //                 onRefresh: controller.fetchHomeData,
-      //                 child: SingleChildScrollView(
-      //                   physics: const AlwaysScrollableScrollPhysics(),
-      //                   child: _buildMainData(theme),
-      //                 ),
-      //               ),
-      //       ),
-      //     ),
-      //     SizedBox(height: 0.02.h),
-      //   ],
-      // ).animate().fade(duration: 400.ms).slideY(begin: 0.1),
+      body: Obx(() {
+        if (controller.isHomeLoading.isTrue) {
+          return AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary);
+        }
+        return RefreshIndicator(
+          onRefresh: controller.fetchHomeData,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: _buildMainData(theme),
+          ),
+        ).animate().fade(duration: 400.ms).slideY(begin: 0.1);
+      }),
     );
   }
 

@@ -201,13 +201,15 @@ class _CouponsScreenState extends State<CouponsScreen> {
       children: controller.todayQR.map<Widget>((qr) {
         return _buildTodayCard(
           theme,
-          qr.messType ?? '',
+          qr.messTime == 'Morning' ? "Lunch" : "Dinner",
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'
               : 'Used At : ${qr.scannedAt}',
           qr.status!,
-          HugeIcons.strokeRoundedServingFood,
+          qr.messTime == 'Morning'
+              ? HugeIcons.strokeRoundedSun03
+              : HugeIcons.strokeRoundedMoon02,
           qr,
         );
       }).toList(),
@@ -268,6 +270,13 @@ class _CouponsScreenState extends State<CouponsScreen> {
                     ),
                   ),
                   AppText(
+                    text: subtitle,
+                    fontSize: 12.sp,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
+                  AppText(
                     text: timing,
                     fontSize: 11.sp,
                     style: theme.textTheme.bodySmall!.copyWith(
@@ -300,16 +309,16 @@ class _CouponsScreenState extends State<CouponsScreen> {
         final qr = controller.usedQR[index];
         return _buildTodayCard(
           theme,
-          qr.messType ?? '',
+          qr.messTime == 'Morning' ? "Lunch" : "Dinner",
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'
               : 'Used At : ${qr.scannedAt}',
           qr.status!,
-          HugeIcons.strokeRoundedServingFood,
-          // qr.messTime == 'Morning'
-          //     ? HugeIcons.strokeRoundedSun03
-          //     : HugeIcons.strokeRoundedMoon02,
+          // HugeIcons.strokeRoundedServingFood,
+          qr.messTime == 'Morning'
+              ? HugeIcons.strokeRoundedSun03
+              : HugeIcons.strokeRoundedMoon02,
           qr,
         );
       },
