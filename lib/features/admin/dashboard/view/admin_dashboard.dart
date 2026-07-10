@@ -1,20 +1,7 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class AdminDashboard extends StatefulWidget {
+class AdminDashboard extends GetView<DashboardController> {
   const AdminDashboard({super.key});
-
-  @override
-  State<AdminDashboard> createState() => _AdminDashboardState();
-}
-
-class _AdminDashboardState extends State<AdminDashboard> {
-  final controller = Get.find<DashboardController>();
-
-  @override
-  void initState() {
-    super.initState();
-    controller.getDashboard();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,70 +23,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   spacing: 16.h,
                   children: [
                     _buildBranchData(theme, controller.dashboardData.value),
-                    AppText(
-                      text: "Today's Overview",
-                      fontSize: 22.sp,
-                      maxLines: 2,
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    Row(
-                      spacing: 16.w,
-                      children: [
-                        Expanded(
-                          child: _buildOverviewCard(
-                            'People\nCount',
-                            controller.overview.value.peopleCount?.toString() ??
-                                '0',
-                            HugeIcons.strokeRoundedCall02,
-                            () async {},
-                            Colors.blue,
-                            theme,
-                            isLoading: false,
-                          ),
-                        ),
-                        Expanded(
-                          child: _buildOverviewCard(
-                            'Lunch\nScans',
-                            controller.overview.value.todayLunchScans
-                                    ?.toString() ??
-                                '0',
-                            HugeIcons.strokeRoundedCall02,
-                            () {
-                              controller.selectedType.value = 1;
-                              Get.toNamed(Routes.scannedUsers);
-                            },
-                            Colors.green,
-                            theme,
-                            isLoading: false,
-                          ),
-                        ),
-                        Expanded(
-                          child: _buildOverviewCard(
-                            'Dinner\nScans',
-                            controller.overview.value.todayDinnerScans
-                                    ?.toString() ??
-                                '0',
-                            HugeIcons.strokeRoundedCall02,
-                            () {
-                              controller.selectedType.value = 2;
-                              Get.toNamed(Routes.scannedUsers);
-                            },
-                            Colors.red,
-                            theme,
-                            isLoading: false,
-                          ),
-                        ),
-                      ],
-                    ),
+                    _buildSectionTitle(theme),
+                    _buildOverviewCards(theme),
 
                     _buildSectionCard(controller.menuList, theme),
                     SizedBox(height: 0.02.h),
-                    AppButton(
-                      icon: HugeIcon(icon: HugeIcons.strokeRoundedQrCode01),
-                      text: "Scan QR",
-                      onTap: () => Get.toNamed(Routes.qrScannerScreen),
-                      backgroundColor: AppColors.lightSecondary,
-                    ),
+                    _buildScanButton(),
                   ],
                 ),
               ),
@@ -127,6 +56,68 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 
+  Widget _buildSectionTitle(ThemeData theme) {
+    return AppText(
+      text: "Today's Overview",
+      fontSize: 22.sp,
+      maxLines: 2,
+      style: theme.textTheme.titleLarge,
+    );
+  }
+
+  Widget _buildOverviewCards(ThemeData theme) {
+    return Row(
+      spacing: 16.w,
+      children: [
+        Expanded(
+          child: _buildOverviewCard(
+            'People\nCount',
+            controller.overview.value.peopleCount?.toString() ?? '0',
+            HugeIcons.strokeRoundedCall02,
+            () {},
+            Colors.blue,
+            theme,
+          ),
+        ),
+        Expanded(
+          child: _buildOverviewCard(
+            'Lunch\nScans',
+            controller.overview.value.todayLunchScans?.toString() ?? '0',
+            HugeIcons.strokeRoundedCall02,
+            () {
+              controller.selectedType.value = 1;
+              Get.toNamed(Routes.scannedUsers);
+            },
+            Colors.green,
+            theme,
+          ),
+        ),
+        Expanded(
+          child: _buildOverviewCard(
+            'Dinner\nScans',
+            controller.overview.value.todayDinnerScans?.toString() ?? '0',
+            HugeIcons.strokeRoundedCall02,
+            () {
+              controller.selectedType.value = 2;
+              Get.toNamed(Routes.scannedUsers);
+            },
+            Colors.red,
+            theme,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildScanButton() {
+    return AppButton(
+      icon: HugeIcon(icon: HugeIcons.strokeRoundedQrCode01),
+      text: "Scan QR",
+      onTap: () => Get.toNamed(Routes.qrScannerScreen),
+      backgroundColor: AppColors.lightSecondary,
+    );
+  }
+
   /// 🔹 MENU CARD
   Widget _buildOverviewCard(
     String title,
@@ -134,9 +125,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
     dynamic icon,
     dynamic onTap,
     Color color,
-    ThemeData theme, {
-    bool isLoading = false,
-  }) {
+    ThemeData theme,
+  ) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -146,33 +136,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
           color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16.r),
         ),
-        child: isLoading
-            ? AppLoader.circular(size: 20.r, color: AppColors.lightPrimary)
-            : Column(
-                spacing: 6.h,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppText(
-                    text: title,
-                    fontSize: 13.sp,
-                    maxLines: 2,
-                    style: theme.textTheme.labelMedium!.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Center(
-                    child: AppText(
-                      text: value,
-                      fontSize: 13.sp,
-                      maxLines: 2,
-                      style: theme.textTheme.bodyMedium,
-                      textAlign: TextAlign.center,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+        child: Column(
+          spacing: 6.h,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppText(
+              text: title,
+              fontSize: 13.sp,
+              maxLines: 2,
+              style: theme.textTheme.labelMedium!.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            Center(
+              child: AppText(
+                text: value,
+                fontSize: 13.sp,
+                maxLines: 2,
+                style: theme.textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

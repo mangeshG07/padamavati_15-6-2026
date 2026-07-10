@@ -87,6 +87,11 @@ class _QRScannerPageState extends State<QRScannerPage> {
                             controller.scanData.value.scanMessType ?? '',
                           ),
                           _infoRow(
+                            Icons.restaurant,
+                            "Food Type",
+                            controller.userData.value.messType ?? '',
+                          ),
+                          _infoRow(
                             Icons.confirmation_number,
                             "Coupons Left",
                             "${user.remainingCoupons}",

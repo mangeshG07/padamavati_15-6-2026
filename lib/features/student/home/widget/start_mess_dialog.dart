@@ -10,8 +10,10 @@ class MessSelectionPopup extends GetView<HomeController> {
     final theme = Theme.of(context);
 
     return Dialog(
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
+        // color: Colors.white,
         padding: const EdgeInsets.all(20),
         width: Get.width * 0.8.w,
         child: Column(
@@ -134,9 +136,9 @@ class MessSelectionPopup extends GetView<HomeController> {
       labelStyle: AppTextStyles.labelMedium,
       isRequired: true,
       textStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 14.sp),
-      focusedBorder: theme.inputDecorationTheme.focusedBorder,
-      enabledBorder: theme.inputDecorationTheme.enabledBorder,
-      fillColor: theme.cardColor,
+      focusedBorder: buildOutlineInputBorder(),
+      enabledBorder: buildOutlineInputBorder(),
+      fillColor: Colors.white,
       hintStyle: theme.textTheme.labelMedium!.copyWith(color: Colors.grey),
       onTap: () async {
         final pickedDate = await showDatePicker(

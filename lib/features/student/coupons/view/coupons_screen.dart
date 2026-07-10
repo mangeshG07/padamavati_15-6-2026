@@ -61,7 +61,8 @@ class _CouponsScreenState extends State<CouponsScreen> {
         _buildCouponCard(
           theme,
           summary.todayCoupons?.toString() ?? '0',
-          'Total: ${summary.totalCoupons?.toString() ?? '0'} Coupons',
+          // 'Total: ${summary.totalCoupons?.toString() ?? '0'} Coupons',
+          '',
           'Today’s Coupons',
           HugeIcons.strokeRoundedTicketStar,
         ),
@@ -117,9 +118,10 @@ class _CouponsScreenState extends State<CouponsScreen> {
                         text: title,
                         fontSize: 16.sp,
                         style: theme.textTheme.displaySmall!.copyWith(
-                          color: AppColors.lightPrimary,
+                          color: Colors.black,
                         ),
                       ),
+                      // if(value.isNotEmpty)
                       AppText(
                         text: value,
                         fontSize: 14.sp,
@@ -201,7 +203,11 @@ class _CouponsScreenState extends State<CouponsScreen> {
       children: controller.todayQR.map<Widget>((qr) {
         return _buildTodayCard(
           theme,
-          qr.messTime == 'Morning' ? "Lunch" : "Dinner",
+          qr.messTime == 'Morning'
+              ? "Lunch"
+              : qr.messTime == 'Full Time'
+              ? 'One Time'
+              : "Dinner",
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'
@@ -309,7 +315,11 @@ class _CouponsScreenState extends State<CouponsScreen> {
         final qr = controller.usedQR[index];
         return _buildTodayCard(
           theme,
-          qr.messTime == 'Morning' ? "Lunch" : "Dinner",
+          qr.messTime == 'Morning'
+              ? "Lunch"
+              : qr.messTime == 'Full Time'
+              ? 'One Time'
+              : "Dinner",
           qr.messType ?? '',
           qr.scannedAt == null
               ? 'Valid Till : ${qr.expiresAt}'

@@ -10,11 +10,11 @@ class AdminProfileScreen extends StatefulWidget {
 class _AdminProfileScreenState extends State<AdminProfileScreen> {
   final controller = Get.find<AdminProfileController>();
 
-  @override
-  void initState() {
-    super.initState();
-    controller.getAdminProfile();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller.getAdminProfile();
+  // }
 
   @override
   Widget build(BuildContext context) {

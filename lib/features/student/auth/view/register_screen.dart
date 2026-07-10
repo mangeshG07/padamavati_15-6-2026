@@ -327,7 +327,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async => await controller.registerUser(
               controller.numberController.text.trim(),
             ),
-            backgroundColor: AppColors.lightPrimary,
+            backgroundColor: Colors.black,
             loading: controller.isLoading.value,
           ),
         ),

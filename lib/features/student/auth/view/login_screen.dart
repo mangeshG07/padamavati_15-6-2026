@@ -125,7 +125,7 @@ class LoginScreen extends GetView<LoginController> {
     return Obx(
       () => AppButton(
         key: const Key("sendOtpButton"),
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: Colors.black,
         text: 'Send OTP',
         loading: controller.isLoading.value,
         onTap: _onSendOtpTap,

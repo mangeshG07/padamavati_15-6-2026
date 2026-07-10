@@ -9,6 +9,7 @@ abstract class PeopleModel with _$PeopleModel {
     String? code,
     String? name,
     @JsonKey(name: 'app_id') int? id,
+    @JsonKey(name: 'due_amount') String? dueAmount,
     @JsonKey(name: 'profile_image') String? profileImage,
   }) = _PeopleModel;
 

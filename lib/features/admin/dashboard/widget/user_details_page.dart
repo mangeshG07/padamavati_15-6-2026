@@ -64,8 +64,16 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
       children: [
         _row(
           "Status",
-          payment.paymentStatus == "1" ? "Paid" : "Pending",
-          valueColor: payment.paymentStatus == "1" ? Colors.green : Colors.red,
+          payment.paymentStatus == "0"
+              ? "Pending"
+              : payment.paymentStatus == "1"
+              ? "Partial"
+              : "Paid",
+          valueColor: payment.paymentStatus == "0"
+              ? Colors.red
+              : payment.paymentStatus == "1"
+              ? Colors.orange
+              : Colors.green,
         ),
         _row("Total", "₹${payment.totalAmount}"),
         _row("Paid", "₹${payment.paidAmount}"),

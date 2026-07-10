@@ -32,8 +32,16 @@ class AppPages {
     ),
     GetPage(name: Routes.couponDetails, page: () => CouponDetails()),
     GetPage(name: Routes.qrDetails, page: () => QRScreen()),
-    GetPage(name: Routes.paymentDetails, page: () => PaymentDetailsScreen(),binding: HistoryBindings()),
-    GetPage(name: Routes.paymentReceipt, page: () => PaymentReceipt(),binding: HistoryBindings()),
+    GetPage(
+      name: Routes.paymentDetails,
+      page: () => PaymentDetailsScreen(),
+      binding: HistoryBindings(),
+    ),
+    GetPage(
+      name: Routes.paymentReceipt,
+      page: () => PaymentReceipt(),
+      binding: HistoryBindings(),
+    ),
     GetPage(name: Routes.editProfile, page: () => EditProfile()),
     GetPage(name: Routes.facilityScreen, page: () => FacilityScreen()),
 
@@ -56,8 +64,16 @@ class AppPages {
       ],
     ),
     GetPage(name: Routes.qrScannerScreen, page: () => QRScannerPage()),
-    GetPage(name: Routes.policyData, page: () => PolicyInfo()),
-    GetPage(name: Routes.helpAndSupport, page: () => HelpAndSupport()),
+    GetPage(
+      name: Routes.policyData,
+      page: () => PolicyInfo(),
+      binding: ProfileBindings(),
+    ),
+    GetPage(
+      name: Routes.helpAndSupport,
+      page: () => HelpAndSupport(),
+      binding: ProfileBindings(),
+    ),
     GetPage(name: Routes.scannedUsers, page: () => ScannedUsersList()),
     GetPage(name: Routes.scannedUsersDetails, page: () => UserDetailsPage()),
   ];

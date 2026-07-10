@@ -27,7 +27,9 @@ abstract class ApiService {
   Future<BaseResponseModel<List<MasterDataModel>>> getDegreeList();
 
   @POST(ApiConstants.getPackageList)
-  Future<BaseResponseModel<List<PackageModel>>> getPackageList();
+  Future<BaseResponseModel<List<PackageModel>>> getPackageList(
+    @Part(name: "user_id") String userId,
+  );
 
   @POST(ApiConstants.register)
   @MultiPart()
@@ -140,6 +142,7 @@ abstract class ApiService {
   Future<BaseResponseModel<PeopleResponseModel>> branchUserList(
     @Part(name: "user_id") String userId,
     @Part(name: "page_number") String pageNo,
+    @Part(name: "search") String search,
   );
 
   @POST(ApiConstants.scanQr)
@@ -178,4 +181,7 @@ abstract class ApiService {
     @Part(name: "page_number") String pageNo,
     @Part(name: "student_id") String studentId,
   );
+
+  @POST(ApiConstants.deleteAccount)
+  Future<BaseResponseModel> deleteAccount(@Part(name: "user_id") String userId);
 }

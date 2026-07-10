@@ -6,6 +6,7 @@ class DashboardController extends BaseController {
   final ScannedUserUsecase _scannedUserUsecase;
   final ScannedUserDetailsUsecase _userDetailsUsecase;
   final UsedQrListUsecase _qrListUsecase;
+
   DashboardController(
     this._dashboardUsecase,
     this._qrUsecase,

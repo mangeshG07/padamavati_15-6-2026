@@ -35,7 +35,9 @@ class FoodRequests extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                      ).copyWith(bottom: 16.h),
                       separatorBuilder: (_, __) => SizedBox(height: 12.h),
                       itemCount: foodData.items.length,
                       itemBuilder: (BuildContext context, int index) {

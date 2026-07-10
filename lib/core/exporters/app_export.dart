@@ -187,6 +187,7 @@ export 'package:padmavatiupdated/domain/usecase/admin_leave_usecase.dart';
 export '../../../../domain/usecase/scanned_user_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/scanned_user_details_usecase.dart';
 export 'package:padmavatiupdated/domain/usecase/used_qr_list.dart';
+export 'package:padmavatiupdated/domain/usecase/delete_account_usecase.dart';
 
 //Bindings//
 export 'package:padmavatiupdated/features/student/auth/bindings/login_bindings.dart';

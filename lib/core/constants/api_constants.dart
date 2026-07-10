@@ -63,6 +63,7 @@ class ApiConstants {
   static const String scannedUserData = '/scanned_users_data';
   static const String scannedUserDetailsData = '/scanned_user_details';
   static const String usedQrData = '/used_qr_list';
+  static const String deleteAccount = '/delete_account';
 
   ///////////////Pending//////////////////////
 }

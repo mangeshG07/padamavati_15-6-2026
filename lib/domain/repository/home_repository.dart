@@ -5,7 +5,9 @@ abstract class HomeRepository {
     UserRequest request,
   );
 
-  Future<Result<BaseResponseModel<List<PackageModel>>>> getPackageList();
+  Future<Result<BaseResponseModel<List<PackageModel>>>> getPackageList(
+    UserRequest request,
+  );
 
   Future<Result<BaseResponseModel>> startMessReq(StartMessRequest request);
 }

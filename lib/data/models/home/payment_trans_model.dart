@@ -8,6 +8,7 @@ abstract class PaymentDetailsModel with _$PaymentDetailsModel {
     @JsonKey(name: 'transaction_id') int? transactionId,
     @JsonKey(name: 'mess_type') String? messType,
     @JsonKey(name: 'mess_type_name') String? messTypeName,
+    @JsonKey(name: 'mess_time') String? messTime,
     @JsonKey(name: 'start_month') String? startMonth,
     @JsonKey(name: 'end_month') String? endMonth,
     String? duration,

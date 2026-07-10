@@ -14,6 +14,7 @@ class PeopleRepositoryImpl implements PeopleRepository {
       final res = await _apiService.branchUserList(
         request.userId,
         request.pageNo,
+        request.type,
       );
 
       if (res.common.status == true) {

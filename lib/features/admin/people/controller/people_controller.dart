@@ -5,6 +5,15 @@ class PeopleController extends GetxController
   final GetBranchUsersUsecase _branchUsersUsecase;
   PeopleController(this._branchUsersUsecase);
 
+  final searchKeyword = TextEditingController();
+  final searchText = ''.obs;
+
+  final debouncer = Debouncer(milliseconds: 500);
+
+  void updateSearchText(String value) {
+    searchText.value = value;
+  }
+
   Future<void> getBranchUserList({
     bool isRefresh = false,
     bool showLoading = true,
@@ -15,10 +24,13 @@ class PeopleController extends GetxController
 
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';
-
     try {
       final response = await _branchUsersUsecase(
-        UserRequest(userId, pageNo: currentPage.toString()),
+        UserRequest(
+          userId,
+          pageNo: currentPage.toString(),
+          type: searchKeyword.text.trim(),
+        ),
       );
 
       switch (response) {
@@ -36,5 +48,10 @@ class PeopleController extends GetxController
     } finally {
       stopLoading();
     }
+  }
+
+  String formatAmount(String? value) {
+    final amount = double.tryParse(value ?? '') ?? 0.0;
+    return "₹ ${amount.toStringAsFixed(2)}";
   }
 }

@@ -7,6 +7,8 @@ abstract class ProfileRepository {
 
   Future<Result<BaseResponseModel>> updateProfile(UpdateProfileEntity request);
 
+  Future<Result<BaseResponseModel>> deleteAccount(UserRequest request);
+
   Future<Result<BaseResponseModel<List<FacilityModel>>>> getFacility();
 
   Future<Result<BaseResponseModel<List<FacilityModel>>>> getLegalPage();

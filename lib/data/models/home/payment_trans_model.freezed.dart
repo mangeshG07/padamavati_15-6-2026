@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentDetailsModel {
 
-@JsonKey(name: 'transaction_id') int? get transactionId;@JsonKey(name: 'mess_type') String? get messType;@JsonKey(name: 'mess_type_name') String? get messTypeName;@JsonKey(name: 'start_month') String? get startMonth;@JsonKey(name: 'end_month') String? get endMonth; String? get duration;@JsonKey(name: 'start_date') String? get startDate;@JsonKey(name: 'end_date') String? get endDate;@JsonKey(name: 'paid_amount') String? get paidAmount;@JsonKey(name: 'due_amount') int? get dueAmount;@JsonKey(name: 'payment_status') String? get paymentStatus; List<PaymentModel>? get payments;
+@JsonKey(name: 'transaction_id') int? get transactionId;@JsonKey(name: 'mess_type') String? get messType;@JsonKey(name: 'mess_type_name') String? get messTypeName;@JsonKey(name: 'mess_time') String? get messTime;@JsonKey(name: 'start_month') String? get startMonth;@JsonKey(name: 'end_month') String? get endMonth; String? get duration;@JsonKey(name: 'start_date') String? get startDate;@JsonKey(name: 'end_date') String? get endDate;@JsonKey(name: 'paid_amount') String? get paidAmount;@JsonKey(name: 'due_amount') int? get dueAmount;@JsonKey(name: 'payment_status') String? get paymentStatus; List<PaymentModel>? get payments;
 /// Create a copy of PaymentDetailsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PaymentDetailsModelCopyWith<PaymentDetailsModel> get copyWith => _$PaymentDetai
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentDetailsModel&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.messType, messType) || other.messType == messType)&&(identical(other.messTypeName, messTypeName) || other.messTypeName == messTypeName)&&(identical(other.startMonth, startMonth) || other.startMonth == startMonth)&&(identical(other.endMonth, endMonth) || other.endMonth == endMonth)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.dueAmount, dueAmount) || other.dueAmount == dueAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&const DeepCollectionEquality().equals(other.payments, payments));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentDetailsModel&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.messType, messType) || other.messType == messType)&&(identical(other.messTypeName, messTypeName) || other.messTypeName == messTypeName)&&(identical(other.messTime, messTime) || other.messTime == messTime)&&(identical(other.startMonth, startMonth) || other.startMonth == startMonth)&&(identical(other.endMonth, endMonth) || other.endMonth == endMonth)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.dueAmount, dueAmount) || other.dueAmount == dueAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&const DeepCollectionEquality().equals(other.payments, payments));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,transactionId,messType,messTypeName,startMonth,endMonth,duration,startDate,endDate,paidAmount,dueAmount,paymentStatus,const DeepCollectionEquality().hash(payments));
+int get hashCode => Object.hash(runtimeType,transactionId,messType,messTypeName,messTime,startMonth,endMonth,duration,startDate,endDate,paidAmount,dueAmount,paymentStatus,const DeepCollectionEquality().hash(payments));
 
 @override
 String toString() {
-  return 'PaymentDetailsModel(transactionId: $transactionId, messType: $messType, messTypeName: $messTypeName, startMonth: $startMonth, endMonth: $endMonth, duration: $duration, startDate: $startDate, endDate: $endDate, paidAmount: $paidAmount, dueAmount: $dueAmount, paymentStatus: $paymentStatus, payments: $payments)';
+  return 'PaymentDetailsModel(transactionId: $transactionId, messType: $messType, messTypeName: $messTypeName, messTime: $messTime, startMonth: $startMonth, endMonth: $endMonth, duration: $duration, startDate: $startDate, endDate: $endDate, paidAmount: $paidAmount, dueAmount: $dueAmount, paymentStatus: $paymentStatus, payments: $payments)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PaymentDetailsModelCopyWith<$Res>  {
   factory $PaymentDetailsModelCopyWith(PaymentDetailsModel value, $Res Function(PaymentDetailsModel) _then) = _$PaymentDetailsModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'transaction_id') int? transactionId,@JsonKey(name: 'mess_type') String? messType,@JsonKey(name: 'mess_type_name') String? messTypeName,@JsonKey(name: 'start_month') String? startMonth,@JsonKey(name: 'end_month') String? endMonth, String? duration,@JsonKey(name: 'start_date') String? startDate,@JsonKey(name: 'end_date') String? endDate,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'due_amount') int? dueAmount,@JsonKey(name: 'payment_status') String? paymentStatus, List<PaymentModel>? payments
+@JsonKey(name: 'transaction_id') int? transactionId,@JsonKey(name: 'mess_type') String? messType,@JsonKey(name: 'mess_type_name') String? messTypeName,@JsonKey(name: 'mess_time') String? messTime,@JsonKey(name: 'start_month') String? startMonth,@JsonKey(name: 'end_month') String? endMonth, String? duration,@JsonKey(name: 'start_date') String? startDate,@JsonKey(name: 'end_date') String? endDate,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'due_amount') int? dueAmount,@JsonKey(name: 'payment_status') String? paymentStatus, List<PaymentModel>? payments
 });
 
 
@@ -65,11 +65,12 @@ class _$PaymentDetailsModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentDetailsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? transactionId = freezed,Object? messType = freezed,Object? messTypeName = freezed,Object? startMonth = freezed,Object? endMonth = freezed,Object? duration = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? paidAmount = freezed,Object? dueAmount = freezed,Object? paymentStatus = freezed,Object? payments = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? transactionId = freezed,Object? messType = freezed,Object? messTypeName = freezed,Object? messTime = freezed,Object? startMonth = freezed,Object? endMonth = freezed,Object? duration = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? paidAmount = freezed,Object? dueAmount = freezed,Object? paymentStatus = freezed,Object? payments = freezed,}) {
   return _then(_self.copyWith(
 transactionId: freezed == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
 as int?,messType: freezed == messType ? _self.messType : messType // ignore: cast_nullable_to_non_nullable
 as String?,messTypeName: freezed == messTypeName ? _self.messTypeName : messTypeName // ignore: cast_nullable_to_non_nullable
+as String?,messTime: freezed == messTime ? _self.messTime : messTime // ignore: cast_nullable_to_non_nullable
 as String?,startMonth: freezed == startMonth ? _self.startMonth : startMonth // ignore: cast_nullable_to_non_nullable
 as String?,endMonth: freezed == endMonth ? _self.endMonth : endMonth // ignore: cast_nullable_to_non_nullable
 as String?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
@@ -164,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentDetailsModel() when $default != null:
-return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
+return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.messTime,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
   return orElse();
 
 }
@@ -185,10 +186,10 @@ return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.star
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentDetailsModel():
-return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
+return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.messTime,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +206,10 @@ return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.star
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'transaction_id')  int? transactionId, @JsonKey(name: 'mess_type')  String? messType, @JsonKey(name: 'mess_type_name')  String? messTypeName, @JsonKey(name: 'mess_time')  String? messTime, @JsonKey(name: 'start_month')  String? startMonth, @JsonKey(name: 'end_month')  String? endMonth,  String? duration, @JsonKey(name: 'start_date')  String? startDate, @JsonKey(name: 'end_date')  String? endDate, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'due_amount')  int? dueAmount, @JsonKey(name: 'payment_status')  String? paymentStatus,  List<PaymentModel>? payments)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentDetailsModel() when $default != null:
-return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
+return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.messTime,_that.startMonth,_that.endMonth,_that.duration,_that.startDate,_that.endDate,_that.paidAmount,_that.dueAmount,_that.paymentStatus,_that.payments);case _:
   return null;
 
 }
@@ -220,12 +221,13 @@ return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.star
 @JsonSerializable()
 
 class _PaymentDetailsModel implements PaymentDetailsModel {
-  const _PaymentDetailsModel({@JsonKey(name: 'transaction_id') this.transactionId, @JsonKey(name: 'mess_type') this.messType, @JsonKey(name: 'mess_type_name') this.messTypeName, @JsonKey(name: 'start_month') this.startMonth, @JsonKey(name: 'end_month') this.endMonth, this.duration, @JsonKey(name: 'start_date') this.startDate, @JsonKey(name: 'end_date') this.endDate, @JsonKey(name: 'paid_amount') this.paidAmount, @JsonKey(name: 'due_amount') this.dueAmount, @JsonKey(name: 'payment_status') this.paymentStatus, final  List<PaymentModel>? payments}): _payments = payments;
+  const _PaymentDetailsModel({@JsonKey(name: 'transaction_id') this.transactionId, @JsonKey(name: 'mess_type') this.messType, @JsonKey(name: 'mess_type_name') this.messTypeName, @JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'start_month') this.startMonth, @JsonKey(name: 'end_month') this.endMonth, this.duration, @JsonKey(name: 'start_date') this.startDate, @JsonKey(name: 'end_date') this.endDate, @JsonKey(name: 'paid_amount') this.paidAmount, @JsonKey(name: 'due_amount') this.dueAmount, @JsonKey(name: 'payment_status') this.paymentStatus, final  List<PaymentModel>? payments}): _payments = payments;
   factory _PaymentDetailsModel.fromJson(Map<String, dynamic> json) => _$PaymentDetailsModelFromJson(json);
 
 @override@JsonKey(name: 'transaction_id') final  int? transactionId;
 @override@JsonKey(name: 'mess_type') final  String? messType;
 @override@JsonKey(name: 'mess_type_name') final  String? messTypeName;
+@override@JsonKey(name: 'mess_time') final  String? messTime;
 @override@JsonKey(name: 'start_month') final  String? startMonth;
 @override@JsonKey(name: 'end_month') final  String? endMonth;
 @override final  String? duration;
@@ -257,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentDetailsModel&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.messType, messType) || other.messType == messType)&&(identical(other.messTypeName, messTypeName) || other.messTypeName == messTypeName)&&(identical(other.startMonth, startMonth) || other.startMonth == startMonth)&&(identical(other.endMonth, endMonth) || other.endMonth == endMonth)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.dueAmount, dueAmount) || other.dueAmount == dueAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&const DeepCollectionEquality().equals(other._payments, _payments));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentDetailsModel&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.messType, messType) || other.messType == messType)&&(identical(other.messTypeName, messTypeName) || other.messTypeName == messTypeName)&&(identical(other.messTime, messTime) || other.messTime == messTime)&&(identical(other.startMonth, startMonth) || other.startMonth == startMonth)&&(identical(other.endMonth, endMonth) || other.endMonth == endMonth)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.dueAmount, dueAmount) || other.dueAmount == dueAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&const DeepCollectionEquality().equals(other._payments, _payments));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,transactionId,messType,messTypeName,startMonth,endMonth,duration,startDate,endDate,paidAmount,dueAmount,paymentStatus,const DeepCollectionEquality().hash(_payments));
+int get hashCode => Object.hash(runtimeType,transactionId,messType,messTypeName,messTime,startMonth,endMonth,duration,startDate,endDate,paidAmount,dueAmount,paymentStatus,const DeepCollectionEquality().hash(_payments));
 
 @override
 String toString() {
-  return 'PaymentDetailsModel(transactionId: $transactionId, messType: $messType, messTypeName: $messTypeName, startMonth: $startMonth, endMonth: $endMonth, duration: $duration, startDate: $startDate, endDate: $endDate, paidAmount: $paidAmount, dueAmount: $dueAmount, paymentStatus: $paymentStatus, payments: $payments)';
+  return 'PaymentDetailsModel(transactionId: $transactionId, messType: $messType, messTypeName: $messTypeName, messTime: $messTime, startMonth: $startMonth, endMonth: $endMonth, duration: $duration, startDate: $startDate, endDate: $endDate, paidAmount: $paidAmount, dueAmount: $dueAmount, paymentStatus: $paymentStatus, payments: $payments)';
 }
 
 
@@ -277,7 +279,7 @@ abstract mixin class _$PaymentDetailsModelCopyWith<$Res> implements $PaymentDeta
   factory _$PaymentDetailsModelCopyWith(_PaymentDetailsModel value, $Res Function(_PaymentDetailsModel) _then) = __$PaymentDetailsModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'transaction_id') int? transactionId,@JsonKey(name: 'mess_type') String? messType,@JsonKey(name: 'mess_type_name') String? messTypeName,@JsonKey(name: 'start_month') String? startMonth,@JsonKey(name: 'end_month') String? endMonth, String? duration,@JsonKey(name: 'start_date') String? startDate,@JsonKey(name: 'end_date') String? endDate,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'due_amount') int? dueAmount,@JsonKey(name: 'payment_status') String? paymentStatus, List<PaymentModel>? payments
+@JsonKey(name: 'transaction_id') int? transactionId,@JsonKey(name: 'mess_type') String? messType,@JsonKey(name: 'mess_type_name') String? messTypeName,@JsonKey(name: 'mess_time') String? messTime,@JsonKey(name: 'start_month') String? startMonth,@JsonKey(name: 'end_month') String? endMonth, String? duration,@JsonKey(name: 'start_date') String? startDate,@JsonKey(name: 'end_date') String? endDate,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'due_amount') int? dueAmount,@JsonKey(name: 'payment_status') String? paymentStatus, List<PaymentModel>? payments
 });
 
 
@@ -294,11 +296,12 @@ class __$PaymentDetailsModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentDetailsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? transactionId = freezed,Object? messType = freezed,Object? messTypeName = freezed,Object? startMonth = freezed,Object? endMonth = freezed,Object? duration = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? paidAmount = freezed,Object? dueAmount = freezed,Object? paymentStatus = freezed,Object? payments = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? transactionId = freezed,Object? messType = freezed,Object? messTypeName = freezed,Object? messTime = freezed,Object? startMonth = freezed,Object? endMonth = freezed,Object? duration = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? paidAmount = freezed,Object? dueAmount = freezed,Object? paymentStatus = freezed,Object? payments = freezed,}) {
   return _then(_PaymentDetailsModel(
 transactionId: freezed == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
 as int?,messType: freezed == messType ? _self.messType : messType // ignore: cast_nullable_to_non_nullable
 as String?,messTypeName: freezed == messTypeName ? _self.messTypeName : messTypeName // ignore: cast_nullable_to_non_nullable
+as String?,messTime: freezed == messTime ? _self.messTime : messTime // ignore: cast_nullable_to_non_nullable
 as String?,startMonth: freezed == startMonth ? _self.startMonth : startMonth // ignore: cast_nullable_to_non_nullable
 as String?,endMonth: freezed == endMonth ? _self.endMonth : endMonth // ignore: cast_nullable_to_non_nullable
 as String?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable

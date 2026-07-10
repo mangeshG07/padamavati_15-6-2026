@@ -61,9 +61,11 @@ class HomeController extends BaseController {
   }
 
   Future<void> fetchPackages() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
     await callApi(
       loader: isPackageLoading,
-      request: () => _getPackagesUsecase.call(),
+      request: () => _getPackagesUsecase.call(UserRequest(userId)),
       onSuccess: (data) {
         packageList.value = data.data ?? [];
       },

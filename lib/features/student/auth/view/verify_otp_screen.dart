@@ -166,7 +166,7 @@ class VerifyOTP extends GetView<OtpController> {
         text: 'Verify OTP',
         loading: controller.isLoading.value,
         onTap: controller.verifyOTP,
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: Colors.black,
       ),
     );
   }

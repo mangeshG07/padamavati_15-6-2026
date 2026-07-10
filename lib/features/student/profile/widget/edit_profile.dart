@@ -89,6 +89,23 @@ class _EditProfileState extends State<EditProfile> {
                                 backgroundColor: AppColors.lightSecondary,
                               ),
                             ),
+
+                            Obx(
+                              () => AppButton(
+                                text: 'Delete Account',
+                                loading: controller.isDeleting.value,
+                                onTap: () async {
+                                  AllDialogs().showConfirmationDialog(
+                                    'Delete',
+                                    'Are you sure you want to delete this account?',
+                                    onConfirm: () async {
+                                      await controller.deleteAccount();
+                                    },
+                                  );
+                                },
+                                backgroundColor: AppColors.lightPrimary,
+                              ),
+                            ),
                           ],
                         ),
                       ),

@@ -11,12 +11,12 @@ class AdminRequestScreen extends StatefulWidget {
 class _AdminRequestScreenState extends State<AdminRequestScreen> {
   final controller = Get.find<AdminReqCtrl>();
 
-  @override
-  void initState() {
-    super.initState();
-    controller.getFoodRequestList(isRefresh: true);
-    controller.getLeaveRequestList(isRefresh: true);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller.getFoodRequestList(isRefresh: true);
+  //   controller.getLeaveRequestList(isRefresh: true);
+  // }
 
   @override
   Widget build(BuildContext context) {

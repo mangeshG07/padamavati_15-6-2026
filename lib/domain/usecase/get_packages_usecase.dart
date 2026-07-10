@@ -6,7 +6,9 @@ class GetPackagesUsecase {
 
   GetPackagesUsecase(this._homeRepository);
 
-  Future<Result<BaseResponseModel<List<PackageModel>>>> call() async {
-    return await _homeRepository.getPackageList();
+  Future<Result<BaseResponseModel<List<PackageModel>>>> call(
+    UserRequest request,
+  ) async {
+    return await _homeRepository.getPackageList(request);
   }
 }

@@ -22,7 +22,7 @@ class PolicyInfo extends StatelessWidget {
             children: [
               HtmlWidget(
                 textStyle: const TextStyle(fontSize: 14),
-                policyData.shortDescription ?? '',
+                policyData.description ?? '',
               ),
             ],
           ),

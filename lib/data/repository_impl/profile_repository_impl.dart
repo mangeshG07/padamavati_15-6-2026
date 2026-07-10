@@ -68,4 +68,18 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Failure('Something went wrong.');
     }
   }
+
+  @override
+  Future<Result<BaseResponseModel>> deleteAccount(UserRequest request) async {
+    try {
+      final res = await _apiService.deleteAccount(request.userId);
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (e) {
+      return Failure('Something went wrong.');
+    }
+  }
 }

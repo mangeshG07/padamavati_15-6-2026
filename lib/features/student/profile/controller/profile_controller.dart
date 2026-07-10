@@ -6,12 +6,15 @@ class ProfileController extends BaseController {
   final GetDegreeListUsecase _degreeListUsecase;
   final GetLegalPageUsecase _legalPageUsecase;
   final GetFacilityUsecase _facilityUsecase;
+  final DeleteAccountUsecase _deleteAccountUsecase;
+
   ProfileController(
     this._profileUsecase,
     this._degreeListUsecase,
     this._updateProfileUsecase,
     this._legalPageUsecase,
     this._facilityUsecase,
+    this._deleteAccountUsecase,
   );
 
   List<Map<String, dynamic>> get menuList => [
@@ -142,6 +145,27 @@ class ProfileController extends BaseController {
       loader: isFacilityLoading,
       onSuccess: (data) {
         pagesList.value = data.data ?? [];
+      },
+    );
+  }
+
+  /// ------------------ Delete Account ------------------ ///
+  final isDeleting = false.obs;
+
+  Future<void> deleteAccount() async {
+    final userId =
+        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    await callApi<BaseResponseModel>(
+      request: () => _deleteAccountUsecase.call(UserRequest(userId)),
+      loader: isDeleting,
+      showError: true,
+      onSuccess: (data) async {
+        await LocalStorage.clear();
+        await SecureStorageService.clear();
+
+        Get.snackbar('Delete', data.common.message);
+
+        Get.offAllNamed(Routes.login);
       },
     );
   }

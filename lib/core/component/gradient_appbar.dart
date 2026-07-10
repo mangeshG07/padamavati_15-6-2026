@@ -32,10 +32,12 @@ class GradientAppbar extends StatelessWidget {
                 backgroundColor: Colors.white70,
                 iconColor: Colors.black,
               ),
-            AppText(
-              text: title,
-              fontSize: 22.sp,
-              style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
+            Expanded(
+              child: AppText(
+                text: title,
+                fontSize: 22.sp,
+                style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
+              ),
             ),
           ],
         ),

@@ -4,7 +4,7 @@ class ProfileBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ProfileController>(
-      () => ProfileController(getIt(), getIt(), getIt(),getIt(), getIt()),
+      () => ProfileController(getIt(), getIt(), getIt(),getIt(), getIt(),getIt()),
     );
   }
 }

@@ -49,6 +49,8 @@ import 'package:padmavatiupdated/domain/usecase/admin_leave_usecase.dart'
 import 'package:padmavatiupdated/domain/usecase/admin_login.dart' as _i647;
 import 'package:padmavatiupdated/domain/usecase/admin_profile_usecase.dart'
     as _i569;
+import 'package:padmavatiupdated/domain/usecase/delete_account_usecase.dart'
+    as _i604;
 import 'package:padmavatiupdated/domain/usecase/food_items_usecase.dart'
     as _i376;
 import 'package:padmavatiupdated/domain/usecase/food_req_usecase.dart' as _i348;
@@ -169,6 +171,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i569.AdminProfileUsecase>(
       () => _i569.AdminProfileUsecase(gh<_i85.AdminProfileRepository>()),
+    );
+    gh.lazySingleton<_i604.DeleteAccountUsecase>(
+      () => _i604.DeleteAccountUsecase(gh<_i85.ProfileRepository>()),
     );
     gh.lazySingleton<_i538.GetFacilityUsecase>(
       () => _i538.GetFacilityUsecase(gh<_i85.ProfileRepository>()),

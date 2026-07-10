@@ -23,6 +23,12 @@ class PaymentTile extends StatelessWidget {
               direction: Axis.horizontal,
             ),
             _buildAmountRow(
+              'Mess Type',
+              payment.messTime?.toString() ?? '',
+              Colors.orange,
+              Icons.watch_later_outlined,
+            ),
+            _buildAmountRow(
               'Paid',
               payment.paidAmount ?? '',
               Colors.green,
