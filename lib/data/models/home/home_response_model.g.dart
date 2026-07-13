@@ -18,6 +18,9 @@ _HomeResponseModel _$HomeResponseModelFromJson(
   payTransactionDetails: (json['payment_transaction_details'] as List<dynamic>?)
       ?.map((e) => PaymentDetailsModel.fromJson(e as Map<String, dynamic>))
       .toList(),
+  todayQr: (json['today_qr_codes'] as List<dynamic>?)
+      ?.map((e) => QRModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$HomeResponseModelToJson(_HomeResponseModel instance) =>
@@ -27,4 +30,5 @@ Map<String, dynamic> _$HomeResponseModelToJson(_HomeResponseModel instance) =>
       'mess_request': instance.messRequest,
       'mess_request_accepted': instance.messRequestAccepted,
       'payment_transaction_details': instance.payTransactionDetails,
+      'today_qr_codes': instance.todayQr,
     };

@@ -1,5 +1,3 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-
 import '../exporters/app_export.dart';
 
 @lazySingleton

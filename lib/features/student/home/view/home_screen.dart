@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final state = controller.states;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -27,14 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _buildAppbar(),
       ),
       body: Obx(() {
-        if (controller.isHomeLoading.isTrue) {
+        if (state.isHomeLoading.isTrue) {
           return AppLoader(strokeWidth: 2.5, color: AppColors.lightPrimary);
         }
         return RefreshIndicator(
           onRefresh: controller.fetchHomeData,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: _buildMainData(theme),
+            child: _buildMainData(theme, state),
           ),
         ).animate().fade(duration: 400.ms).slideY(begin: 0.1);
       }),
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(horizontal: 8.w).copyWith(top: 16.h),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.appBgColor, Colors.white],
+          colors: [AppColors.lightPrimary.withValues(alpha: 0.1), Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -57,10 +58,23 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomImage(image: AppAssets.splashLogo, height: 50.h),
-            AppIconButton(
-              icon: HugeIcons.strokeRoundedNotification01,
-              backgroundColor: Colors.grey.shade50,
-              iconColor: Colors.black,
+            Row(
+              children: [
+                AppIconButton(
+                  onPressed: () {
+                    final qr = controller.states.todaysQR.first;
+                    Get.toNamed(Routes.qrDetails, arguments: {'qrData': qr});
+                  },
+                  icon: HugeIcons.strokeRoundedQrCode,
+                  backgroundColor: Colors.grey.shade50,
+                  iconColor: Colors.black,
+                ),
+                AppIconButton(
+                  icon: HugeIcons.strokeRoundedNotification01,
+                  backgroundColor: Colors.grey.shade50,
+                  iconColor: Colors.black,
+                ),
+              ],
             ),
           ],
         ),
@@ -68,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ).animate().fade(duration: 500.ms).slideY(begin: 0.3);
   }
 
-  Widget _buildMainData(ThemeData theme) {
+  Widget _buildMainData(ThemeData theme, HomeState state) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -77,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Center(
             child: AppText(
-              text: 'Welcome To Padmavati Mess ${controller.branchName.value}',
+              text: 'Welcome To Padmavati Mess ${state.branchName.value}',
               fontSize: 14.sp,
               style: theme.textTheme.bodySmall!.copyWith(color: Colors.black),
             ),
@@ -87,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
           controller.isPending
               ? _buildRequestPending(theme)
               : controller.isApproved
-              ? _buildPaymentDetails(theme)
-              : _buildStartMess(theme),
+              ? _buildPaymentDetails(theme, state)
+              : _buildStartMess(theme, state),
         ],
       ),
     );
@@ -102,7 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: AppCarouselSlider(
           placeholder: CustomImage(image: AppAssets.defaultImage),
           errorWidget: CustomImage(image: AppAssets.defaultImage),
-          imageUrls: controller.sliderList.map((e) => e.image ?? '').toList(),
+          imageUrls: controller.states.sliders
+              .map((e) => e.image ?? '')
+              .toList(),
           height: Get.height * 0.45.h,
           margin: EdgeInsets.zero,
           activeIndicatorColor: Colors.transparent,
@@ -112,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildStartMess(ThemeData theme) {
+  Widget _buildStartMess(ThemeData theme, HomeState state) {
     return Column(
       spacing: 12.h,
       children: [
@@ -133,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
         AppButton(
           text: 'Start Mess',
           onTap: () {
-            controller.selectedPackage.value = null;
+            state.selectedPackageId.value = null;
             controller.selectedDate.clear();
-            controller.selectedPackageDetails.value = null;
+            state.selectedPackage.value = null;
             Get.dialog(MessSelectionPopup(), barrierDismissible: true);
           },
           backgroundColor: AppColors.lightSecondary,
@@ -170,8 +186,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildPaymentDetails(ThemeData theme) {
-    if (controller.payDetailsList.isEmpty) {
+  Widget _buildPaymentDetails(ThemeData theme, HomeState state) {
+    if (state.payments.isEmpty) {
       return const Center(
         child: AppText(text: "No payments yet", fontSize: 14),
       );
@@ -192,9 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           separatorBuilder: (_, __) => SizedBox(height: 12.h),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.payDetailsList.length,
+          itemCount: state.payments.length,
           itemBuilder: (BuildContext context, int index) {
-            final payment = controller.payDetailsList[index];
+            final payment = state.payments[index];
             return PaymentTile(
               payment: payment,
             ).animate().fade(duration: 100.ms);

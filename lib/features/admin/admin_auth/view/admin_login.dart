@@ -6,6 +6,7 @@ class AdminLogin extends GetView<AdminLoginController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
@@ -82,7 +83,8 @@ class AdminLogin extends GetView<AdminLoginController> {
       filled: true,
       focusedBorder: theme.inputDecorationTheme.focusedBorder,
       validator: (value) =>
-          value!.trim().isEmpty ? 'Please enter username'.tr : null,
+          AppValidators.required(value, message: 'Please enter username'),
+      // value!.trim().isEmpty ? 'Please enter username'.tr : null,
     );
   }
 
@@ -97,7 +99,7 @@ class AdminLogin extends GetView<AdminLoginController> {
         filled: true,
         focusedBorder: theme.inputDecorationTheme.focusedBorder,
         validator: (value) =>
-            value!.trim().isEmpty ? 'Please enter password'.tr : null,
+            AppValidators.required(value, message: 'Please enter password'),
         suffixIcon: GestureDetector(
           onTap: controller.togglePassword,
           child: paddedIcon(

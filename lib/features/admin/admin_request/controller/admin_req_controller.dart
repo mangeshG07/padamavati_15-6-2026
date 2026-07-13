@@ -1,4 +1,6 @@
-import 'package:padmavatiupdated/core/exporters/app_export.dart';
+import 'package:intl/intl.dart';
+import 'package:padmavatiupdated/core/exporters/app_export.dart '
+    hide DateFormat;
 
 class AdminReqCtrl extends BaseController {
   final GetAdminFoodRequests _foodRequests;
@@ -88,5 +90,20 @@ class AdminReqCtrl extends BaseController {
     } finally {
       leavePagination.stopLoading();
     }
+  }
+
+  final selectedDate = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    setDate(DateTime.now());
+  }
+
+  void setDate(DateTime date) {
+    final formatted = DateFormat('dd-MM-yyyy').format(date);
+    final today = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+    selectedDate.value = (formatted == today) ? 'Today' : formatted;
   }
 }

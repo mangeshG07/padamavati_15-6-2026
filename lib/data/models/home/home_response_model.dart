@@ -11,6 +11,7 @@ abstract class HomeResponseModel with _$HomeResponseModel {
     @JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,
     @JsonKey(name: 'payment_transaction_details')
     List<PaymentDetailsModel>? payTransactionDetails,
+    @JsonKey(name: 'today_qr_codes') List<QRModel>? todayQr,
   }) = _HomeResponseModel;
 
   factory HomeResponseModel.fromJson(Map<String, dynamic> json) =>

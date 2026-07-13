@@ -24,6 +24,7 @@ class AdminNavController extends GetxController {
       case 1:
         Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);
         Get.find<AdminReqCtrl>().getLeaveRequestList(isRefresh: true);
+        Get.find<AdminReqCtrl>().setDate(DateTime.now());
         break;
       case 2:
         Get.find<PeopleController>().getBranchUserList(isRefresh: true);

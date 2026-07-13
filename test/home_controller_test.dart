@@ -58,6 +58,6 @@ void main() {
 
     await controller.fetchHomeData();
 
-    expect(controller.branchName.value, "Test");
+    expect(controller.states.branchName.value, "Test");
   });
 }

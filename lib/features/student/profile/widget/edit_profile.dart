@@ -92,6 +92,8 @@ class _EditProfileState extends State<EditProfile> {
 
                             Obx(
                               () => AppButton(
+                                type: AppButtonType.text,
+                                textColor: AppColors.lightPrimary,
                                 text: 'Delete Account',
                                 loading: controller.isDeleting.value,
                                 onTap: () async {

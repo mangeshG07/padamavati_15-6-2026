@@ -97,27 +97,71 @@ class QRScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.grey200,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: HugeIcon(
+              icon: qr.messTime == 'Morning'
+                  ? HugeIcons.strokeRoundedSun03
+                  : HugeIcons.strokeRoundedMoon02,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
+              spacing: 3,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  text: qr.messType ?? '',
-                  fontSize: 18.sp,
+                  text: qr.messTime == 'Morning'
+                      ? "Lunch"
+                      : qr.messTime == 'Full Time'
+                      ? 'One Time'
+                      : "Dinner",
+                  fontSize: 14.sp,
                   style: theme.textTheme.titleMedium!.copyWith(
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 4.h),
                 AppText(
-                  text: qr.scannedAt == null
-                      ? 'Valid Till: ${qr.expiresAt}'
-                      : 'Used At: ${qr.scannedAt}',
-                  fontSize: 13.sp,
+                  text: qr.messType ?? '',
+                  fontSize: 12.sp,
                   style: theme.textTheme.bodySmall!.copyWith(
                     color: Colors.black,
                   ),
                 ),
+                AppText(
+                  text: qr.scannedAt == null
+                      ? 'Valid Till: ${qr.expiresAt}'
+                      : 'Used At: ${qr.scannedAt}',
+                  fontSize: 11.sp,
+                  style: theme.textTheme.bodySmall!.copyWith(
+                    color: Colors.grey,
+                  ),
+                ),
+
+                // AppText(
+                //   text: qr.messType ?? '',
+                //   fontSize: 18.sp,
+                //   style: theme.textTheme.titleMedium!.copyWith(
+                //     color: Colors.black,
+                //   ),
+                // ),
+                // SizedBox(height: 4.h),
+                // AppText(
+                //   text: qr.scannedAt == null
+                //       ? 'Valid Till: ${qr.expiresAt}'
+                //       : 'Used At: ${qr.scannedAt}',
+                //   fontSize: 13.sp,
+                //   style: theme.textTheme.bodySmall!.copyWith(
+                //     color: Colors.black,
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -34,19 +34,6 @@ class AdminLoginController extends BaseController {
             user.roleId.toString(),
           ),
         ]);
-
-        // await SecureStorageService.write(
-        //   AppConstants.userTokenKey,
-        //   data.data!.authKey,
-        // );
-        // await SecureStorageService.write(
-        //   AppConstants.userIdKey,
-        //   data.data!.userId.toString(),
-        // );
-        // await SecureStorageService.write(
-        //   AppConstants.userRollIdKey,
-        //   data.data!.roleId.toString(),
-        // );
         Get.offAllNamed(Routes.adminMainScreen);
 
         CustomSnackbar.show(

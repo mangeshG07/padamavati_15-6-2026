@@ -3,10 +3,12 @@ import '../exporters/app_export.dart';
 class GradientAppbar extends StatelessWidget {
   final String title;
   final bool showBack;
+  final Widget? actions;
   const GradientAppbar({
     super.key,
     required this.title,
     required this.showBack,
+    this.actions,
   });
 
   @override
@@ -17,7 +19,7 @@ class GradientAppbar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w).copyWith(top: 16.h),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.appBgColor, Colors.white],
+          colors: [AppColors.lightPrimary.withValues(alpha: 0.1), Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -36,9 +38,12 @@ class GradientAppbar extends StatelessWidget {
               child: AppText(
                 text: title,
                 fontSize: 22.sp,
-                style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
+                style: theme.textTheme.titleLarge!.copyWith(
+                  color: Colors.black,
+                ),
               ),
             ),
+            actions ?? SizedBox(),
           ],
         ),
       ),

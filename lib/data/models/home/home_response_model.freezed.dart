@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeResponseModel {
 
-@JsonKey(name: 'branch_name') String? get branchName; List<MasterDataModel>? get sliders;@JsonKey(name: 'mess_request') bool? get messRequest;@JsonKey(name: 'mess_request_accepted') bool? get messRequestAccepted;@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? get payTransactionDetails;
+@JsonKey(name: 'branch_name') String? get branchName; List<MasterDataModel>? get sliders;@JsonKey(name: 'mess_request') bool? get messRequest;@JsonKey(name: 'mess_request_accepted') bool? get messRequestAccepted;@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? get payTransactionDetails;@JsonKey(name: 'today_qr_codes') List<QRModel>? get todayQr;
 /// Create a copy of HomeResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $HomeResponseModelCopyWith<HomeResponseModel> get copyWith => _$HomeResponseMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeResponseModel&&(identical(other.branchName, branchName) || other.branchName == branchName)&&const DeepCollectionEquality().equals(other.sliders, sliders)&&(identical(other.messRequest, messRequest) || other.messRequest == messRequest)&&(identical(other.messRequestAccepted, messRequestAccepted) || other.messRequestAccepted == messRequestAccepted)&&const DeepCollectionEquality().equals(other.payTransactionDetails, payTransactionDetails));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeResponseModel&&(identical(other.branchName, branchName) || other.branchName == branchName)&&const DeepCollectionEquality().equals(other.sliders, sliders)&&(identical(other.messRequest, messRequest) || other.messRequest == messRequest)&&(identical(other.messRequestAccepted, messRequestAccepted) || other.messRequestAccepted == messRequestAccepted)&&const DeepCollectionEquality().equals(other.payTransactionDetails, payTransactionDetails)&&const DeepCollectionEquality().equals(other.todayQr, todayQr));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,branchName,const DeepCollectionEquality().hash(sliders),messRequest,messRequestAccepted,const DeepCollectionEquality().hash(payTransactionDetails));
+int get hashCode => Object.hash(runtimeType,branchName,const DeepCollectionEquality().hash(sliders),messRequest,messRequestAccepted,const DeepCollectionEquality().hash(payTransactionDetails),const DeepCollectionEquality().hash(todayQr));
 
 @override
 String toString() {
-  return 'HomeResponseModel(branchName: $branchName, sliders: $sliders, messRequest: $messRequest, messRequestAccepted: $messRequestAccepted, payTransactionDetails: $payTransactionDetails)';
+  return 'HomeResponseModel(branchName: $branchName, sliders: $sliders, messRequest: $messRequest, messRequestAccepted: $messRequestAccepted, payTransactionDetails: $payTransactionDetails, todayQr: $todayQr)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $HomeResponseModelCopyWith<$Res>  {
   factory $HomeResponseModelCopyWith(HomeResponseModel value, $Res Function(HomeResponseModel) _then) = _$HomeResponseModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'branch_name') String? branchName, List<MasterDataModel>? sliders,@JsonKey(name: 'mess_request') bool? messRequest,@JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? payTransactionDetails
+@JsonKey(name: 'branch_name') String? branchName, List<MasterDataModel>? sliders,@JsonKey(name: 'mess_request') bool? messRequest,@JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? payTransactionDetails,@JsonKey(name: 'today_qr_codes') List<QRModel>? todayQr
 });
 
 
@@ -65,14 +65,15 @@ class _$HomeResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of HomeResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? branchName = freezed,Object? sliders = freezed,Object? messRequest = freezed,Object? messRequestAccepted = freezed,Object? payTransactionDetails = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? branchName = freezed,Object? sliders = freezed,Object? messRequest = freezed,Object? messRequestAccepted = freezed,Object? payTransactionDetails = freezed,Object? todayQr = freezed,}) {
   return _then(_self.copyWith(
 branchName: freezed == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
 as String?,sliders: freezed == sliders ? _self.sliders : sliders // ignore: cast_nullable_to_non_nullable
 as List<MasterDataModel>?,messRequest: freezed == messRequest ? _self.messRequest : messRequest // ignore: cast_nullable_to_non_nullable
 as bool?,messRequestAccepted: freezed == messRequestAccepted ? _self.messRequestAccepted : messRequestAccepted // ignore: cast_nullable_to_non_nullable
 as bool?,payTransactionDetails: freezed == payTransactionDetails ? _self.payTransactionDetails : payTransactionDetails // ignore: cast_nullable_to_non_nullable
-as List<PaymentDetailsModel>?,
+as List<PaymentDetailsModel>?,todayQr: freezed == todayQr ? _self.todayQr : todayQr // ignore: cast_nullable_to_non_nullable
+as List<QRModel>?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes')  List<QRModel>? todayQr)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeResponseModel() when $default != null:
-return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails);case _:
+return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails,_that.todayQr);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messReque
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes')  List<QRModel>? todayQr)  $default,) {final _that = this;
 switch (_that) {
 case _HomeResponseModel():
-return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails);case _:
+return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails,_that.todayQr);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messReque
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'branch_name')  String? branchName,  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request')  bool? messRequest, @JsonKey(name: 'mess_request_accepted')  bool? messRequestAccepted, @JsonKey(name: 'payment_transaction_details')  List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes')  List<QRModel>? todayQr)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeResponseModel() when $default != null:
-return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails);case _:
+return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messRequestAccepted,_that.payTransactionDetails,_that.todayQr);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.branchName,_that.sliders,_that.messRequest,_that.messReque
 @JsonSerializable()
 
 class _HomeResponseModel implements HomeResponseModel {
-  const _HomeResponseModel({@JsonKey(name: 'branch_name') this.branchName, final  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request') this.messRequest, @JsonKey(name: 'mess_request_accepted') this.messRequestAccepted, @JsonKey(name: 'payment_transaction_details') final  List<PaymentDetailsModel>? payTransactionDetails}): _sliders = sliders,_payTransactionDetails = payTransactionDetails;
+  const _HomeResponseModel({@JsonKey(name: 'branch_name') this.branchName, final  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request') this.messRequest, @JsonKey(name: 'mess_request_accepted') this.messRequestAccepted, @JsonKey(name: 'payment_transaction_details') final  List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes') final  List<QRModel>? todayQr}): _sliders = sliders,_payTransactionDetails = payTransactionDetails,_todayQr = todayQr;
   factory _HomeResponseModel.fromJson(Map<String, dynamic> json) => _$HomeResponseModelFromJson(json);
 
 @override@JsonKey(name: 'branch_name') final  String? branchName;
@@ -237,6 +238,15 @@ class _HomeResponseModel implements HomeResponseModel {
   return EqualUnmodifiableListView(value);
 }
 
+ final  List<QRModel>? _todayQr;
+@override@JsonKey(name: 'today_qr_codes') List<QRModel>? get todayQr {
+  final value = _todayQr;
+  if (value == null) return null;
+  if (_todayQr is EqualUnmodifiableListView) return _todayQr;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of HomeResponseModel
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeResponseModel&&(identical(other.branchName, branchName) || other.branchName == branchName)&&const DeepCollectionEquality().equals(other._sliders, _sliders)&&(identical(other.messRequest, messRequest) || other.messRequest == messRequest)&&(identical(other.messRequestAccepted, messRequestAccepted) || other.messRequestAccepted == messRequestAccepted)&&const DeepCollectionEquality().equals(other._payTransactionDetails, _payTransactionDetails));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeResponseModel&&(identical(other.branchName, branchName) || other.branchName == branchName)&&const DeepCollectionEquality().equals(other._sliders, _sliders)&&(identical(other.messRequest, messRequest) || other.messRequest == messRequest)&&(identical(other.messRequestAccepted, messRequestAccepted) || other.messRequestAccepted == messRequestAccepted)&&const DeepCollectionEquality().equals(other._payTransactionDetails, _payTransactionDetails)&&const DeepCollectionEquality().equals(other._todayQr, _todayQr));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,branchName,const DeepCollectionEquality().hash(_sliders),messRequest,messRequestAccepted,const DeepCollectionEquality().hash(_payTransactionDetails));
+int get hashCode => Object.hash(runtimeType,branchName,const DeepCollectionEquality().hash(_sliders),messRequest,messRequestAccepted,const DeepCollectionEquality().hash(_payTransactionDetails),const DeepCollectionEquality().hash(_todayQr));
 
 @override
 String toString() {
-  return 'HomeResponseModel(branchName: $branchName, sliders: $sliders, messRequest: $messRequest, messRequestAccepted: $messRequestAccepted, payTransactionDetails: $payTransactionDetails)';
+  return 'HomeResponseModel(branchName: $branchName, sliders: $sliders, messRequest: $messRequest, messRequestAccepted: $messRequestAccepted, payTransactionDetails: $payTransactionDetails, todayQr: $todayQr)';
 }
 
 
@@ -271,7 +281,7 @@ abstract mixin class _$HomeResponseModelCopyWith<$Res> implements $HomeResponseM
   factory _$HomeResponseModelCopyWith(_HomeResponseModel value, $Res Function(_HomeResponseModel) _then) = __$HomeResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'branch_name') String? branchName, List<MasterDataModel>? sliders,@JsonKey(name: 'mess_request') bool? messRequest,@JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? payTransactionDetails
+@JsonKey(name: 'branch_name') String? branchName, List<MasterDataModel>? sliders,@JsonKey(name: 'mess_request') bool? messRequest,@JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,@JsonKey(name: 'payment_transaction_details') List<PaymentDetailsModel>? payTransactionDetails,@JsonKey(name: 'today_qr_codes') List<QRModel>? todayQr
 });
 
 
@@ -288,14 +298,15 @@ class __$HomeResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of HomeResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? branchName = freezed,Object? sliders = freezed,Object? messRequest = freezed,Object? messRequestAccepted = freezed,Object? payTransactionDetails = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? branchName = freezed,Object? sliders = freezed,Object? messRequest = freezed,Object? messRequestAccepted = freezed,Object? payTransactionDetails = freezed,Object? todayQr = freezed,}) {
   return _then(_HomeResponseModel(
 branchName: freezed == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
 as String?,sliders: freezed == sliders ? _self._sliders : sliders // ignore: cast_nullable_to_non_nullable
 as List<MasterDataModel>?,messRequest: freezed == messRequest ? _self.messRequest : messRequest // ignore: cast_nullable_to_non_nullable
 as bool?,messRequestAccepted: freezed == messRequestAccepted ? _self.messRequestAccepted : messRequestAccepted // ignore: cast_nullable_to_non_nullable
 as bool?,payTransactionDetails: freezed == payTransactionDetails ? _self._payTransactionDetails : payTransactionDetails // ignore: cast_nullable_to_non_nullable
-as List<PaymentDetailsModel>?,
+as List<PaymentDetailsModel>?,todayQr: freezed == todayQr ? _self._todayQr : todayQr // ignore: cast_nullable_to_non_nullable
+as List<QRModel>?,
   ));
 }
 

@@ -14,48 +14,48 @@ class HomeController extends BaseController {
   );
 
   /// -------------------- STATE --------------------
+  final states = HomeState();
 
-  final sliderList = <MasterDataModel>[].obs;
-  final packageList = <PackageModel>[].obs;
-  final selectedPackageDetails = Rx<PackageModel?>(null);
-
-  final payDetailsList = <PaymentDetailsModel>[].obs;
-
-  final branchName = ''.obs;
-
-  final isPackageLoading = false.obs;
-  final isHomeLoading = false.obs;
-  final isStarting = false.obs;
-
-  final isRequested = false.obs;
-  final isAccepted = false.obs;
-
-  final selectedPackage = Rxn<String>();
+  // final sliderList = <MasterDataModel>[].obs;
+  // final packageList = <PackageModel>[].obs;
+  // final selectedPackageDetails = Rx<PackageModel?>(null);
+  // final payDetailsList = <PaymentDetailsModel>[].obs;
+  //
+  // final branchName = ''.obs;
+  //
+  // final isPackageLoading = false.obs;
+  // final isHomeLoading = false.obs;
+  // final isStarting = false.obs;
+  //
+  // final isRequested = false.obs;
+  // final isAccepted = false.obs;
+  //
+  // final selectedPackage = Rxn<String>();
   final selectedDate = TextEditingController();
 
   /// -------------------- COMPUTED --------------------
 
-  bool get isPending => isRequested.value && !isAccepted.value;
-  bool get isApproved => isRequested.value && isAccepted.value;
+  bool get isPending => states.isRequested.value && !states.isAccepted.value;
+  bool get isApproved => states.isRequested.value && states.isAccepted.value;
 
   /// -------------------- METHODS --------------------
-
   Future<void> fetchHomeData() async {
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';
     await callApi<BaseResponseModel<HomeResponseModel>>(
       request: () => _homeUseCase.call(UserRequest(userId)),
-      loader: isHomeLoading,
+      loader: states.isHomeLoading,
       onSuccess: (data) {
         final res = data.data;
 
-        branchName.value = res?.branchName ?? '';
-        sliderList.value = res!.sliders ?? [];
+        states.branchName.value = res?.branchName ?? '';
+        states.sliders.value = res!.sliders ?? [];
 
-        payDetailsList.value = res.payTransactionDetails ?? [];
+        states.payments.value = res.payTransactionDetails ?? [];
+        states.todaysQR.value = res.todayQr ?? [];
 
-        isRequested.value = res.messRequest ?? false;
-        isAccepted.value = res.messRequestAccepted ?? false;
+        states.isRequested.value = res.messRequest ?? false;
+        states.isAccepted.value = res.messRequestAccepted ?? false;
       },
     );
   }
@@ -64,22 +64,22 @@ class HomeController extends BaseController {
     final userId =
         await SecureStorageService.read(AppConstants.userIdKey) ?? '';
     await callApi(
-      loader: isPackageLoading,
+      loader: states.isPackageLoading,
       request: () => _getPackagesUsecase.call(UserRequest(userId)),
       onSuccess: (data) {
-        packageList.value = data.data ?? [];
+        states.packages.value = data.data ?? [];
       },
     );
   }
 
   void updatePackageDetails() {
-    selectedPackageDetails.value = packageList.firstWhereOrNull(
-      (e) => e.id.toString() == selectedPackage.value,
+    states.selectedPackage.value = states.packages.firstWhereOrNull(
+      (e) => e.id.toString() == states.selectedPackageId.value,
     );
   }
 
   void submitSelection() async {
-    if (selectedPackage.value == null || selectedDate.text.isEmpty) {
+    if (states.selectedPackageId.value == null || selectedDate.text.isEmpty) {
       Get.snackbar('Error', 'Please select package & date');
       return;
     }
@@ -99,10 +99,10 @@ class HomeController extends BaseController {
         StartMessRequest(
           userId: userId,
           date: selectedDate.text.trim(),
-          ratePackageId: selectedPackage.value.toString(),
+          ratePackageId: states.selectedPackageId.value.toString(),
         ),
       ),
-      loader: isStarting,
+      loader: states.isStarting,
       onSuccess: (data) async {
         isSuccess = true;
         await fetchHomeData();
@@ -110,29 +110,6 @@ class HomeController extends BaseController {
       },
     );
     return isSuccess;
-    // isStarting.value = true;
-
-    // try {
-    //   final userId =
-    //       await SecureStorageService.read(AppConstants.userIdKey) ?? '';
-    //
-    //   final response = await _startMessUsecase.call(
-    //     StartMessRequest(
-    //       userId: userId,
-    //       date: selectedDate.text.trim(),
-    //       ratePackageId: selectedPackage.value.toString(),
-    //     ),
-    //   );
-    //
-    //   if (response.common.status == true) {
-    //     await fetchHomeData();
-    //     showSuccess(response.common.message);
-    //   } else {
-    //     showError(response.common.message);
-    //   }
-    // } finally {
-    //   isStarting.value = false;
-    // }
   }
 
   /// -------------------- HELPERS --------------------

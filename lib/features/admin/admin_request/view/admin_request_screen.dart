@@ -1,25 +1,11 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-import 'package:padmavatiupdated/features/admin/admin_request/widget/admin_leave_requests.dart';
 
-class AdminRequestScreen extends StatefulWidget {
+class AdminRequestScreen extends GetView<AdminReqCtrl> {
   const AdminRequestScreen({super.key});
 
   @override
-  State<AdminRequestScreen> createState() => _AdminRequestScreenState();
-}
-
-class _AdminRequestScreenState extends State<AdminRequestScreen> {
-  final controller = Get.find<AdminReqCtrl>();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   controller.getFoodRequestList(isRefresh: true);
-  //   controller.getLeaveRequestList(isRefresh: true);
-  // }
-
-  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -28,7 +14,40 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
           preferredSize: Size.fromHeight(100.h),
           child: Column(
             children: [
-              GradientAppbar(title: 'Request (Today)', showBack: false),
+              Obx(
+                () => GradientAppbar(
+                  title: 'Request (${controller.selectedDate})',
+                  showBack: false,
+                  actions: AppIconButton(
+                    onPressed: () async {
+                      final pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now().add(const Duration(days: 30)),
+                        builder: (context, child) {
+                          return Theme(
+                            data: theme.copyWith(
+                              colorScheme: ColorScheme.light(
+                                primary: AppColors.lightPrimary,
+                                onPrimary: Colors.white,
+                                onSurface: Colors.black,
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
+                      if (pickedDate != null) {
+                        controller.setDate(pickedDate);
+                      }
+                    },
+                    icon: HugeIcons.strokeRoundedCalendar03,
+                    backgroundColor: Colors.grey.shade50,
+                    iconColor: Colors.black,
+                  ),
+                ),
+              ),
 
               /// Tabs
               TabBar(
@@ -62,37 +81,4 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
       ),
     );
   }
-
-  // Widget _buildToggle(bool isLight, ThemeData theme) {
-  //   return Obx(
-  //     () => Container(
-  //       width: Get.width,
-  //       padding: const EdgeInsets.all(6.0),
-  //       decoration: BoxDecoration(
-  //         color: isLight ? AppColors.grey100 : AppColors.grey800,
-  //         borderRadius: BorderRadius.circular(12.r),
-  //       ),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           toggleItem(
-  //             title: "Special Food Request",
-  //             isSelected: controller.selectedType.value == 0,
-  //             onTap: () async {
-  //               controller.selectedType.value = 0;
-  //             },
-  //           ),
-  //           SizedBox(width: 8.w),
-  //           toggleItem(
-  //             title: "Leave Request",
-  //             isSelected: controller.selectedType.value == 1,
-  //             onTap: () async {
-  //               controller.selectedType.value = 1;
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

@@ -8,7 +8,7 @@ class MessSelectionPopup extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final state = controller.states;
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -32,19 +32,19 @@ class MessSelectionPopup extends GetView<HomeController> {
             _buildStartDate(theme, context),
 
             Obx(() {
-              if (controller.isPackageLoading.value) {
+              if (state.isPackageLoading.value) {
                 return AppLoader(size: 2.5, color: AppColors.lightPrimary);
               }
               return AppDropdownField(
                 isRequired: true,
                 isDynamic: true,
                 title: "Choose a package",
-                value: controller.selectedPackage.value,
-                items: controller.packageList,
+                value: state.selectedPackageId.value,
+                items: state.packages,
                 hintText: 'Package',
                 validator: AppValidators.required,
                 onChanged: (val) {
-                  controller.selectedPackage.value = val;
+                  state.selectedPackageId.value = val;
                   controller.updatePackageDetails();
                 },
               );
@@ -52,7 +52,7 @@ class MessSelectionPopup extends GetView<HomeController> {
 
             /// 🔥 PACKAGE DETAILS CARD
             Obx(() {
-              final pkg = controller.selectedPackageDetails.value;
+              final pkg = state.selectedPackage.value;
 
               if (pkg == null) return const SizedBox();
 

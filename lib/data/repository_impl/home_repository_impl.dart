@@ -25,7 +25,9 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Result<BaseResponseModel<List<PackageModel>>>> getPackageList(    UserRequest request) async {
+  Future<Result<BaseResponseModel<List<PackageModel>>>> getPackageList(
+    UserRequest request,
+  ) async {
     try {
       final res = await _apiService.getPackageList(request.userId);
 
