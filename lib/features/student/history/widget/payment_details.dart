@@ -13,6 +13,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+    });
     PaymentDetailsModel payment = Get.arguments;
 
     controller.fetchPaymentReceipt(payment.transactionId.toString());

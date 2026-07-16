@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import '../exporters/app_export.dart';
 
-Future<void> handleUpdate(dynamic data) async {
-  if (data == null || data['version'] == null) return;
+Future<void> handleUpdate(AppConfigModel data) async {
+  if (data.version.isEmpty) return;
 
   final info = await PackageInfo.fromPlatform();
   final String currentVersion = info.version;
-  final String latestVersion = data['version'];
+  final String latestVersion = data.version;
 
   final bool isUpdateAvailable =
       compareVersions(latestVersion, currentVersion) > 0;
 
-  if (isUpdateAvailable && data['show_popup'] == true) {
+  if (isUpdateAvailable && data.showPopup == true) {
     showUpdateDialog(data);
   }
 }
@@ -72,7 +72,7 @@ int versionToInt(String version) {
   return major * 1000000 + minor * 1000 + patch;
 }
 
-void showUpdateDialog(Map<String, dynamic> data) {
+void showUpdateDialog(AppConfigModel data) {
   if (Platform.isIOS) {
     /// 🍎 iOS Style Dialog
     Get.dialog(
@@ -92,7 +92,7 @@ void showUpdateDialog(Map<String, dynamic> data) {
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () async {
-              final url = data['url'];
+              final url = data.url;
               if (url != null) {
                 await launchInBrowser(Uri.parse(url));
               }
@@ -109,7 +109,7 @@ void showUpdateDialog(Map<String, dynamic> data) {
           //   ),
 
           /// 🔹 Optional Update → Skip
-          if (data['force_update'] == false)
+          if (data.forceUpdate == false)
             CupertinoDialogAction(
               onPressed: () => Get.back(),
               child: const Text('Later'),
@@ -134,7 +134,7 @@ void showUpdateDialog(Map<String, dynamic> data) {
         actions: [
           TextButton(
             onPressed: () async {
-              final url = data['url'].toString();
+              final url = data.url.toString();
               if (url.isNotEmpty) {
                 await launchInBrowser(Uri.parse(url));
               }
@@ -144,7 +144,7 @@ void showUpdateDialog(Map<String, dynamic> data) {
               style: TextStyle(color: AppColors.lightPrimary),
             ),
           ),
-          if (data['force_update'] == true)
+          if (data.forceUpdate == true)
             TextButton(
               onPressed: () => SystemNavigator.pop(),
               child: const Text(
@@ -152,7 +152,7 @@ void showUpdateDialog(Map<String, dynamic> data) {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-          if (data['force_update'] == false)
+          if (data.forceUpdate == false)
             TextButton(
               onPressed: () => Get.back(),
               child: const Text('Later', style: TextStyle(color: Colors.grey)),

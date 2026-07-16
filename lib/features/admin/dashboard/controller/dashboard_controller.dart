@@ -34,10 +34,32 @@ class DashboardController extends BaseController {
     await callApi<BaseResponseModel<DashboardModel>>(
       request: () => _dashboardUsecase.call(UserRequest(userId)),
       loader: isLoading,
-      onSuccess: (data) {
+      onSuccess: (data) async {
         dashboardData.value = data.data!;
         overview.value = data.data!.todayOverview!;
         _buildMenu();
+        AppConfigModel platformData = Platform.isAndroid
+            ? data.android
+            : data.ios;
+
+        /// Maintenance first
+        if (platformData.isMaintenance == true) {
+          isLoading(false);
+
+          Get.offAll(
+            () => MaintenanceScreen(
+              message: platformData.maintenanceMsg ?? '',
+              imageAsset: AppAssets.appMaintainance,
+              buttonTextColor: AppColors.lightPrimary,
+              buttonBorderColor: AppColors.lightPrimary,
+            ),
+          );
+
+          return;
+        }
+
+        /// Update after maintenance check
+        await handleUpdate(platformData);
       },
     );
   }

@@ -13,7 +13,11 @@ class _FacilityScreenState extends State<FacilityScreen> {
   @override
   void initState() {
     super.initState();
-    controller.fetchFacility();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.fetchFacility();
+    });
   }
 
   @override

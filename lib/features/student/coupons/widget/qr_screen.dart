@@ -1,7 +1,46 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
-class QRScreen extends StatelessWidget {
+class QRScreen extends StatefulWidget {
   const QRScreen({super.key});
+
+  @override
+  State<QRScreen> createState() => _QRScreenState();
+}
+
+class _QRScreenState extends State<QRScreen> {
+  final _noScreenshot = NoScreenshot.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _disableScreenshot();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+    });
+  }
+
+  Future<void> _disableScreenshot() async {
+    try {
+      await _noScreenshot.screenshotOff();
+    } catch (e) {
+      debugPrint("Screenshot disable failed: $e");
+    }
+  }
+
+  Future<void> _enableScreenshot() async {
+    try {
+      await _noScreenshot.screenshotOn();
+    } catch (e) {
+      debugPrint("Screenshot enable failed: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _enableScreenshot(); // restore when leaving screen
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

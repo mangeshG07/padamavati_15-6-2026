@@ -36,24 +36,33 @@ class HomeController extends BaseController {
         states.sliders.value = res!.sliders ?? [];
         states.bannerData.value = res.popup ?? BannerModel();
 
-        // final newImage = states.bannerData.value!.image ?? '';
-        // final oldImage =
-        //     await SecureStorageService.read(AppConstants.popupImageKey) ?? '';
-        //
-        // if (oldImage.isNotEmpty) {
-        //   if (oldImage != newImage) {
-        //     await SecureStorageService.write(
-        //       AppConstants.popupImageKey,
-        //       states.bannerData.value!.image ?? '',
-        //     );
-        //   }
-        // }
-
         states.payments.value = res.payTransactionDetails ?? [];
         states.todaysQR.value = res.todayQr ?? [];
 
         states.isRequested.value = res.messRequest ?? false;
         states.isAccepted.value = res.messRequestAccepted ?? false;
+        AppConfigModel platformData = Platform.isAndroid
+            ? data.android
+            : data.ios;
+
+        /// Maintenance first
+        if (platformData.isMaintenance == true) {
+          isLoading(false);
+
+          Get.offAll(
+            () => MaintenanceScreen(
+              message: platformData.maintenanceMsg ?? '',
+              imageAsset: AppAssets.appMaintainance,
+              buttonTextColor: AppColors.lightPrimary,
+              buttonBorderColor: AppColors.lightPrimary,
+            ),
+          );
+
+          return;
+        }
+
+        /// Update after maintenance check
+        await handleUpdate(platformData);
 
         /// ✅ CALL POPUP HERE
         await handlePopup();

@@ -18,23 +18,29 @@ class AdminNavController extends GetxController {
 
   /// 🔥 Smart Lazy Loader
   void _loadTab(int index) {
-    switch (index) {
-      case 0:
-        Get.find<DashboardController>().getDashboard();
-        Get.find<RequestsUserController>().getUsersPaymentList(isRefresh: true);
-        break;
-      case 1:
-        Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);
-        Get.find<AdminReqCtrl>().getLeaveRequestList(isRefresh: true);
-        Get.find<AdminReqCtrl>().setDate(DateTime.now());
-        break;
-      case 2:
-        Get.find<PeopleController>().getBranchUserList(isRefresh: true);
-        break;
-      case 3:
-        Get.find<AdminProfileController>().getAdminProfile();
-        break;
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+
+      switch (index) {
+        case 0:
+          Get.find<DashboardController>().getDashboard();
+          Get.find<RequestsUserController>().getUsersPaymentList(
+            isRefresh: true,
+          );
+          break;
+        case 1:
+          Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);
+          Get.find<AdminReqCtrl>().getLeaveRequestList(isRefresh: true);
+          Get.find<AdminReqCtrl>().setDate(DateTime.now());
+          break;
+        case 2:
+          Get.find<PeopleController>().getBranchUserList(isRefresh: true);
+          break;
+        case 3:
+          Get.find<AdminProfileController>().getAdminProfile();
+          break;
+      }
+    });
   }
 
   Widget get currentPage => _pages[currentIndex.value];

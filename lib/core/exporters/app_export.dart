@@ -35,14 +35,14 @@ export 'package:animated_toggle_switch/animated_toggle_switch.dart'
 export 'package:image_picker/image_picker.dart';
 export 'package:dotted_line/dotted_line.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
-export 'package:firebase_core/firebase_core.dart';
+// export 'package:firebase_core/firebase_core.dart';
 export 'package:padmavatiupdated/core/config/remote_config.dart';
 export 'package:flutter_widget_from_html/flutter_widget_from_html.dart'
     hide ImageSource;
 export 'package:open_filex/open_filex.dart';
 export 'package:flutter_file_downloader/flutter_file_downloader.dart';
 export 'package:flutter_animate/flutter_animate.dart';
-export 'package:firebase_remote_config/firebase_remote_config.dart';
+// export 'package:firebase_remote_config/firebase_remote_config.dart';
 
 //Common//
 export 'package:padmavatiupdated/core/constants/app_constants.dart';
@@ -72,6 +72,7 @@ export 'package:padmavatiupdated/domain/usecase/get_payment_receipt.dart';
 export 'package:padmavatiupdated/features/admin/dashboard/widget/used_qr_sheet.dart';
 export 'package:padmavatiupdated/features/admin/admin_request/widget/admin_leave_requests.dart';
 export 'package:padmavatiupdated/features/student/profile/widget/profile_states.dart';
+export 'package:padmavatiupdated/features/admin/people/view/expire_coupon_sheet.dart';
 
 //Pages//
 export 'package:padmavatiupdated/main.dart';

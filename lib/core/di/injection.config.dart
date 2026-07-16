@@ -12,7 +12,6 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:padmavatiupdated/core/component/time_service.dart' as _i766;
-import 'package:padmavatiupdated/core/config/remote_config.dart' as _i602;
 import 'package:padmavatiupdated/core/exporters/app_export.dart' as _i85;
 import 'package:padmavatiupdated/core/network/api_service.dart' as _i400;
 import 'package:padmavatiupdated/core/network/register_module.dart' as _i433;
@@ -115,9 +114,6 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i766.TimerService>(() => _i766.TimerService());
-    gh.lazySingleton<_i602.RemoteConfigService>(
-      () => _i602.RemoteConfigService(),
-    );
     gh.lazySingleton<_i85.Dio>(() => registerModule.dio);
     gh.factory<_i400.ApiService>(() => _i400.ApiService(gh<_i85.Dio>()));
     gh.lazySingleton<_i85.AdminAuthRepository>(

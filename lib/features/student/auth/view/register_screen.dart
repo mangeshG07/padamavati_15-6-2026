@@ -263,6 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildFoodPreference(ThemeData theme) {
     return Obx(
       () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 6.h,
         children: [
           AppLabel.required(text: 'Food Preference'),

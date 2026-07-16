@@ -9,7 +9,7 @@ void main() {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
       // ⚡ 1. Firebase init FIRST
-      await Firebase.initializeApp();
+      // await Firebase.initializeApp();
 
       // ⚡ 2. Dependency Injection FIRST (important order)
       await configureDependencies();

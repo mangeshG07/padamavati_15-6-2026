@@ -8,6 +8,17 @@ class RetryInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     String message = "Something went wrong. Please try again.";
+    if (err.response?.statusCode == 429) {
+      _showError("Too many requests. Please wait a moment.");
+      return handler.next(err);
+    }
+
+    int retryCount = err.requestOptions.extra['retryCount'] ?? 0;
+
+    /// 🚫 Max retry limit
+    if (retryCount >= 2) {
+      return handler.next(err);
+    }
 
     switch (err.type) {
       case DioExceptionType.connectionTimeout:
@@ -45,6 +56,10 @@ class RetryInterceptor extends Interceptor {
     /// Retry only for network issues
     if (err.type == DioExceptionType.connectionError ||
         err.type == DioExceptionType.receiveTimeout) {
+      err.requestOptions.extra['retryCount'] = retryCount + 1;
+
+      await Future.delayed(const Duration(seconds: 1));
+
       try {
         final response = await dio.fetch(err.requestOptions);
         return handler.resolve(response);
@@ -66,6 +81,8 @@ class RetryInterceptor extends Interceptor {
         return "You don’t have permission.";
       case 404:
         return "Requested resource not found.";
+      case 429:
+        return "Too many requests.";
       case 500:
         return "Server error. Please try later.";
       default:

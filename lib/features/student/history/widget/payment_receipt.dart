@@ -203,6 +203,10 @@ class PaymentReceipt extends StatelessWidget {
                         SizedBox(height: 24.h),
 
                         ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.lightPrimary,
+                            foregroundColor: Colors.white,
+                          ),
                           onPressed: () =>
                               downloadFile(payment.receiptUrl ?? ''),
                           icon: const Icon(Icons.download),

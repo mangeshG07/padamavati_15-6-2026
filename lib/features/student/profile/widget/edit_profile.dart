@@ -13,18 +13,9 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    // final state = controller.state;
-    // state.currentAddressController.text =
-    //     state.profileData.value!.curAddress ?? '';
-    // state.permAddressController.text =
-    //     state.profileData.value!.perAddress ?? '';
-    // state.selectedDegree.value =
-    //     state.profileData.value!.degreeId?.toString() ?? '';
-    //
-    // controller.fetchDegree();
-
     /// ✅ CLEAN UI (no business logic)
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
       controller.initEditProfile();
     });
   }

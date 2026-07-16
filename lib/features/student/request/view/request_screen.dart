@@ -14,10 +14,14 @@ class _RequestScreenState extends State<RequestScreen>
   @override
   void initState() {
     super.initState();
-    Future.wait([
-      controller.getLeaveRequestList(isRefresh: true),
-      controller.getFoodRequestList(isRefresh: true),
-    ]);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      Future.wait([
+        controller.getLeaveRequestList(isRefresh: true),
+        controller.getFoodRequestList(isRefresh: true),
+      ]);
+    });
   }
 
   @override

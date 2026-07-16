@@ -17,16 +17,20 @@ class PeopleController extends GetxController
     searchText.value = value;
   }
 
+  final isApiCalling = false.obs;
+
   Future<void> getBranchUserList({
     bool isRefresh = false,
     bool showLoading = true,
   }) async {
+    if (isApiCalling.value) return;
+
+    isApiCalling(true);
     if (isRefresh) resetPagination();
 
     startLoading(showLoading: showLoading);
 
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
     try {
       final response = await _branchUsersUsecase(
         UserRequest(
@@ -49,6 +53,7 @@ class PeopleController extends GetxController
     } catch (e) {
       debugPrint("Error: $e");
     } finally {
+      isApiCalling(false);
       stopLoading();
     }
   }

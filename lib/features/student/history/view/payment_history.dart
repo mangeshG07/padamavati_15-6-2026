@@ -14,7 +14,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
   @override
   void initState() {
     super.initState();
-    controller.fetchPaymentHistory();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.fetchPaymentHistory();
+    });
   }
 
   @override

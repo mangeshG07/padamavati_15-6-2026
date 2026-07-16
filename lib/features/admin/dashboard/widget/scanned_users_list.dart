@@ -13,7 +13,10 @@ class _ScannedUsersListState extends State<ScannedUsersList> {
   @override
   void initState() {
     super.initState();
-    controller.getScannedUserList(isRefresh: true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.getScannedUserList(isRefresh: true);
+    });
   }
 
   @override

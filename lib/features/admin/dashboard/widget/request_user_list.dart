@@ -13,7 +13,11 @@ class _RequestUsersState extends State<RequestUsers> {
   @override
   void initState() {
     super.initState();
-    controller.getRequestUserList(isRefresh: true);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.getRequestUserList(isRefresh: true);
+    });
   }
 
   @override

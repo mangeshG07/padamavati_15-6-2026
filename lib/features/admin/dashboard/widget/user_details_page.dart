@@ -1,4 +1,4 @@
-import 'package:padmavatiupdated/features/admin/people/view/expire_coupon_sheet.dart';
+
 
 import '../../../../core/exporters/app_export.dart';
 
@@ -15,8 +15,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   @override
   void initState() {
     super.initState();
-    final studentId = Get.arguments['id']?.toString() ?? '';
-    controller.getUserDetails(studentId);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      final studentId = Get.arguments['id']?.toString() ?? '';
+      controller.getUserDetails(studentId);
+    });
   }
 
   @override
