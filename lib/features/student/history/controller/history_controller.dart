@@ -14,8 +14,7 @@ class HistoryController extends BaseController {
 
   /// -------------------- HISTORY --------------------
   Future<void> fetchPaymentHistory() async {
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
     await callApi<BaseResponseModel<List<PaymentDetailsModel>>>(
       request: () => _historyUsecase.call(UserRequest(userId)),
       loader: isHistoryLoading,

@@ -11,6 +11,8 @@ abstract class PeopleModel with _$PeopleModel {
     @JsonKey(name: 'app_id') int? id,
     @JsonKey(name: 'due_amount') String? dueAmount,
     @JsonKey(name: 'profile_image') String? profileImage,
+    @JsonKey(name: 'account_status') String? status,
+    @JsonKey(name: 'account_status_label') String? statusLabel,
   }) = _PeopleModel;
 
   factory PeopleModel.fromJson(Map<String, dynamic> json) =>

@@ -9,6 +9,7 @@ abstract class CouponSummaryModel with _$CouponSummaryModel {
     @JsonKey(name: 'used_coupons') int? usedCoupons,
     @JsonKey(name: 'today_coupons') int? todayCoupons,
     @JsonKey(name: 'remaining_coupons') int? remainingCoupons,
+    @JsonKey(name: 'expires_coupons') int? expiredCoupons,
     @JsonKey(name: 'package_end_date') String? expiryDate,
   }) = _CouponSummaryModel;
 

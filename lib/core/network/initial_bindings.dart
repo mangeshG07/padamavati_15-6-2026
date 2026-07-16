@@ -6,5 +6,6 @@ class InitialBindings extends Bindings {
   void dependencies() {
     final dio = DioClient.create();
     Get.put<ApiService>(ApiService(dio), permanent: true);
+    Get.lazyPut<SplashController>(() => SplashController(getIt()));
   }
 }

@@ -136,6 +136,7 @@ abstract class ApiService {
   Future<BaseResponseModel<FoodResponseModel>> adminFoodRequest(
     @Part(name: "user_id") String userId,
     @Part(name: "page_number") String pageNo,
+    @Part(name: "date") String date,
   );
 
   @POST(ApiConstants.branchUserList)
@@ -160,6 +161,7 @@ abstract class ApiService {
   Future<BaseResponseModel<LeaveResponseModel>> adminLeaveRequest(
     @Part(name: "user_id") String userId,
     @Part(name: "page_number") String pageNo,
+    @Part(name: "date") String date,
   );
 
   @POST(ApiConstants.scannedUserData)
@@ -182,6 +184,29 @@ abstract class ApiService {
     @Part(name: "student_id") String studentId,
   );
 
+  @POST(ApiConstants.expireQrData)
+  Future<BaseResponseModel<ExpireResponseModel>> expireQrData(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+    @Part(name: "student_id") String studentId,
+  );
+
   @POST(ApiConstants.deleteAccount)
   Future<BaseResponseModel> deleteAccount(@Part(name: "user_id") String userId);
+
+  @POST(ApiConstants.tomorrowRequests)
+  Future<BaseResponseModel<RequestsResponseModel>> tomorrowRequests(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+    @Part(name: "type") String type,
+  );
+
+  @POST(ApiConstants.usersPaymentData)
+  Future<BaseResponseModel<PaymentResponseModel>> usersPaymentData(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_number") String pageNo,
+  );
+
+  @POST(ApiConstants.getSplash)
+  Future<dynamic> getSplash();
 }

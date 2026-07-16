@@ -26,4 +26,25 @@ class PeopleRepositoryImpl implements PeopleRepository {
       return Failure('Something went wrong.');
     }
   }
+
+  @override
+  Future<Result<BaseResponseModel<ExpireResponseModel>>> expireQrData(
+    UserRequest request,
+  ) async {
+    try {
+      final res = await _apiService.expireQrData(
+        request.userId,
+        request.pageNo,
+        request.type,
+      );
+
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (error) {
+      return Failure('Something went wrong.');
+    }
+  }
 }

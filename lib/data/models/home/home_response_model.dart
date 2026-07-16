@@ -6,6 +6,7 @@ part 'home_response_model.g.dart';
 abstract class HomeResponseModel with _$HomeResponseModel {
   const factory HomeResponseModel({
     @JsonKey(name: 'branch_name') String? branchName,
+    @JsonKey(name: 'popup_banner') BannerModel? popup,
     List<MasterDataModel>? sliders,
     @JsonKey(name: 'mess_request') bool? messRequest,
     @JsonKey(name: 'mess_request_accepted') bool? messRequestAccepted,

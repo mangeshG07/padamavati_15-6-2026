@@ -145,16 +145,38 @@ class _CouponsScreenState extends State<CouponsScreen> {
   Widget _totalCard() {
     final total =
         controller.couponSummary.value.totalCoupons?.toString() ?? '0';
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
-      alignment: Alignment.center,
-      decoration: buildCardDecoration(),
-      child: AppText(
-        text: 'Total: $total Coupons',
-        fontSize: 18.sp,
-        color: Colors.black,
-      ),
+    final expire =
+        controller.couponSummary.value.expiredCoupons?.toString() ?? '0';
+    return Row(
+      spacing: 8,
+      children: [
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            decoration: buildCardDecoration(),
+            child: AppText(
+              text: 'Expired: $expire Coupons',
+              fontSize: 16.sp,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            decoration: buildCardDecoration(),
+            child: AppText(
+              text: 'Total: $total Coupons',
+              fontSize: 16.sp,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -205,7 +227,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
           theme,
           qr.messTime == 'Morning'
               ? "Lunch"
-              : qr.messTime == 'Full Time'
+              : qr.messTime == '1 Time'
               ? 'One Time'
               : "Dinner",
           qr.messType ?? '',
@@ -317,7 +339,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
           theme,
           qr.messTime == 'Morning'
               ? "Lunch"
-              : qr.messTime == 'Full Time'
+              : qr.messTime == '1 Time'
               ? 'One Time'
               : "Dinner",
           qr.messType ?? '',

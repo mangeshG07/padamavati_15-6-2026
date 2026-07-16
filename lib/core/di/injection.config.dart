@@ -51,6 +51,8 @@ import 'package:padmavatiupdated/domain/usecase/admin_profile_usecase.dart'
     as _i569;
 import 'package:padmavatiupdated/domain/usecase/delete_account_usecase.dart'
     as _i604;
+import 'package:padmavatiupdated/domain/usecase/expire_coupon_usecase.dart'
+    as _i419;
 import 'package:padmavatiupdated/domain/usecase/food_items_usecase.dart'
     as _i376;
 import 'package:padmavatiupdated/domain/usecase/food_req_usecase.dart' as _i348;
@@ -90,13 +92,19 @@ import 'package:padmavatiupdated/domain/usecase/scanned_user_usecase.dart'
 import 'package:padmavatiupdated/domain/usecase/send_otp_usecase.dart' as _i470;
 import 'package:padmavatiupdated/domain/usecase/start_mess_usecase.dart'
     as _i765;
+import 'package:padmavatiupdated/domain/usecase/tomorrow_user_usecase.dart'
+    as _i816;
 import 'package:padmavatiupdated/domain/usecase/update_profile_usecase.dart'
     as _i370;
 import 'package:padmavatiupdated/domain/usecase/used_qr_list.dart' as _i446;
+import 'package:padmavatiupdated/domain/usecase/user_payment_usecase.dart'
+    as _i1063;
 import 'package:padmavatiupdated/domain/usecase/verify_otp_usecase.dart'
     as _i1039;
 import 'package:padmavatiupdated/features/splash/controller/splash_controller.dart'
     as _i1022;
+import 'package:padmavatiupdated/features/splash/view/remote_config.dart'
+    as _i296;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -111,9 +119,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i602.RemoteConfigService(),
     );
     gh.lazySingleton<_i85.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i1022.SplashController>(
-      () => _i1022.SplashController(gh<_i85.RemoteConfigService>()),
-    );
     gh.factory<_i400.ApiService>(() => _i400.ApiService(gh<_i85.Dio>()));
     gh.lazySingleton<_i85.AdminAuthRepository>(
       () => _i403.AdminAuthRepositoryImpl(gh<_i85.ApiService>()),
@@ -124,11 +129,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i85.PeopleRepository>(
       () => _i28.PeopleRepositoryImpl(gh<_i85.ApiService>()),
     );
+    gh.lazySingleton<_i419.ExpireCouponUsecase>(
+      () => _i419.ExpireCouponUsecase(gh<_i85.PeopleRepository>()),
+    );
     gh.lazySingleton<_i237.GetBranchUsersUsecase>(
       () => _i237.GetBranchUsersUsecase(gh<_i85.PeopleRepository>()),
     );
     gh.lazySingleton<_i85.HomeRepository>(
       () => _i877.HomeRepositoryImpl(gh<_i85.ApiService>()),
+    );
+    gh.lazySingleton<_i296.RemoteConfigServiceNew>(
+      () => _i296.RemoteConfigServiceNew(gh<_i85.ApiService>()),
     );
     gh.lazySingleton<_i85.AuthRepository>(
       () => _i272.AuthRepositoryImpl(gh<_i85.ApiService>()),
@@ -208,8 +219,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i586.ScannedUserUsecase>(
       () => _i586.ScannedUserUsecase(gh<_i85.DashboardRepository>()),
     );
+    gh.lazySingleton<_i816.TomorrowUserUsecase>(
+      () => _i816.TomorrowUserUsecase(gh<_i85.DashboardRepository>()),
+    );
     gh.lazySingleton<_i446.UsedQrListUsecase>(
       () => _i446.UsedQrListUsecase(gh<_i85.DashboardRepository>()),
+    );
+    gh.lazySingleton<_i1063.UserPaymentUsecase>(
+      () => _i1063.UserPaymentUsecase(gh<_i85.DashboardRepository>()),
     );
     gh.lazySingleton<_i1039.VerifyOtpUsecase>(
       () => _i1039.VerifyOtpUsecase(gh<_i85.AuthRepository>()),
@@ -222,6 +239,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i470.SendOtpUsecase>(
       () => _i470.SendOtpUsecase(gh<_i85.AuthRepository>()),
+    );
+    gh.lazySingleton<_i1022.SplashController>(
+      () => _i1022.SplashController(gh<_i296.RemoteConfigServiceNew>()),
     );
     gh.lazySingleton<_i886.RegisterUsecase>(
       () => _i886.RegisterUsecase(gh<_i85.AuthRepository>()),

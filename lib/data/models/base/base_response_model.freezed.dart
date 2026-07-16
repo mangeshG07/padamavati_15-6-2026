@@ -11,7 +11,6 @@ part of 'base_response_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$BaseResponseModel<T> {
 
@@ -22,8 +21,6 @@ mixin _$BaseResponseModel<T> {
 @pragma('vm:prefer-inline')
 $BaseResponseModelCopyWith<T, BaseResponseModel<T>> get copyWith => _$BaseResponseModelCopyWithImpl<T, BaseResponseModel<T>>(this as BaseResponseModel<T>, _$identity);
 
-  /// Serializes this BaseResponseModel to a JSON map.
-  Map<String, dynamic> toJson(Object? Function(T) toJsonT);
 
 
 @override
@@ -31,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseResponseModel<T>&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,common,android,ios,const DeepCollectionEquality().hash(data));
 
@@ -236,11 +233,11 @@ return $default(_that.common,_that.android,_that.ios,_that.data);case _:
 }
 
 /// @nodoc
-@JsonSerializable(genericArgumentFactories: true)
+
 
 class _BaseResponseModel<T> implements BaseResponseModel<T> {
   const _BaseResponseModel({required this.common, required this.android, required this.ios, this.data});
-  factory _BaseResponseModel.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$BaseResponseModelFromJson(json,fromJsonT);
+  
 
 @override final  CommonModel common;
 @override final  AppConfigModel android;
@@ -253,17 +250,14 @@ class _BaseResponseModel<T> implements BaseResponseModel<T> {
 @pragma('vm:prefer-inline')
 _$BaseResponseModelCopyWith<T, _BaseResponseModel<T>> get copyWith => __$BaseResponseModelCopyWithImpl<T, _BaseResponseModel<T>>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
-  return _$BaseResponseModelToJson<T>(this, toJsonT);
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _BaseResponseModel<T>&&(identical(other.common, common) || other.common == common)&&(identical(other.android, android) || other.android == android)&&(identical(other.ios, ios) || other.ios == ios)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,common,android,ios,const DeepCollectionEquality().hash(data));
 

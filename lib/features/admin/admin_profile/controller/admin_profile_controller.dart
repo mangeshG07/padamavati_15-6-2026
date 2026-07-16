@@ -5,18 +5,8 @@ class AdminProfileController extends BaseController {
   AdminProfileController(this._profileUsecase);
 
   List<Map<String, dynamic>> get menuList => [
-    // {
-    //   'title': 'Edit Profile',
-    //   'icon': HugeIcons.strokeRoundedUserCircle,
-    //   'onTap': () => Get.toNamed(Routes.editProfile),
-    // },
-    // {
-    //   'title': 'Facility',
-    //   'icon': HugeIcons.strokeRoundedSpoonAndKnife,
-    //   'onTap': () => Get.toNamed(Routes.facilityScreen),
-    // },
     {
-      'title': 'Privacy Policy',
+      'title': 'Help And Support',
       'icon': HugeIcons.strokeRoundedMailOpen,
       'onTap': () => Get.toNamed(Routes.helpAndSupport),
     },

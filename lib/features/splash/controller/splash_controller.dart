@@ -1,62 +1,62 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
+import '../view/remote_config.dart';
+
 @lazySingleton
 class SplashController extends GetxController {
-  final RemoteConfigService remoteConfig;
+  final RemoteConfigServiceNew remoteConfig;
+
   SplashController(this.remoteConfig);
 
-  void checkLogin() async {
-    final tokenFuture = SecureStorageService.read(AppConstants.userTokenKey);
-    final roleFuture = SecureStorageService.read(AppConstants.userRollIdKey);
+  RxBool isLoaded = false.obs;
 
-    final results = await Future.wait([tokenFuture, roleFuture]);
-    final token = results[0] ?? '';
-    final role = results[1] ?? '';
-
-    _navigate(token, role);
-
-    // final token =
-    //     await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
-    // final role =
-    //     await SecureStorageService.read(AppConstants.userRollIdKey) ?? '';
-
-    /// ✅ 1. First check onboarding
-    // if (isOnboarded != true) {
-    //   Get.offAllNamed(Routes.onboarding);
-    //   return;
-    // }
-
-    // /// ✅ 2. Then check auth
-    // Future.microtask(() {
-    //   if (token.isEmpty) {
-    //     Get.offAllNamed(Routes.login);
-    //   } else {
-    //     if (role == '5') {
-    //       Get.offAllNamed(Routes.adminMainScreen);
-    //     } else {
-    //       Get.offAllNamed(Routes.mainScreen);
-    //     }
-    //   }
-    // });
-    // _loadRemoteConfig();
+  @override
+  void onInit() {
+    super.onInit();
+    initApp();
   }
 
-  //
-  // Future<void> _loadRemoteConfig() async {
-  //   try {
-  //     await remote.init();
-  //
-  //     if (remote.maintenance) {
-  //       Get.offAllNamed(Routes.maintenance);
-  //     }
-  //
-  //     if (remote.forceUpdate) {
-  //       Get.offAllNamed(Routes.updateApp);
-  //     }
-  //   } catch (e) {
-  //     // fallback safe mode
-  //   }
-  // }
+  Future<void> initApp() async {
+    try {
+      /// ✅ 1. Load remote config FROM API
+      await remoteConfig.init();
+
+      isLoaded.value = true; // ✅ trigger UI update
+
+      /// ⏳ Give UI time to render image
+      await Future.delayed(const Duration(seconds: 2));
+
+      /// ✅ 2. Maintenance
+      if (remoteConfig.isMaintenance) {
+        // Get.offAllNamed(Routes.maintenance);
+        return;
+      }
+
+      /// ✅ 3. Force update
+      if (remoteConfig.isForceUpdate) {
+        // Get.offAllNamed(Routes.updateApp);
+        return;
+      }
+      //
+      // /// ✅ 4. Login check (API based)
+      // if (!remoteConfig.isLoggedIn) {
+      //   Get.offAllNamed(Routes.login);
+      //   return;
+      // }
+
+      /// ✅ 5. Local storage (token + role)
+      final token =
+          await SecureStorageService.read(AppConstants.userTokenKey) ?? '';
+
+      final role =
+          await SecureStorageService.read(AppConstants.userRollIdKey) ?? '';
+
+      _navigate(token, role);
+    } catch (e) {
+      /// ✅ fallback safety
+      Get.offAllNamed(Routes.login);
+    }
+  }
 
   void _navigate(String token, String role) {
     if (token.isEmpty) {
@@ -73,3 +73,35 @@ class SplashController extends GetxController {
     }
   }
 }
+
+// @lazySingleton
+// class SplashController extends GetxController {
+//   final RemoteConfigService remoteConfig;
+//   SplashController(this.remoteConfig);
+//
+//   void checkLogin() async {
+//     final tokenFuture = SecureStorageService.read(AppConstants.userTokenKey);
+//     final roleFuture = SecureStorageService.read(AppConstants.userRollIdKey);
+//
+//     final results = await Future.wait([tokenFuture, roleFuture]);
+//     final token = results[0] ?? '';
+//     final role = results[1] ?? '';
+//
+//     _navigate(token, role);
+//   }
+//
+//   void _navigate(String token, String role) {
+//     if (token.isEmpty) {
+//       Get.offAllNamed(Routes.login);
+//       return;
+//     }
+//
+//     switch (role) {
+//       case '5':
+//         Get.offAllNamed(Routes.adminMainScreen);
+//         break;
+//       default:
+//         Get.offAllNamed(Routes.mainScreen);
+//     }
+//   }
+// }

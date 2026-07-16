@@ -1,3 +1,5 @@
+import 'package:padmavatiupdated/features/admin/people/view/expire_coupon_sheet.dart';
+
 import '../../../../core/exporters/app_export.dart';
 
 class UserDetailsPage extends StatefulWidget {
@@ -103,7 +105,18 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
           child: _row("Used", qr.usedQrs.toString()),
         ),
         _row("Pending", qr.pendingQrs.toString()),
-        _row("Expired", qr.expiredQrs.toString()),
+        GestureDetector(
+          onTap: () {
+            Get.bottomSheet(
+              ExpireQrSheet(
+                id: controller.scanUserData.value.userId?.toString() ?? '',
+              ),
+              isScrollControlled: true,
+            );
+          },
+
+          child: _row("Expired", qr.expiredQrs.toString()),
+        ),
       ],
     );
   }
@@ -207,7 +220,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
         children: [
           AppText(
             text: title,
-            color: title == 'Used' ? Colors.blue : Colors.grey[600],
+            color: title == 'Used' || title == "Expired"
+                ? Colors.blue
+                : Colors.grey[600],
             fontSize: 14.sp,
           ),
           AppText(

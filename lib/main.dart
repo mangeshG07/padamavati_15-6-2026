@@ -1,5 +1,7 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
+import 'features/splash/view/remote_config.dart';
+
 void main() {
   runZonedGuarded(
     () async {
@@ -13,13 +15,14 @@ void main() {
       await configureDependencies();
 
       // ⚡ 3. Remote config via GetIt (NOT new instance)
-      await getIt<RemoteConfigService>().init();
+
       // await Firebase.initializeApp();
 
       // await RemoteConfigService().init();
 
       /// Init Dependencies (GetX)
       await initServices();
+
       // await configureDependencies();
 
       /// Global Flutter Error
@@ -37,6 +40,7 @@ void main() {
 
 Future<void> initServices() async {
   await Get.putAsync(() => InitService().init());
+  await getIt<RemoteConfigServiceNew>().init();
 }
 
 class MyApp extends StatelessWidget {

@@ -1,20 +1,22 @@
 import '../../../../core/exporters/app_export.dart';
 
-class UsedQrSheet extends StatefulWidget {
+class ExpireQrSheet extends StatefulWidget {
   final String id;
-  const UsedQrSheet({super.key, required this.id});
+  const ExpireQrSheet({super.key, required this.id});
 
   @override
-  State<UsedQrSheet> createState() => _UsedQrSheetState();
+  State<ExpireQrSheet> createState() => _ExpireQrSheetState();
 }
 
-class _UsedQrSheetState extends State<UsedQrSheet> {
-  final controller = Get.find<DashboardController>();
+class _ExpireQrSheetState extends State<ExpireQrSheet> {
+  final PeopleController controller = Get.isRegistered<PeopleController>()
+      ? Get.find<PeopleController>()
+      : Get.put(PeopleController(getIt(), getIt()));
 
   @override
   void initState() {
     super.initState();
-    controller.usedQRList(isRefresh: true, studentId: widget.id);
+    controller.getExpireCouponList(isRefresh: true, studentId: widget.id);
   }
 
   @override
@@ -40,7 +42,7 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
           ),
 
           const Text(
-            "QR Scan History",
+            "QR Expired History",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
 
@@ -48,7 +50,7 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
 
           Expanded(
             child: Obx(() {
-              final usedQR = controller.usedQRPagination;
+              final usedQR = controller.expirePagination;
               if (usedQR.isLoading.isTrue) {
                 return AppLoader(strokeWidth: 2.5);
               }
@@ -58,7 +60,7 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
                 );
               }
               final groupedData = controller.groupByDate(
-                controller.usedQRPagination.items,
+                controller.expirePagination.items,
               );
 
               final dates = groupedData.keys.toList();
@@ -71,7 +73,7 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
                       usedQR.hasMore &&
                       !usedQR.isLoadMore.value &&
                       !usedQR.isLoading.value) {
-                    controller.usedQRList(
+                    controller.getExpireCouponList(
                       showLoading: false,
                       studentId: widget.id,
                     );
@@ -86,7 +88,7 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
                         itemCount: dates.length,
                         itemBuilder: (BuildContext context, int index) {
                           final date = dates[index];
-                          final items = groupedData[date]!;
+                          final items = groupedData[date] ?? [];
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -114,15 +116,14 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
                                   ),
                                   child: ListTile(
                                     leading: const Icon(Icons.qr_code),
-                                    title: Text(
-                                      "${item.mess} (${item.messType})",
-                                    ),
+                                    title: Text(item.mealTime ?? ''),
                                     subtitle: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Scanned At: ${item.scannedAt}"),
-                                        Text("By: ${item.scannedByName}"),
+                                        Text(
+                                          "Expired At: ${item.expiredAt ?? ''}",
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -130,49 +131,6 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
                               }),
                             ],
                           );
-
-                          // return Container(
-                          //   margin: const EdgeInsets.symmetric(vertical: 6),
-                          //   padding: const EdgeInsets.all(12),
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.grey[100],
-                          //     borderRadius: BorderRadius.circular(12),
-                          //   ),
-                          //   child: Column(
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: [
-                          //       /// Meal + Type
-                          //       Row(
-                          //         mainAxisAlignment:
-                          //             MainAxisAlignment.spaceBetween,
-                          //         children: [
-                          //           Text(
-                          //             item.mess,
-                          //             style: const TextStyle(
-                          //               fontWeight: FontWeight.bold,
-                          //             ),
-                          //           ),
-                          //           Text(
-                          //             item.messType,
-                          //             style: TextStyle(
-                          //               color: item.messType == "Veg"
-                          //                   ? Colors.green
-                          //                   : Colors.red,
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //
-                          //       const SizedBox(height: 5),
-                          //
-                          //       Text("Valid: ${item.messValidDate}"),
-                          //       Text("Scanned: ${item.scannedAt}"),
-                          //       Text(
-                          //         "By: ${item.scannedByName} (${item.scannedBy})",
-                          //       ),
-                          //     ],
-                          //   ),
-                          // );
                         },
                       ),
                     ),
@@ -194,11 +152,8 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
               );
             }),
           ),
-
         ],
       ),
     );
   }
-
-
 }

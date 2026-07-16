@@ -18,11 +18,11 @@ class GradientAppbar extends StatelessWidget {
       width: Get.width,
       padding: EdgeInsets.symmetric(horizontal: 16.w).copyWith(top: 16.h),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.lightPrimary.withValues(alpha: 0.1), Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        // gradient: LinearGradient(
+        //   colors: [AppColors.lightPrimary.withValues(alpha: 0.1), Colors.white],
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        // ),
       ),
       child: SafeArea(
         child: Row(

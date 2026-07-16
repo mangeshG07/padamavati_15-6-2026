@@ -29,6 +29,9 @@ class AdminReqCtrl extends BaseController {
     bool isRefresh = false,
     bool showLoading = true,
   }) async {
+    final date = selectedDate.value == 'Today'
+        ? DateFormat('dd-MM-yyyy').format(DateTime.now()).toString()
+        : selectedDate.value;
     if (isRefresh) foodPagination.reset();
 
     foodPagination.startLoading(showLoading: showLoading);
@@ -38,7 +41,11 @@ class AdminReqCtrl extends BaseController {
 
     try {
       final response = await _foodRequests(
-        UserRequest(userId, pageNo: foodPagination.currentPage.toString()),
+        UserRequest(
+          userId,
+          pageNo: foodPagination.currentPage.toString(),
+          type: date,
+        ),
       );
 
       switch (response) {
@@ -63,6 +70,9 @@ class AdminReqCtrl extends BaseController {
     bool isRefresh = false,
     bool showLoading = true,
   }) async {
+    final date = selectedDate.value == 'Today'
+        ? DateFormat('dd-MM-yyyy').format(DateTime.now()).toString()
+        : selectedDate.value;
     if (isRefresh) leavePagination.reset();
 
     leavePagination.startLoading(showLoading: showLoading);
@@ -72,7 +82,11 @@ class AdminReqCtrl extends BaseController {
 
     try {
       final response = await _leaveRequests(
-        UserRequest(userId, pageNo: leavePagination.currentPage.toString()),
+        UserRequest(
+          userId,
+          pageNo: leavePagination.currentPage.toString(),
+          type: date,
+        ),
       );
 
       switch (response) {
@@ -100,10 +114,12 @@ class AdminReqCtrl extends BaseController {
     setDate(DateTime.now());
   }
 
-  void setDate(DateTime date) {
+  void setDate(DateTime date) async {
     final formatted = DateFormat('dd-MM-yyyy').format(date);
     final today = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
     selectedDate.value = (formatted == today) ? 'Today' : formatted;
+    await getFoodRequestList(isRefresh: true);
+    await getLeaveRequestList(isRefresh: true);
   }
 }

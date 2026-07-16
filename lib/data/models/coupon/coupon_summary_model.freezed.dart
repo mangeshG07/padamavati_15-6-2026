@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CouponSummaryModel {
 
-@JsonKey(name: 'total_coupons') int? get totalCoupons;@JsonKey(name: 'used_coupons') int? get usedCoupons;@JsonKey(name: 'today_coupons') int? get todayCoupons;@JsonKey(name: 'remaining_coupons') int? get remainingCoupons;@JsonKey(name: 'package_end_date') String? get expiryDate;
+@JsonKey(name: 'total_coupons') int? get totalCoupons;@JsonKey(name: 'used_coupons') int? get usedCoupons;@JsonKey(name: 'today_coupons') int? get todayCoupons;@JsonKey(name: 'remaining_coupons') int? get remainingCoupons;@JsonKey(name: 'expires_coupons') int? get expiredCoupons;@JsonKey(name: 'package_end_date') String? get expiryDate;
 /// Create a copy of CouponSummaryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CouponSummaryModelCopyWith<CouponSummaryModel> get copyWith => _$CouponSummaryM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CouponSummaryModel&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons)&&(identical(other.usedCoupons, usedCoupons) || other.usedCoupons == usedCoupons)&&(identical(other.todayCoupons, todayCoupons) || other.todayCoupons == todayCoupons)&&(identical(other.remainingCoupons, remainingCoupons) || other.remainingCoupons == remainingCoupons)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CouponSummaryModel&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons)&&(identical(other.usedCoupons, usedCoupons) || other.usedCoupons == usedCoupons)&&(identical(other.todayCoupons, todayCoupons) || other.todayCoupons == todayCoupons)&&(identical(other.remainingCoupons, remainingCoupons) || other.remainingCoupons == remainingCoupons)&&(identical(other.expiredCoupons, expiredCoupons) || other.expiredCoupons == expiredCoupons)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalCoupons,usedCoupons,todayCoupons,remainingCoupons,expiryDate);
+int get hashCode => Object.hash(runtimeType,totalCoupons,usedCoupons,todayCoupons,remainingCoupons,expiredCoupons,expiryDate);
 
 @override
 String toString() {
-  return 'CouponSummaryModel(totalCoupons: $totalCoupons, usedCoupons: $usedCoupons, todayCoupons: $todayCoupons, remainingCoupons: $remainingCoupons, expiryDate: $expiryDate)';
+  return 'CouponSummaryModel(totalCoupons: $totalCoupons, usedCoupons: $usedCoupons, todayCoupons: $todayCoupons, remainingCoupons: $remainingCoupons, expiredCoupons: $expiredCoupons, expiryDate: $expiryDate)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CouponSummaryModelCopyWith<$Res>  {
   factory $CouponSummaryModelCopyWith(CouponSummaryModel value, $Res Function(CouponSummaryModel) _then) = _$CouponSummaryModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'total_coupons') int? totalCoupons,@JsonKey(name: 'used_coupons') int? usedCoupons,@JsonKey(name: 'today_coupons') int? todayCoupons,@JsonKey(name: 'remaining_coupons') int? remainingCoupons,@JsonKey(name: 'package_end_date') String? expiryDate
+@JsonKey(name: 'total_coupons') int? totalCoupons,@JsonKey(name: 'used_coupons') int? usedCoupons,@JsonKey(name: 'today_coupons') int? todayCoupons,@JsonKey(name: 'remaining_coupons') int? remainingCoupons,@JsonKey(name: 'expires_coupons') int? expiredCoupons,@JsonKey(name: 'package_end_date') String? expiryDate
 });
 
 
@@ -65,12 +65,13 @@ class _$CouponSummaryModelCopyWithImpl<$Res>
 
 /// Create a copy of CouponSummaryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? totalCoupons = freezed,Object? usedCoupons = freezed,Object? todayCoupons = freezed,Object? remainingCoupons = freezed,Object? expiryDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? totalCoupons = freezed,Object? usedCoupons = freezed,Object? todayCoupons = freezed,Object? remainingCoupons = freezed,Object? expiredCoupons = freezed,Object? expiryDate = freezed,}) {
   return _then(_self.copyWith(
 totalCoupons: freezed == totalCoupons ? _self.totalCoupons : totalCoupons // ignore: cast_nullable_to_non_nullable
 as int?,usedCoupons: freezed == usedCoupons ? _self.usedCoupons : usedCoupons // ignore: cast_nullable_to_non_nullable
 as int?,todayCoupons: freezed == todayCoupons ? _self.todayCoupons : todayCoupons // ignore: cast_nullable_to_non_nullable
 as int?,remainingCoupons: freezed == remainingCoupons ? _self.remainingCoupons : remainingCoupons // ignore: cast_nullable_to_non_nullable
+as int?,expiredCoupons: freezed == expiredCoupons ? _self.expiredCoupons : expiredCoupons // ignore: cast_nullable_to_non_nullable
 as int?,expiryDate: freezed == expiryDate ? _self.expiryDate : expiryDate // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'expires_coupons')  int? expiredCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CouponSummaryModel() when $default != null:
-return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiryDate);case _:
+return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiredCoupons,_that.expiryDate);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.re
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'expires_coupons')  int? expiredCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)  $default,) {final _that = this;
 switch (_that) {
 case _CouponSummaryModel():
-return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiryDate);case _:
+return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiredCoupons,_that.expiryDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.re
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'total_coupons')  int? totalCoupons, @JsonKey(name: 'used_coupons')  int? usedCoupons, @JsonKey(name: 'today_coupons')  int? todayCoupons, @JsonKey(name: 'remaining_coupons')  int? remainingCoupons, @JsonKey(name: 'expires_coupons')  int? expiredCoupons, @JsonKey(name: 'package_end_date')  String? expiryDate)?  $default,) {final _that = this;
 switch (_that) {
 case _CouponSummaryModel() when $default != null:
-return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiryDate);case _:
+return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.remainingCoupons,_that.expiredCoupons,_that.expiryDate);case _:
   return null;
 
 }
@@ -213,13 +214,14 @@ return $default(_that.totalCoupons,_that.usedCoupons,_that.todayCoupons,_that.re
 @JsonSerializable()
 
 class _CouponSummaryModel implements CouponSummaryModel {
-  const _CouponSummaryModel({@JsonKey(name: 'total_coupons') this.totalCoupons, @JsonKey(name: 'used_coupons') this.usedCoupons, @JsonKey(name: 'today_coupons') this.todayCoupons, @JsonKey(name: 'remaining_coupons') this.remainingCoupons, @JsonKey(name: 'package_end_date') this.expiryDate});
+  const _CouponSummaryModel({@JsonKey(name: 'total_coupons') this.totalCoupons, @JsonKey(name: 'used_coupons') this.usedCoupons, @JsonKey(name: 'today_coupons') this.todayCoupons, @JsonKey(name: 'remaining_coupons') this.remainingCoupons, @JsonKey(name: 'expires_coupons') this.expiredCoupons, @JsonKey(name: 'package_end_date') this.expiryDate});
   factory _CouponSummaryModel.fromJson(Map<String, dynamic> json) => _$CouponSummaryModelFromJson(json);
 
 @override@JsonKey(name: 'total_coupons') final  int? totalCoupons;
 @override@JsonKey(name: 'used_coupons') final  int? usedCoupons;
 @override@JsonKey(name: 'today_coupons') final  int? todayCoupons;
 @override@JsonKey(name: 'remaining_coupons') final  int? remainingCoupons;
+@override@JsonKey(name: 'expires_coupons') final  int? expiredCoupons;
 @override@JsonKey(name: 'package_end_date') final  String? expiryDate;
 
 /// Create a copy of CouponSummaryModel
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CouponSummaryModel&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons)&&(identical(other.usedCoupons, usedCoupons) || other.usedCoupons == usedCoupons)&&(identical(other.todayCoupons, todayCoupons) || other.todayCoupons == todayCoupons)&&(identical(other.remainingCoupons, remainingCoupons) || other.remainingCoupons == remainingCoupons)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CouponSummaryModel&&(identical(other.totalCoupons, totalCoupons) || other.totalCoupons == totalCoupons)&&(identical(other.usedCoupons, usedCoupons) || other.usedCoupons == usedCoupons)&&(identical(other.todayCoupons, todayCoupons) || other.todayCoupons == todayCoupons)&&(identical(other.remainingCoupons, remainingCoupons) || other.remainingCoupons == remainingCoupons)&&(identical(other.expiredCoupons, expiredCoupons) || other.expiredCoupons == expiredCoupons)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalCoupons,usedCoupons,todayCoupons,remainingCoupons,expiryDate);
+int get hashCode => Object.hash(runtimeType,totalCoupons,usedCoupons,todayCoupons,remainingCoupons,expiredCoupons,expiryDate);
 
 @override
 String toString() {
-  return 'CouponSummaryModel(totalCoupons: $totalCoupons, usedCoupons: $usedCoupons, todayCoupons: $todayCoupons, remainingCoupons: $remainingCoupons, expiryDate: $expiryDate)';
+  return 'CouponSummaryModel(totalCoupons: $totalCoupons, usedCoupons: $usedCoupons, todayCoupons: $todayCoupons, remainingCoupons: $remainingCoupons, expiredCoupons: $expiredCoupons, expiryDate: $expiryDate)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$CouponSummaryModelCopyWith<$Res> implements $CouponSummar
   factory _$CouponSummaryModelCopyWith(_CouponSummaryModel value, $Res Function(_CouponSummaryModel) _then) = __$CouponSummaryModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'total_coupons') int? totalCoupons,@JsonKey(name: 'used_coupons') int? usedCoupons,@JsonKey(name: 'today_coupons') int? todayCoupons,@JsonKey(name: 'remaining_coupons') int? remainingCoupons,@JsonKey(name: 'package_end_date') String? expiryDate
+@JsonKey(name: 'total_coupons') int? totalCoupons,@JsonKey(name: 'used_coupons') int? usedCoupons,@JsonKey(name: 'today_coupons') int? todayCoupons,@JsonKey(name: 'remaining_coupons') int? remainingCoupons,@JsonKey(name: 'expires_coupons') int? expiredCoupons,@JsonKey(name: 'package_end_date') String? expiryDate
 });
 
 
@@ -272,12 +274,13 @@ class __$CouponSummaryModelCopyWithImpl<$Res>
 
 /// Create a copy of CouponSummaryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? totalCoupons = freezed,Object? usedCoupons = freezed,Object? todayCoupons = freezed,Object? remainingCoupons = freezed,Object? expiryDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? totalCoupons = freezed,Object? usedCoupons = freezed,Object? todayCoupons = freezed,Object? remainingCoupons = freezed,Object? expiredCoupons = freezed,Object? expiryDate = freezed,}) {
   return _then(_CouponSummaryModel(
 totalCoupons: freezed == totalCoupons ? _self.totalCoupons : totalCoupons // ignore: cast_nullable_to_non_nullable
 as int?,usedCoupons: freezed == usedCoupons ? _self.usedCoupons : usedCoupons // ignore: cast_nullable_to_non_nullable
 as int?,todayCoupons: freezed == todayCoupons ? _self.todayCoupons : todayCoupons // ignore: cast_nullable_to_non_nullable
 as int?,remainingCoupons: freezed == remainingCoupons ? _self.remainingCoupons : remainingCoupons // ignore: cast_nullable_to_non_nullable
+as int?,expiredCoupons: freezed == expiredCoupons ? _self.expiredCoupons : expiredCoupons // ignore: cast_nullable_to_non_nullable
 as int?,expiryDate: freezed == expiryDate ? _self.expiryDate : expiryDate // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

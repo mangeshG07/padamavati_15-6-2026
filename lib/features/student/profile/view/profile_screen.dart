@@ -21,30 +21,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(
-        () => controller.isLoading.isTrue
-            ? AppLoader(strokeWidth: 2.5)
-            : SingleChildScrollView(
-                child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GradientAppbar(title: 'Profile', showBack: false),
-                    Column(
-                      // spacing: 16.h,
-                      children: [
-                        _buildProfileHeader(
-                          theme,
-                          controller.profileData.value,
-                        ),
-                        _buildSectionCard(controller.menuList, theme),
-                      ],
-                    ),
-                    SizedBox(height: 0.02.h),
-                  ],
-                ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return AppLoader(strokeWidth: 2.5);
+        }
+        final user = controller.state.profileData.value;
+
+        if (user == null) {
+          return _buildEmptyState(); // or loader
+        }
+        return SingleChildScrollView(
+          child: Column(
+            spacing: 8.h,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GradientAppbar(title: 'Profile', showBack: false),
+              Column(
+                // spacing: 16.h,
+                children: [
+                  _buildProfileHeader(theme, user),
+                  _buildSectionCard(controller.menuList, theme),
+                ],
               ),
-      ),
+              SizedBox(height: 0.02.h),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -133,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // 📦 SECTION CARD
-  Widget _buildSectionCard(List<dynamic> list, ThemeData theme) {
+  Widget _buildSectionCard(List<ProfileMenuItem> list, ThemeData theme) {
     return SafeArea(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w).copyWith(bottom: 16),
@@ -170,12 +173,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // 🎯 MENU ITEM0
-  Widget _menuItem(dynamic menu, ThemeData theme) {
+  Widget _menuItem(ProfileMenuItem menu, ThemeData theme) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
-        onTap: menu['onTap'],
+        onTap: menu.onTap,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
           child: Row(
@@ -190,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 child: HugeIcon(
-                  icon: menu['icon'],
+                  icon: menu.icon,
                   color: AppColors.lightPrimary,
                   size: 20.r,
                 ),
@@ -198,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(width: 12.w),
               Expanded(
                 child: AppText(
-                  text: menu['title'] ?? '',
+                  text: menu.title,
                   fontSize: 14.sp,
                   style: theme.textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w600,
@@ -219,6 +222,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: AppText(text: 'Profile data not available', fontSize: 14.sp),
     );
   }
 }

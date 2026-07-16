@@ -35,8 +35,7 @@ class _SplashPageState extends State<SplashPage>
     );
 
     await _animationController.forward();
-
-    controller.checkLogin();
+    controller.initApp();
   }
 
   @override
@@ -47,33 +46,105 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _animationController,
-          builder: (context, child) {
-            return FadeTransition(
-              opacity: _fadeAnimation,
-              child: ScaleTransition(
-                scale: _scaleAnimation,
-                child: _buildLogo(),
-              ),
-            );
-          },
+    final theme = Theme.of(context);
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarContrastEnforced: false,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarIconBrightness: theme.brightness,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: MediaQuery.removePadding(
+          context: context,
+          removeBottom: true,
+          removeTop: true,
+          child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, child) {
+              return FadeTransition(
+                opacity: _fadeAnimation,
+                child: ScaleTransition(
+                  scale: _scaleAnimation,
+                  child: _buildLogo(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
   Widget _buildLogo() {
-    return Image.asset(
-      // getIt<RemoteConfigService>().splashLogo,
-      // 'http://192.168.29.139:5000/uploads/splash/splash-image.jpg',
-      AppAssets.splashLogo,
-      width: Get.width * 0.6.w,
-      // height: double.infinity,
-      fit: BoxFit.contain,
-    );
+    return Obx(() {
+      final imageUrl = controller.remoteConfig.splashImage;
+
+      return AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+
+        /// 🔑 Important for animation
+        child: (!controller.isLoaded.value)
+            ? Center(
+                child: Image.asset(
+                  AppAssets.splashLogo,
+                  key: const ValueKey("local"),
+                  width: Get.width * 0.6,
+                ),
+              )
+            /// ✅ Show ONLY network image (no double)
+            : (imageUrl != null && imageUrl.isNotEmpty)
+            ? Image.network(
+                imageUrl,
+                key: const ValueKey("network"),
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              )
+            /// fallback
+            : Center(
+                child: Image.asset(
+                  AppAssets.splashLogo,
+                  key: const ValueKey("fallback"),
+                  width: Get.width * 0.6,
+                ),
+              ),
+      );
+    });
   }
 }
+
+// Widget _buildLogo() {
+//   final imageUrl = controller.remoteConfig.splashImage;
+//   print("Splash Image URL: ${controller.remoteConfig.splashImage}");
+//
+//   /// ✅ Network splash (API driven)
+//   if (imageUrl != null && imageUrl.isNotEmpty) {
+//     return FadeInImage.assetNetwork(
+//       placeholder: AppAssets.splashLogo,
+//       image: imageUrl,
+//       width: Get.width * 0.6.w,
+//       fit: BoxFit.contain,
+//     );
+//   }
+//
+//   /// ✅ fallback (offline)
+//   return Image.asset(
+//     AppAssets.splashLogo,
+//     width: Get.width * 0.6.w,
+//     fit: BoxFit.contain,
+//   );
+// }
+
+// Widget _buildLogo() {
+//   return Image.asset(
+//     // getIt<RemoteConfigService>().splashLogo,
+//     // 'http://192.168.29.139:5000/uploads/splash/splash-image.jpg',
+//     AppAssets.splashLogo,
+//     width: Get.width * 0.6.w,
+//     // height: double.infinity,
+//     fit: BoxFit.contain,
+//   );
+// }

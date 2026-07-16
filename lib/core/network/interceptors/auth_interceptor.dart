@@ -6,9 +6,15 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    final fullUrl = options.uri.toString();
+
     final token = await SecureStorageService.read('token') ?? '';
     options.headers.addAll({
-      'Authorization': token.isNotEmpty ? 'Bearer $token' : 'demo',
+      'Authorization': fullUrl.contains(ApiConstants.getSplash)
+          ? 'demo'
+          : token.isNotEmpty
+          ? 'Bearer $token'
+          : 'demo',
       'Accept': 'application/json',
     });
     super.onRequest(options, handler);

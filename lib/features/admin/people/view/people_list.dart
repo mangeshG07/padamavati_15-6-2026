@@ -83,9 +83,13 @@ class _PeopleListState extends State<PeopleList> {
                                               image: people.profileImage ?? '',
                                               placeholder: Image.asset(
                                                 AppAssets.defaultImage,
+                                                width: 50.w,
+                                                height: 50.h,
                                               ),
                                               errorWidget: Image.asset(
                                                 AppAssets.defaultImage,
+                                                width: 50.w,
+                                                height: 50.h,
                                               ),
                                               width: 50.w,
                                               height: 50.h,
@@ -167,6 +171,14 @@ class _PeopleListState extends State<PeopleList> {
                                                       },
                                                     ),
                                                   ],
+                                                ),
+                                                AppText(
+                                                  text:
+                                                      people.statusLabel ?? '',
+                                                  fontSize: 14.sp,
+                                                  color: people.status == '0'
+                                                      ? Colors.green
+                                                      : Colors.red,
                                                 ),
                                               ],
                                             ),

@@ -13,14 +13,20 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    controller.currentAddressController.text =
-        controller.profileData.value.curAddress ?? '';
-    controller.permAddressController.text =
-        controller.profileData.value.perAddress ?? '';
-    controller.selectedDegree.value =
-        controller.profileData.value.degreeId?.toString() ?? '';
+    // final state = controller.state;
+    // state.currentAddressController.text =
+    //     state.profileData.value!.curAddress ?? '';
+    // state.permAddressController.text =
+    //     state.profileData.value!.perAddress ?? '';
+    // state.selectedDegree.value =
+    //     state.profileData.value!.degreeId?.toString() ?? '';
+    //
+    // controller.fetchDegree();
 
-    controller.fetchDegree();
+    /// ✅ CLEAN UI (no business logic)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initEditProfile();
+    });
   }
 
   @override
@@ -28,95 +34,94 @@ class _EditProfileState extends State<EditProfile> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(
-        () => controller.isDegreeLoading.isTrue
-            ? AppLoader(strokeWidth: 2.5)
-            : SingleChildScrollView(
-                child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GradientAppbar(title: 'Edit Profile', showBack: true),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Form(
-                        key: controller.updateForm,
-                        child: Column(
-                          spacing: 16.h,
-                          children: [
-                            _buildProfileHeader(
-                              theme,
-                              controller.profileData.value,
-                            ),
-                            _buildField(
-                              theme,
-                              'Current Address',
-                              'Address',
-                              controller.currentAddressController,
-                            ),
-                            _buildField(
-                              theme,
-                              'Permanent Address',
-                              'Address',
-                              isReadOnly: true,
-                              isEnabled: false,
-                              controller.permAddressController,
-                            ),
-                            Obx(
-                              () => AppDropdownField(
-                                isRequired: true,
-                                isDynamic: true,
-                                title: "Select Your Degree",
-                                value: controller.selectedDegree.value,
-                                items: controller.degreeList,
-                                hintText: 'Degree',
-                                validator: AppValidators.required,
-                                onChanged: (val) =>
-                                    controller.selectedDegree.value = val,
-                              ),
-                            ),
+      body: Obx(() {
+        final state = controller.state;
 
-                            Obx(
-                              () => AppButton(
-                                text: 'Update Profile',
-                                loading: controller.isUpdating.value,
-                                onTap: () async {
-                                  if (controller.updateForm.currentState!
-                                      .validate()) {
-                                    await controller.updateProfile();
-                                  }
-                                },
-                                backgroundColor: AppColors.lightSecondary,
-                              ),
-                            ),
-
-                            Obx(
-                              () => AppButton(
-                                type: AppButtonType.text,
-                                textColor: AppColors.lightPrimary,
-                                text: 'Delete Account',
-                                loading: controller.isDeleting.value,
-                                onTap: () async {
-                                  AllDialogs().showConfirmationDialog(
-                                    'Delete',
-                                    'Are you sure you want to delete this account?',
-                                    onConfirm: () async {
-                                      await controller.deleteAccount();
-                                    },
-                                  );
-                                },
-                                backgroundColor: AppColors.lightPrimary,
-                              ),
-                            ),
-                          ],
+        if (state.isDegreeLoading.value) {
+          return AppLoader(strokeWidth: 2.5);
+        }
+        return SingleChildScrollView(
+          child: Column(
+            spacing: 8.h,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GradientAppbar(title: 'Edit Profile', showBack: true),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: controller.updateForm,
+                  child: Column(
+                    spacing: 16.h,
+                    children: [
+                      _buildProfileHeader(theme, state.profileData.value!),
+                      _buildField(
+                        theme,
+                        'Current Address',
+                        'Address',
+                        state.currentAddressController,
+                      ),
+                      _buildField(
+                        theme,
+                        'Permanent Address',
+                        'Address',
+                        isReadOnly: true,
+                        isEnabled: false,
+                        state.permAddressController,
+                      ),
+                      Obx(
+                        () => AppDropdownField(
+                          isRequired: true,
+                          isDynamic: true,
+                          title: "Select Your Degree",
+                          value: state.selectedDegree.value,
+                          items: state.degreeList,
+                          hintText: 'Degree',
+                          validator: AppValidators.required,
+                          onChanged: (val) => state.selectedDegree.value = val,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 0.02.h),
-                  ],
+
+                      Obx(
+                        () => AppButton(
+                          text: 'Update Profile',
+                          loading: state.isUpdating.value,
+                          onTap: () async {
+                            if (controller.updateForm.currentState!
+                                .validate()) {
+                              await controller.updateProfile();
+                            }
+                          },
+                          backgroundColor: AppColors.lightSecondary,
+                        ),
+                      ),
+
+                      Obx(
+                        () => AppButton(
+                          type: AppButtonType.text,
+                          textColor: AppColors.lightPrimary,
+                          text: 'Delete Account',
+                          loading: state.isDeleting.value,
+                          onTap: () async {
+                            AllDialogs().showConfirmationDialog(
+                              'Delete',
+                              'Are you sure you want to delete this account?',
+                              onConfirm: () async {
+                                await controller.deleteAccount();
+                              },
+                            );
+                          },
+                          backgroundColor: AppColors.lightPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-      ),
+              SizedBox(height: 0.02.h),
+            ],
+          ),
+        );
+      }),
     );
   }
 

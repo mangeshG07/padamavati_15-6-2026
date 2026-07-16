@@ -12,13 +12,14 @@ class CouponController extends BaseController {
   final usedQR = <QRModel>[].obs;
 
   Future<void> getCoupon() async {
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    // final userId =
+    //     await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
     await callApi<BaseResponseModel<CouponResponseModel>>(
       request: () => _couponUsecase.getCoupon(UserRequest(userId)),
       loader: isLoading,
       onSuccess: (data) {
-        couponSummary.value = data.data!.couponSummary!;
+        couponSummary.value = data.data!.couponSummary ?? CouponSummaryModel();
         todayQR.value = data.data!.todayQr ?? [];
         usedQR.value = data.data!.scannedQr ?? [];
       },

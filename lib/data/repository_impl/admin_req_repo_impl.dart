@@ -13,6 +13,7 @@ class AdminRequestRepositoryImpl implements AdminRequestRepository {
       final res = await _apiService.adminFoodRequest(
         request.userId,
         request.pageNo,
+        request.type,
       );
 
       if (res.common.status == true) {
@@ -33,6 +34,7 @@ class AdminRequestRepositoryImpl implements AdminRequestRepository {
       final res = await _apiService.adminLeaveRequest(
         request.userId,
         request.pageNo,
+        request.type,
       );
 
       if (res.common.status == true) {

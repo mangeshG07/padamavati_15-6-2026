@@ -12,6 +12,8 @@ _PeopleModel _$PeopleModelFromJson(Map<String, dynamic> json) => _PeopleModel(
   id: (json['app_id'] as num?)?.toInt(),
   dueAmount: json['due_amount'] as String?,
   profileImage: json['profile_image'] as String?,
+  status: json['account_status'] as String?,
+  statusLabel: json['account_status_label'] as String?,
 );
 
 Map<String, dynamic> _$PeopleModelToJson(_PeopleModel instance) =>
@@ -21,4 +23,6 @@ Map<String, dynamic> _$PeopleModelToJson(_PeopleModel instance) =>
       'app_id': instance.id,
       'due_amount': instance.dueAmount,
       'profile_image': instance.profileImage,
+      'account_status': instance.status,
+      'account_status_label': instance.statusLabel,
     };

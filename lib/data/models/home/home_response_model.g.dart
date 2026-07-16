@@ -10,6 +10,9 @@ _HomeResponseModel _$HomeResponseModelFromJson(
   Map<String, dynamic> json,
 ) => _HomeResponseModel(
   branchName: json['branch_name'] as String?,
+  popup: json['popup_banner'] == null
+      ? null
+      : BannerModel.fromJson(json['popup_banner'] as Map<String, dynamic>),
   sliders: (json['sliders'] as List<dynamic>?)
       ?.map((e) => MasterDataModel.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -26,6 +29,7 @@ _HomeResponseModel _$HomeResponseModelFromJson(
 Map<String, dynamic> _$HomeResponseModelToJson(_HomeResponseModel instance) =>
     <String, dynamic>{
       'branch_name': instance.branchName,
+      'popup_banner': instance.popup,
       'sliders': instance.sliders,
       'mess_request': instance.messRequest,
       'mess_request_accepted': instance.messRequestAccepted,

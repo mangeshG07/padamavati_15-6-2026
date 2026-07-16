@@ -40,7 +40,7 @@ class AdminFoodRequests extends StatelessWidget {
                       itemCount: foodData.items.length,
                       itemBuilder: (BuildContext context, int index) {
                         final request = foodData.items[index];
-                        return _FoodItemCard(request: request);
+                        return FoodItemCard(request: request);
                       },
                     ),
                   ),
@@ -64,8 +64,8 @@ class AdminFoodRequests extends StatelessWidget {
   }
 }
 
-class _FoodItemCard extends StatelessWidget {
-  const _FoodItemCard({required this.request});
+class FoodItemCard extends StatelessWidget {
+  const FoodItemCard({super.key, required this.request});
 
   final FoodRequestModel request;
 

@@ -6,5 +6,6 @@ class DashboardBindings extends Bindings {
     Get.lazyPut<DashboardController>(
       () => DashboardController(getIt(), getIt(), getIt(), getIt(), getIt()),
     );
+    Get.lazyPut<RequestsUserController>(() => RequestsUserController(getIt(),getIt()));
   }
 }

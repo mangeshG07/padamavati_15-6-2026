@@ -105,7 +105,8 @@ class AppConstants {
 
   /// User onboarding cache key
   static const String userOnboardingKey = 'is_onboarded';
-
+  static const String popupSeenKey = "popup_seen";
+  static const String popupImageKey = 'popup_image';
   // ========== Private Helpers ==========
 
   /// Parse boolean from environment variable

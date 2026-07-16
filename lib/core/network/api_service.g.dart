@@ -822,6 +822,7 @@ class _ApiService implements ApiService {
   Future<BaseResponseModel<FoodResponseModel>> adminFoodRequest(
     String userId,
     String pageNo,
+    String date,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -829,6 +830,7 @@ class _ApiService implements ApiService {
     final _data = FormData();
     _data.fields.add(MapEntry('user_id', userId));
     _data.fields.add(MapEntry('page_number', pageNo));
+    _data.fields.add(MapEntry('date', date));
     final _options = _setStreamType<BaseResponseModel<FoodResponseModel>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -962,6 +964,7 @@ class _ApiService implements ApiService {
   Future<BaseResponseModel<LeaveResponseModel>> adminLeaveRequest(
     String userId,
     String pageNo,
+    String date,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -969,6 +972,7 @@ class _ApiService implements ApiService {
     final _data = FormData();
     _data.fields.add(MapEntry('user_id', userId));
     _data.fields.add(MapEntry('page_number', pageNo));
+    _data.fields.add(MapEntry('date', date));
     final _options = _setStreamType<BaseResponseModel<LeaveResponseModel>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -1103,6 +1107,43 @@ class _ApiService implements ApiService {
   }
 
   @override
+  Future<BaseResponseModel<ExpireResponseModel>> expireQrData(
+    String userId,
+    String pageNo,
+    String studentId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('page_number', pageNo));
+    _data.fields.add(MapEntry('student_id', studentId));
+    final _options = _setStreamType<BaseResponseModel<ExpireResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/expire_qr',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<ExpireResponseModel> _value;
+    try {
+      _value = BaseResponseModel<ExpireResponseModel>.fromJson(
+        _result.data!,
+        (json) => ExpireResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<BaseResponseModel<dynamic>> deleteAccount(String userId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -1130,6 +1171,99 @@ class _ApiService implements ApiService {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponseModel<RequestsResponseModel>> tomorrowRequests(
+    String userId,
+    String pageNo,
+    String type,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('page_number', pageNo));
+    _data.fields.add(MapEntry('type', type));
+    final _options = _setStreamType<BaseResponseModel<RequestsResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/tomorrow_requests',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<RequestsResponseModel> _value;
+    try {
+      _value = BaseResponseModel<RequestsResponseModel>.fromJson(
+        _result.data!,
+        (json) => RequestsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponseModel<PaymentResponseModel>> usersPaymentData(
+    String userId,
+    String pageNo,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('user_id', userId));
+    _data.fields.add(MapEntry('page_number', pageNo));
+    final _options = _setStreamType<BaseResponseModel<PaymentResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/users_payment_data',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponseModel<PaymentResponseModel> _value;
+    try {
+      _value = BaseResponseModel<PaymentResponseModel>.fromJson(
+        _result.data!,
+        (json) => PaymentResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<dynamic> getSplash() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/get_splash',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 

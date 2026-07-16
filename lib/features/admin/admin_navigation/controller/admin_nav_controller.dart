@@ -4,15 +4,16 @@ class AdminNavController extends GetxController {
   final currentIndex = 0.obs;
 
   final List<Widget> _pages = [
-    const AdminDashboard(),
+    AdminDashboard(),
     const AdminRequestScreen(),
     const PeopleList(),
     const AdminProfileScreen(),
   ];
+
   @override
   void onInit() {
     super.onInit();
-    _loadTab(0); // Load first tab
+    _loadTab(0);
   }
 
   /// 🔥 Smart Lazy Loader
@@ -20,6 +21,7 @@ class AdminNavController extends GetxController {
     switch (index) {
       case 0:
         Get.find<DashboardController>().getDashboard();
+        Get.find<RequestsUserController>().getUsersPaymentList(isRefresh: true);
         break;
       case 1:
         Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);

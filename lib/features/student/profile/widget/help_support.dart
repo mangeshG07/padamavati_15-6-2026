@@ -29,58 +29,73 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
         child: GradientAppbar(title: 'Help And Support', showBack: true),
       ),
       body: Obx(
-        () => _controller.isPagesLoading.isTrue
-            ? SingleChildScrollView(
-                child: CustomShimmerWidget.list(
-                  baseColor: theme.brightness == Brightness.light
-                      ? Colors.grey.shade300
-                      : Colors.grey.shade800,
-                  highlightColor: theme.brightness == Brightness.light
-                      ? Colors.grey.shade100
-                      : Colors.grey.shade700,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  itemCount: 10,
-                  width: double.infinity,
-                  height: Get.height * 0.08.h,
+        () {
+          final state = _controller.state;
+
+          if (state.isPagesLoading.value) {
+            return _buildShimmerLoader(theme);
+          }
+          if (state.pagesList.isEmpty) {
+            return _buildEmptyState();
+          }
+          return ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            itemCount: state.pagesList.length,
+            separatorBuilder: (_, __) => Divider(
+              color: theme.dividerTheme.color,
+              indent: Get.width * 0.04,
+              endIndent: Get.width * 0.04,
+              height: 1,
+            ),
+            itemBuilder: (context, index) {
+              final page = state.pagesList[index];
+              return ListTile(
+                onTap: () => Get.toNamed(Routes.policyData, arguments: page),
+                title: AppText(
+                  text: page.name,
+                  fontSize: 16.sp,
+                  maxLines: 2,
+                  style: theme.textTheme.titleMedium,
                 ),
-              )
-            : _controller.pagesList.isEmpty
-            ? _buildEmptyState()
-            : ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 8.h),
-                itemCount: _controller.pagesList.length,
-                separatorBuilder: (_, __) => Divider(
-                  color: theme.dividerTheme.color,
-                  indent: Get.width * 0.04,
-                  endIndent: Get.width * 0.04,
-                  height: 1,
+                trailing: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 16.r,
+                  color: AppColors.grey500,
                 ),
-                itemBuilder: (context, index) {
-                  final page = _controller.pagesList[index];
-                  return ListTile(
-                    onTap: () =>
-                        Get.toNamed(Routes.policyData, arguments: page),
-                    title: AppText(
-                      text: page.name,
-                      fontSize: 16.sp,
-                      maxLines: 2,
-                      style: theme.textTheme.titleMedium,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 16.r,
-                      color: AppColors.grey500,
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.04,
-                      vertical: 4.h,
-                    ),
-                  );
-                },
-              ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: Get.width * 0.04,
+                  vertical: 4.h,
+                ),
+              );
+            },
+          );
+        },
+
+        // _controller.isPagesLoading.isTrue
+        //     ?
+        //
+        //
+        // _buildShimmerLoader(theme)
+        //     : _controller.pagesList.isEmpty
+        //     ? _buildEmptyState()
+        //     : ,
+      ),
+    );
+  }
+
+  SingleChildScrollView _buildShimmerLoader(ThemeData theme) {
+    return SingleChildScrollView(
+      child: CustomShimmerWidget.list(
+        baseColor: theme.brightness == Brightness.light
+            ? Colors.grey.shade300
+            : Colors.grey.shade800,
+        highlightColor: theme.brightness == Brightness.light
+            ? Colors.grey.shade100
+            : Colors.grey.shade700,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        itemCount: 10,
+        width: double.infinity,
+        height: Get.height * 0.08.h,
       ),
     );
   }

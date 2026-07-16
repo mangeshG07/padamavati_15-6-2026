@@ -73,6 +73,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
         return Failure(res.common.message);
       }
     } catch (error) {
+
       return Failure('Something went wrong');
     }
   }
@@ -87,6 +88,42 @@ class DashboardRepositoryImpl implements DashboardRepository {
         req.pageNo,
         req.type,
       );
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (error) {
+      return Failure('Something went wrong');
+    }
+  }
+
+  @override
+  Future<Result<BaseResponseModel<RequestsResponseModel>>> tomorrowRequests(
+    UserRequest req,
+  ) async {
+    try {
+      final res = await _apiService.tomorrowRequests(
+        req.userId,
+        req.pageNo,
+        req.type,
+      );
+      if (res.common.status == true) {
+        return Success(res);
+      } else {
+        return Failure(res.common.message);
+      }
+    } catch (error) {
+      return Failure('Something went wrong');
+    }
+  }
+
+  @override
+  Future<Result<BaseResponseModel<PaymentResponseModel>>> usersPaymentData(
+    UserRequest req,
+  ) async {
+    try {
+      final res = await _apiService.usersPaymentData(req.userId, req.pageNo);
       if (res.common.status == true) {
         return Success(res);
       } else {

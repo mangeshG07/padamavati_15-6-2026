@@ -20,4 +20,12 @@ abstract class DashboardRepository {
   Future<Result<BaseResponseModel<UsedQRResponseModel>>> usedQrData(
     UserRequest req,
   );
+
+  Future<Result<BaseResponseModel<RequestsResponseModel>>> tomorrowRequests(
+    UserRequest req,
+  );
+
+  Future<Result<BaseResponseModel<PaymentResponseModel>>> usersPaymentData(
+    UserRequest req,
+  );
 }

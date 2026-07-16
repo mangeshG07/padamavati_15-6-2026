@@ -12,6 +12,7 @@ _CouponSummaryModel _$CouponSummaryModelFromJson(Map<String, dynamic> json) =>
       usedCoupons: (json['used_coupons'] as num?)?.toInt(),
       todayCoupons: (json['today_coupons'] as num?)?.toInt(),
       remainingCoupons: (json['remaining_coupons'] as num?)?.toInt(),
+      expiredCoupons: (json['expires_coupons'] as num?)?.toInt(),
       expiryDate: json['package_end_date'] as String?,
     );
 
@@ -21,5 +22,6 @@ Map<String, dynamic> _$CouponSummaryModelToJson(_CouponSummaryModel instance) =>
       'used_coupons': instance.usedCoupons,
       'today_coupons': instance.todayCoupons,
       'remaining_coupons': instance.remainingCoupons,
+      'expires_coupons': instance.expiredCoupons,
       'package_end_date': instance.expiryDate,
     };

@@ -21,34 +21,38 @@ class _FacilityScreenState extends State<FacilityScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(
-        () => controller.isFacilityLoading.isTrue
-            ? AppLoader(strokeWidth: 2.5)
-            : controller.facilityList.isEmpty
-            ? Center(
-                child: AppText(text: 'No Data Found', fontSize: 16.sp),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  spacing: 8.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GradientAppbar(title: 'Facility', showBack: true),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.facilityList.length,
-                      itemBuilder: (_, index) {
-                        final facility = controller.facilityList[index];
-                        return _buildFacilityTile(facility, theme);
-                      },
-                    ),
-                    SizedBox(height: 0.02.h),
-                  ],
-                ),
+      body: Obx(() {
+        final state = controller.state;
+
+        if (state.isFacilityLoading.value) {
+          return AppLoader(strokeWidth: 2.5);
+        }
+        if (state.facilityList.isEmpty) {
+          return Center(
+            child: AppText(text: 'No Facilities', fontSize: 16.sp),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            spacing: 8.h,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GradientAppbar(title: 'Facility', showBack: true),
+              ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: state.facilityList.length,
+                itemBuilder: (_, index) {
+                  final facility = state.facilityList[index];
+                  return _buildFacilityTile(facility, theme);
+                },
               ),
-      ),
+              SizedBox(height: 0.02.h),
+            ],
+          ),
+        );
+      }),
     );
   }
 

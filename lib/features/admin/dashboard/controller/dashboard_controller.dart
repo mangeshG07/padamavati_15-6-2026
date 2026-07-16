@@ -15,6 +15,8 @@ class DashboardController extends BaseController {
     this._userDetailsUsecase,
   );
 
+  final controller = Get.find<RequestsUserController>();
+
   final overview = OverViewModel().obs;
   final dashboardData = DashboardModel().obs;
   final menuList = <DashboardMenuItem>[].obs;
@@ -63,14 +65,20 @@ class DashboardController extends BaseController {
         icon: HugeIcons.strokeRoundedClock03,
         isToday: false,
         count: data.tomorrowLeaveCount ?? 0,
-        onTap: () {},
+        onTap: () async {
+          controller.selectedType.value = 1;
+          Get.toNamed(Routes.requestedUsers);
+        },
       ),
       DashboardMenuItem(
         title: 'Tomorrow Special Request',
         icon: HugeIcons.strokeRoundedClock03,
         isToday: false,
         count: data.tomorrowFoodCount ?? 0,
-        onTap: () {},
+        onTap: () {
+          controller.selectedType.value = 0;
+          Get.toNamed(Routes.requestedUsers);
+        },
       ),
     ];
   }
@@ -149,17 +157,24 @@ class DashboardController extends BaseController {
   }
 
   Future<void> getUserDetails(String studentId) async {
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
+
     await callApi<BaseResponseModel<UserDetailsModel>>(
       request: () =>
           _userDetailsUsecase.call(UserRequest(userId, type: studentId)),
       loader: userLoading,
       onSuccess: (data) {
-        scanUserData.value = data.data!.userData!;
-        packageData.value = data.data!.packageData!;
-        qrData.value = data.data!.qrData!;
-        scannedPayData.value = data.data!.paymentData!;
+        final resData = data.data;
+
+        if (resData == null) {
+          // handle safely (log or ignore)
+          return;
+        }
+
+        scanUserData.value = resData.userData ?? UserData();
+        packageData.value = resData.packageData ?? PackageData();
+        qrData.value = resData.qrData ?? QrData();
+        scannedPayData.value = resData.paymentData ?? ScannedPaymentData();
       },
     );
   }

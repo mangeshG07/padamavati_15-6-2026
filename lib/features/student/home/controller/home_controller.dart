@@ -15,22 +15,6 @@ class HomeController extends BaseController {
 
   /// -------------------- STATE --------------------
   final states = HomeState();
-
-  // final sliderList = <MasterDataModel>[].obs;
-  // final packageList = <PackageModel>[].obs;
-  // final selectedPackageDetails = Rx<PackageModel?>(null);
-  // final payDetailsList = <PaymentDetailsModel>[].obs;
-  //
-  // final branchName = ''.obs;
-  //
-  // final isPackageLoading = false.obs;
-  // final isHomeLoading = false.obs;
-  // final isStarting = false.obs;
-  //
-  // final isRequested = false.obs;
-  // final isAccepted = false.obs;
-  //
-  // final selectedPackage = Rxn<String>();
   final selectedDate = TextEditingController();
 
   /// -------------------- COMPUTED --------------------
@@ -45,17 +29,34 @@ class HomeController extends BaseController {
     await callApi<BaseResponseModel<HomeResponseModel>>(
       request: () => _homeUseCase.call(UserRequest(userId)),
       loader: states.isHomeLoading,
-      onSuccess: (data) {
+      onSuccess: (data) async {
         final res = data.data;
 
         states.branchName.value = res?.branchName ?? '';
         states.sliders.value = res!.sliders ?? [];
+        states.bannerData.value = res.popup ?? BannerModel();
+
+        // final newImage = states.bannerData.value!.image ?? '';
+        // final oldImage =
+        //     await SecureStorageService.read(AppConstants.popupImageKey) ?? '';
+        //
+        // if (oldImage.isNotEmpty) {
+        //   if (oldImage != newImage) {
+        //     await SecureStorageService.write(
+        //       AppConstants.popupImageKey,
+        //       states.bannerData.value!.image ?? '',
+        //     );
+        //   }
+        // }
 
         states.payments.value = res.payTransactionDetails ?? [];
         states.todaysQR.value = res.todayQr ?? [];
 
         states.isRequested.value = res.messRequest ?? false;
         states.isAccepted.value = res.messRequestAccepted ?? false;
+
+        /// ✅ CALL POPUP HERE
+        await handlePopup();
       },
     );
   }
@@ -110,6 +111,85 @@ class HomeController extends BaseController {
       },
     );
     return isSuccess;
+  }
+
+  Future<void> handlePopup() async {
+    final banner = states.bannerData.value;
+
+    /// ❌ Popup OFF
+    if (banner?.popupStatus != 'on') return;
+
+    final currentImage = banner?.image ?? '';
+
+    /// ❌ No image
+    if (currentImage.isEmpty) return;
+
+    final savedImage = await SecureStorageService.read(
+      AppConstants.popupImageKey,
+    );
+
+    // /// ✅ Local check (already shown?)
+    // final isSeen = await SecureStorageService.read(AppConstants.popupSeenKey);
+    //
+    // if (isSeen == 'true') return;
+
+    /// ❌ SAME IMAGE → DO NOT SHOW AGAIN
+    if (savedImage == currentImage) return;
+
+    /// ✅ Show popup
+    Get.bottomSheet(
+      PopScope(
+        canPop: true, // 👈 allow back press
+        onPopInvokedWithResult: (didPop, _) async {
+          if (didPop) {
+            // 👇 Save when user presses back
+            await SecureStorageService.write(
+              AppConstants.popupImageKey,
+              currentImage,
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(banner?.image ?? '', fit: BoxFit.cover),
+              ).animate().fade(duration: 500.ms).slideY(begin: 0.3),
+
+              /// ❌ Close button
+              Positioned(
+                right: 10,
+                top: -20,
+                child: GestureDetector(
+                  onTap: () async {
+                    await SecureStorageService.write(
+                      AppConstants.popupImageKey,
+                      currentImage,
+                    );
+                    Get.back();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.close, color: Colors.black),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+    );
   }
 
   /// -------------------- HELPERS --------------------

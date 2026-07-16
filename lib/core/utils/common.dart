@@ -444,3 +444,7 @@ Future<void> downloadFile(String url) async {
     },
   );
 }
+
+Future<String> getUserId() async {
+  return await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+}

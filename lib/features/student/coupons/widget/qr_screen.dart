@@ -120,7 +120,7 @@ class QRScreen extends StatelessWidget {
                 AppText(
                   text: qr.messTime == 'Morning'
                       ? "Lunch"
-                      : qr.messTime == 'Full Time'
+                      : qr.messTime == '1 Time'
                       ? 'One Time'
                       : "Dinner",
                   fontSize: 14.sp,
@@ -197,20 +197,35 @@ class QRScreen extends StatelessWidget {
 
             /// OVERLAY (only if used/expired)
             if (coupon.status != 'Active')
-              Container(
-                width: 250,
-                height: 250,
-                color: Colors.red.withValues(alpha: 0.6),
-                alignment: Alignment.center,
-                child: Transform.rotate(
-                  angle: -0.4,
-                  child: Text(
-                    coupon.status ?? 'Used',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28.sp,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
+              Positioned.fill(
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.white.withValues(alpha: 0.6), // faded QR
+                  child: Transform.rotate(
+                    angle: -0.75, // better angle
+                    child: Container(
+                      height: 40.h,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 6.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withValues(alpha: 0.85),
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: AppText(
+                        text: (coupon.status ?? 'EXPIRED').toUpperCase(),
+                        fontSize: 22.sp,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
+                      ),
                     ),
                   ),
                 ),

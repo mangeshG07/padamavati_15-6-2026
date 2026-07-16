@@ -16,4 +16,5 @@ class HomeState {
 
   final Rxn<String> selectedPackageId = Rxn<String>();
   final Rxn<PackageModel> selectedPackage = Rxn<PackageModel>();
+  final Rxn<BannerModel> bannerData = Rxn<BannerModel>();
 }
