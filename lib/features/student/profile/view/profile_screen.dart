@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(() {
-        if (controller.isLoading.value) {
+        if (controller.state.isLoading.value) {
           return AppLoader(strokeWidth: 2.5);
         }
         final user = controller.state.profileData.value;

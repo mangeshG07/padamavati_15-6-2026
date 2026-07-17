@@ -25,7 +25,7 @@ class ProfileController extends BaseController {
 
     await callApi<BaseResponseModel<ProfileResponseModel>>(
       request: () => _profileUsecase.call(UserRequest(userId)),
-      loader: isLoading,
+      loader: state.isLoading,
       onSuccess: (data) {
         state.profileData.value = data.data;
       },

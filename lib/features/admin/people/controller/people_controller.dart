@@ -23,9 +23,11 @@ class PeopleController extends GetxController
     bool isRefresh = false,
     bool showLoading = true,
   }) async {
+    // /// 🚫 HARD STOP (MOST IMPORTANT)
     if (isApiCalling.value) return;
 
     isApiCalling(true);
+
     if (isRefresh) resetPagination();
 
     startLoading(showLoading: showLoading);
@@ -53,6 +55,7 @@ class PeopleController extends GetxController
     } catch (e) {
       debugPrint("Error: $e");
     } finally {
+      await Future.delayed(const Duration(milliseconds: 200));
       isApiCalling(false);
       stopLoading();
     }

@@ -10,38 +10,38 @@ class AdminNavController extends GetxController {
     const AdminProfileScreen(),
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
-    _loadTab(0);
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   _loadTab(0);
+  // }
 
-  /// 🔥 Smart Lazy Loader
-  void _loadTab(int index) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkInternetAndShowPopup();
-
-      switch (index) {
-        case 0:
-          Get.find<DashboardController>().getDashboard();
-          Get.find<RequestsUserController>().getUsersPaymentList(
-            isRefresh: true,
-          );
-          break;
-        case 1:
-          Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);
-          Get.find<AdminReqCtrl>().getLeaveRequestList(isRefresh: true);
-          Get.find<AdminReqCtrl>().setDate(DateTime.now());
-          break;
-        case 2:
-          Get.find<PeopleController>().getBranchUserList(isRefresh: true);
-          break;
-        case 3:
-          Get.find<AdminProfileController>().getAdminProfile();
-          break;
-      }
-    });
-  }
+  // /// 🔥 Smart Lazy Loader
+  // void _loadTab(int index) {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     checkInternetAndShowPopup();
+  //
+  //     switch (index) {
+  //       case 0:
+  //         Get.find<DashboardController>().getDashboard();
+  //         Get.find<RequestsUserController>().getUsersPaymentList(
+  //           isRefresh: true,
+  //         );
+  //         break;
+  //       case 1:
+  //         Get.find<AdminReqCtrl>().getFoodRequestList(isRefresh: true);
+  //         Get.find<AdminReqCtrl>().getLeaveRequestList(isRefresh: true);
+  //         Get.find<AdminReqCtrl>().setDate(DateTime.now());
+  //         break;
+  //       case 2:
+  //         Get.find<PeopleController>().getBranchUserList(isRefresh: true);
+  //         break;
+  //       case 3:
+  //         Get.find<AdminProfileController>().getAdminProfile();
+  //         break;
+  //     }
+  //   });
+  // }
 
   Widget get currentPage => _pages[currentIndex.value];
 
@@ -49,6 +49,6 @@ class AdminNavController extends GetxController {
     if (currentIndex.value == index) return;
 
     currentIndex.value = index;
-    _loadTab(index);
+    // _loadTab(index);
   }
 }

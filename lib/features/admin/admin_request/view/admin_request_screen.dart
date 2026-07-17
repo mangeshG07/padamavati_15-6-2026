@@ -1,7 +1,25 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class AdminRequestScreen extends GetView<AdminReqCtrl> {
+class AdminRequestScreen extends StatefulWidget {
   const AdminRequestScreen({super.key});
+
+  @override
+  State<AdminRequestScreen> createState() => _AdminRequestScreenState();
+}
+
+class _AdminRequestScreenState extends State<AdminRequestScreen> {
+  final controller = Get.find<AdminReqCtrl>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.getFoodRequestList(isRefresh: true);
+      controller.getLeaveRequestList(isRefresh: true);
+      controller.setDate(DateTime.now());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -27,6 +27,7 @@ class DashboardController extends BaseController {
 
   final isScanning = false.obs;
   final selectedType = 0.obs;
+  final isLoading = false.obs;
 
   Future<void> getDashboard() async {
     final userId =
@@ -73,14 +74,18 @@ class DashboardController extends BaseController {
         icon: HugeIcons.strokeRoundedSpoonAndKnife,
         isToday: true,
         count: data.todayFoodCount ?? 0,
-        onTap: () {},
+        onTap: () {
+          Get.find<AdminNavController>().changePage(1);
+        },
       ),
       DashboardMenuItem(
         title: 'Leave Request',
         icon: HugeIcons.strokeRoundedClock03,
         isToday: true,
         count: data.todayLeaveCount ?? 0,
-        onTap: () {},
+        onTap: () {
+          Get.find<AdminNavController>().changePage(1);
+        },
       ),
       DashboardMenuItem(
         title: 'Tomorrow Leave Request',

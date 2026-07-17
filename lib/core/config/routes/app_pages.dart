@@ -1,5 +1,3 @@
-
-
 import '../../exporters/app_export.dart';
 
 class AppPages {
@@ -76,8 +74,16 @@ class AppPages {
       page: () => HelpAndSupport(),
       binding: ProfileBindings(),
     ),
-    GetPage(name: Routes.scannedUsers, page: () => ScannedUsersList()),
+    GetPage(
+      name: Routes.scannedUsers,
+      page: () => ScannedUsersList(),
+      binding: PeopleBindings(),
+    ),
     GetPage(name: Routes.requestedUsers, page: () => RequestUsers()),
-    GetPage(name: Routes.scannedUsersDetails, page: () => UserDetailsPage()),
+    GetPage(
+      name: Routes.scannedUsersDetails,
+      page: () => UserDetailsPage(),
+      binding: PeopleBindings(),
+    ),
   ];
 }

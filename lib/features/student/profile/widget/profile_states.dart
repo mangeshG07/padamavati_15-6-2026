@@ -5,6 +5,7 @@ class ProfileStates {
 
   final isUpdating = false.obs;
   final isDeleting = false.obs;
+  final isLoading = false.obs;
 
   final isDegreeLoading = false.obs;
   final degreeList = <MasterDataModel>[].obs;

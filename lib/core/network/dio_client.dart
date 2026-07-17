@@ -12,6 +12,9 @@ class DioClient {
         receiveDataWhenStatusError: true,
         connectTimeout: ApiConstants.connectionTimeout,
         receiveTimeout: ApiConstants.receiveTimeout,
+        validateStatus: (status) {
+          return status != null && status < 500;
+        },
       ),
     );
 

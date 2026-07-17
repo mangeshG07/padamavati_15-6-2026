@@ -9,7 +9,7 @@ class AdminReqCtrl extends BaseController {
   AdminReqCtrl(this._foodRequests, this._leaveRequests);
 
   final selectedType = 0.obs;
-
+  final isLoading = false.obs;
   final leavePagination = PaginationState<LeaveRequestModel>();
   final foodPagination = PaginationState<FoodRequestModel>();
 

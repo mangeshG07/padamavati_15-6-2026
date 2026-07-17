@@ -15,6 +15,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkInternetAndShowPopup();
+      controller.getAdminProfile();
     });
   }
 

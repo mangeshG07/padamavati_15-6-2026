@@ -32,6 +32,7 @@ class AdminProfileController extends BaseController {
   ];
 
   final userData = ProfileResponseModel().obs;
+  final isLoading = false.obs;
 
   Future<void> getAdminProfile() async {
     final userId =

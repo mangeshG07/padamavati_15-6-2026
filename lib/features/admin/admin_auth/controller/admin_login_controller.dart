@@ -9,6 +9,7 @@ class AdminLoginController extends BaseController {
   final adminLoginKey = GlobalKey<FormState>();
 
   final isObscure = true.obs;
+  final isLoading = false.obs;
 
   void togglePassword() => isObscure.toggle();
 

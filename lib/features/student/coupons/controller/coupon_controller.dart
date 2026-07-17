@@ -10,6 +10,7 @@ class CouponController extends BaseController {
   final couponSummary = CouponSummaryModel().obs;
   final todayQR = <QRModel>[].obs;
   final usedQR = <QRModel>[].obs;
+  final isLoading = false.obs;
 
   Future<void> getCoupon() async {
     // final userId =

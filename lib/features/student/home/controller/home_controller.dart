@@ -47,8 +47,6 @@ class HomeController extends BaseController {
 
         /// Maintenance first
         if (platformData.isMaintenance == true) {
-          isLoading(false);
-
           Get.offAll(
             () => MaintenanceScreen(
               message: platformData.maintenanceMsg ?? '',

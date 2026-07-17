@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomImage(image: AppAssets.splashLogo, height: 50.h),
             Row(
               children: [
+                if(controller.states.todaysQR.isNotEmpty)
                 AppIconButton(
                   onPressed: () {
                     final qr = controller.states.todaysQR.first;

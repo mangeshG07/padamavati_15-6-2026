@@ -11,6 +11,15 @@ class _PeopleListState extends State<PeopleList> {
   final controller = Get.find<PeopleController>();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.getBranchUserList(isRefresh: true);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -255,6 +264,7 @@ class _PeopleListState extends State<PeopleList> {
 
   void _onSearchChanged(String text) {
     controller.updateSearchText(text);
+
     if (text.trim().isEmpty) {
       controller.searchKeyword.clear();
       return;

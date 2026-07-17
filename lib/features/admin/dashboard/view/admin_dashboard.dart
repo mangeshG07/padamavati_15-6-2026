@@ -1,9 +1,26 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
-class AdminDashboard extends GetView<DashboardController> {
-  AdminDashboard({super.key});
+class AdminDashboard extends StatefulWidget {
+  const AdminDashboard({super.key});
 
+  @override
+  State<AdminDashboard> createState() => _AdminDashboardState();
+}
+
+class _AdminDashboardState extends State<AdminDashboard> {
   final data = Get.find<RequestsUserController>();
+  final controller = Get.find<DashboardController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkInternetAndShowPopup();
+      controller.getDashboard();
+      data.getUsersPaymentList(isRefresh: true);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +99,10 @@ class AdminDashboard extends GetView<DashboardController> {
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                       showBottomBorder: true,
+                      dataRowMaxHeight: 50,
+                      headingRowHeight: 40,
+                      columnSpacing: 20,
+                      horizontalMargin: 10,
                       border: TableBorder.all(
                         borderRadius: BorderRadius.circular(8),
                         color: AppColors.grey200,
@@ -122,7 +143,7 @@ class AdminDashboard extends GetView<DashboardController> {
                   Obx(() {
                     if (payData.isLoadMore.value) {
                       return Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: CircularProgressIndicator(),
                       );
                     } else {
@@ -306,7 +327,9 @@ class AdminDashboard extends GetView<DashboardController> {
             'People\nCount',
             controller.overview.value.peopleCount?.toString() ?? '0',
             HugeIcons.strokeRoundedCall02,
-            () {},
+            () {
+              Get.find<AdminNavController>().changePage(2);
+            },
             Colors.blue,
             theme,
           ),
@@ -489,3 +512,11 @@ class AdminDashboard extends GetView<DashboardController> {
     );
   }
 }
+
+// class AdminDashboard extends GetView<DashboardController> {
+//   AdminDashboard({super.key});
+//
+//   final data = Get.find<RequestsUserController>();
+//
+//
+// }
