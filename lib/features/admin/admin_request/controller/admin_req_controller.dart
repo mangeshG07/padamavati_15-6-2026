@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:padmavatiupdated/core/exporters/app_export.dart '
+import 'package:padmavatiupdated/core/exporters/app_export.dart'
     hide DateFormat;
 
 class AdminReqCtrl extends BaseController {
@@ -10,12 +10,12 @@ class AdminReqCtrl extends BaseController {
 
   final selectedType = 0.obs;
   final isLoading = false.obs;
+
   final leavePagination = PaginationState<LeaveRequestModel>();
   final foodPagination = PaginationState<FoodRequestModel>();
 
   Future<void> getFoodRequests() async {
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
     await callApi<BaseResponseModel<FoodResponseModel>>(
       request: () => _foodRequests.call(UserRequest(userId)),
       loader: isLoading,
@@ -36,8 +36,7 @@ class AdminReqCtrl extends BaseController {
 
     foodPagination.startLoading(showLoading: showLoading);
 
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
 
     try {
       final response = await _foodRequests(
@@ -77,8 +76,7 @@ class AdminReqCtrl extends BaseController {
 
     leavePagination.startLoading(showLoading: showLoading);
 
-    final userId =
-        await SecureStorageService.read(AppConstants.userIdKey) ?? '';
+    final userId = await getUserId();
 
     try {
       final response = await _leaveRequests(

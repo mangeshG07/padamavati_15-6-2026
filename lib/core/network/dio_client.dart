@@ -2,6 +2,7 @@ import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 // BASE_URL=http://192.168.29.126/padmavatimess/api/v1
 // https://beta.madhyasthi.com/api/v1/
+// https://padmavatimess.com/api/v1
 
 class DioClient {
   static Dio create() {
