@@ -12,6 +12,7 @@ _PaymentDataModel _$PaymentDataModelFromJson(Map<String, dynamic> json) =>
       remainingAmount: (json['remaining_amount'] as num?)?.toInt(),
       paymentStatus: json['payment_status'] as String?,
       paidAmount: json['paid_amount'] as String?,
+      paidDate: json['paid_date'] as String?,
     );
 
 Map<String, dynamic> _$PaymentDataModelToJson(_PaymentDataModel instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$PaymentDataModelToJson(_PaymentDataModel instance) =>
       'remaining_amount': instance.remainingAmount,
       'payment_status': instance.paymentStatus,
       'paid_amount': instance.paidAmount,
+      'paid_date': instance.paidDate,
     };

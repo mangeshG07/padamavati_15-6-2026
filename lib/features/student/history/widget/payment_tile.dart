@@ -110,7 +110,6 @@ class PaymentTile extends StatelessWidget {
           ],
         ),
         AppText(
-          // text: payment.paidAmount ?? '',
           text: value ?? '',
           fontSize: 14.sp,
           fontWeight: FontWeight.bold,

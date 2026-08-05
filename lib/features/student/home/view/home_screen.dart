@@ -63,16 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomImage(image: AppAssets.splashLogo, height: 50.h),
             Row(
               children: [
-                if(controller.states.todaysQR.isNotEmpty)
-                AppIconButton(
-                  onPressed: () {
-                    final qr = controller.states.todaysQR.first;
-                    Get.toNamed(Routes.qrDetails, arguments: {'qrData': qr});
-                  },
-                  icon: HugeIcons.strokeRoundedQrCode,
-                  backgroundColor: Colors.grey.shade50,
-                  iconColor: Colors.black,
-                ),
+                if (controller.states.todaysQR.isNotEmpty)
+                  AppIconButton(
+                    onPressed: () {
+                      final qr = controller.states.todaysQR.first;
+                      Get.toNamed(Routes.qrDetails, arguments: {'qrData': qr});
+                    },
+                    icon: HugeIcons.strokeRoundedQrCode,
+                    backgroundColor: Colors.grey.shade50,
+                    iconColor: Colors.black,
+                  ),
                 AppIconButton(
                   icon: HugeIcons.strokeRoundedNotification01,
                   backgroundColor: Colors.grey.shade50,

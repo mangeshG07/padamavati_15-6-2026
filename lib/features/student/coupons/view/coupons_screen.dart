@@ -72,7 +72,7 @@ class _CouponsScreenState extends State<CouponsScreen> {
         _buildCouponCard(
           theme,
           summary.remainingCoupons?.toString() ?? '0',
-          'Valid til: ${summary.expiryDate?.toString() ?? ''}',
+          'Valid till: ${summary.expiryDate?.toString() ?? ''}',
           'Remaining Coupons',
           HugeIcons.strokeRoundedTags,
         ),

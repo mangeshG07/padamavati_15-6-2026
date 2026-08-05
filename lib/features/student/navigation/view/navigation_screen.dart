@@ -48,32 +48,6 @@ class NavigationScreen extends GetView<NavigationController> {
                 _item(2, HugeIcons.strokeRoundedTransactionHistory, 'History'),
                 _item(3, HugeIcons.strokeRoundedValidationApproval, 'Requests'),
                 _item(4, HugeIcons.strokeRoundedUser03, 'Profile'),
-                // _buildNavItem(
-                //   HugeIcons.strokeRoundedHome04,
-                //   'Home',
-                //   controller.currentIndex.value == 0,
-                // ),
-                // _buildNavItem(
-                //   HugeIcons.strokeRoundedTicketStar,
-                //   'Coupens',
-                //   controller.currentIndex.value == 1,
-                // ),
-                // _buildNavItem(
-                //   HugeIcons.strokeRoundedTransactionHistory,
-                //   'History',
-                //   controller.currentIndex.value == 2,
-                // ),
-                // _buildNavItem(
-                //   HugeIcons.strokeRoundedValidationApproval,
-                //   'Requests',
-                //   controller.currentIndex.value == 3,
-                // ),
-                // _buildNavItem(
-                //   HugeIcons.strokeRoundedUser03,
-                //   'Profile',
-                //   controller.currentIndex.value == 4,
-                //   iconSize: Get.width * 0.05,
-                // ),
               ],
             ),
           ),

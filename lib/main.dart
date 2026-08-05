@@ -1,5 +1,4 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
-
 import 'features/splash/view/remote_config.dart';
 
 void main() {

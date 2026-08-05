@@ -82,6 +82,11 @@ class _QRScannerPageState extends State<QRScannerPage> {
                       child: Column(
                         children: [
                           _infoRow(
+                            Icons.food_bank,
+                            "Branch",
+                            user.branch ?? '',
+                          ),
+                          _infoRow(
                             Icons.restaurant,
                             "Meal Type",
                             controller.scanData.value.scanMessType ?? '',
@@ -89,7 +94,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
                           _infoRow(
                             Icons.restaurant,
                             "Food Type",
-                            controller.userData.value.messType ?? '',
+                            user.messType ?? '',
                           ),
                           _infoRow(
                             Icons.confirmation_number,
@@ -105,6 +110,24 @@ class _QRScannerPageState extends State<QRScannerPage> {
                             Icons.access_time,
                             "Mess Time",
                             "${user.messTime}",
+                          ),
+                          _infoRow(
+                            Icons.access_time,
+                            "Expired Coupon",
+                            controller.scanQrData.value.expiredQr?.toString() ??
+                                '0',
+                          ),
+                          _infoRow(
+                            Icons.access_time,
+                            "Used Coupon",
+                            controller.scanQrData.value.usedQr?.toString() ??
+                                '0',
+                          ),
+                          _infoRow(
+                            Icons.calendar_today,
+                            "Last Payment Date",
+                            controller.paymentData.value.paidDate?.toString() ??
+                                '0',
                           ),
                         ],
                       ),

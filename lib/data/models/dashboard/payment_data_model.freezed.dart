@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentDataModel {
 
-@JsonKey(name: 'package_amount') int? get packageAmount;@JsonKey(name: 'remaining_amount') int? get remainingAmount;@JsonKey(name: 'payment_status') String? get paymentStatus;@JsonKey(name: 'paid_amount') String? get paidAmount;
+@JsonKey(name: 'package_amount') int? get packageAmount;@JsonKey(name: 'remaining_amount') int? get remainingAmount;@JsonKey(name: 'payment_status') String? get paymentStatus;@JsonKey(name: 'paid_amount') String? get paidAmount;@JsonKey(name: 'paid_date') String? get paidDate;
 /// Create a copy of PaymentDataModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PaymentDataModelCopyWith<PaymentDataModel> get copyWith => _$PaymentDataModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentDataModel&&(identical(other.packageAmount, packageAmount) || other.packageAmount == packageAmount)&&(identical(other.remainingAmount, remainingAmount) || other.remainingAmount == remainingAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentDataModel&&(identical(other.packageAmount, packageAmount) || other.packageAmount == packageAmount)&&(identical(other.remainingAmount, remainingAmount) || other.remainingAmount == remainingAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.paidDate, paidDate) || other.paidDate == paidDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,packageAmount,remainingAmount,paymentStatus,paidAmount);
+int get hashCode => Object.hash(runtimeType,packageAmount,remainingAmount,paymentStatus,paidAmount,paidDate);
 
 @override
 String toString() {
-  return 'PaymentDataModel(packageAmount: $packageAmount, remainingAmount: $remainingAmount, paymentStatus: $paymentStatus, paidAmount: $paidAmount)';
+  return 'PaymentDataModel(packageAmount: $packageAmount, remainingAmount: $remainingAmount, paymentStatus: $paymentStatus, paidAmount: $paidAmount, paidDate: $paidDate)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PaymentDataModelCopyWith<$Res>  {
   factory $PaymentDataModelCopyWith(PaymentDataModel value, $Res Function(PaymentDataModel) _then) = _$PaymentDataModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'package_amount') int? packageAmount,@JsonKey(name: 'remaining_amount') int? remainingAmount,@JsonKey(name: 'payment_status') String? paymentStatus,@JsonKey(name: 'paid_amount') String? paidAmount
+@JsonKey(name: 'package_amount') int? packageAmount,@JsonKey(name: 'remaining_amount') int? remainingAmount,@JsonKey(name: 'payment_status') String? paymentStatus,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'paid_date') String? paidDate
 });
 
 
@@ -65,12 +65,13 @@ class _$PaymentDataModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentDataModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? packageAmount = freezed,Object? remainingAmount = freezed,Object? paymentStatus = freezed,Object? paidAmount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? packageAmount = freezed,Object? remainingAmount = freezed,Object? paymentStatus = freezed,Object? paidAmount = freezed,Object? paidDate = freezed,}) {
   return _then(_self.copyWith(
 packageAmount: freezed == packageAmount ? _self.packageAmount : packageAmount // ignore: cast_nullable_to_non_nullable
 as int?,remainingAmount: freezed == remainingAmount ? _self.remainingAmount : remainingAmount // ignore: cast_nullable_to_non_nullable
 as int?,paymentStatus: freezed == paymentStatus ? _self.paymentStatus : paymentStatus // ignore: cast_nullable_to_non_nullable
 as String?,paidAmount: freezed == paidAmount ? _self.paidAmount : paidAmount // ignore: cast_nullable_to_non_nullable
+as String?,paidDate: freezed == paidDate ? _self.paidDate : paidDate // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'paid_date')  String? paidDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentDataModel() when $default != null:
-return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount);case _:
+return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount,_that.paidDate);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'paid_date')  String? paidDate)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentDataModel():
-return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount);case _:
+return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount,_that.paidDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'package_amount')  int? packageAmount, @JsonKey(name: 'remaining_amount')  int? remainingAmount, @JsonKey(name: 'payment_status')  String? paymentStatus, @JsonKey(name: 'paid_amount')  String? paidAmount, @JsonKey(name: 'paid_date')  String? paidDate)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentDataModel() when $default != null:
-return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount);case _:
+return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_that.paidAmount,_that.paidDate);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.packageAmount,_that.remainingAmount,_that.paymentStatus,_t
 @JsonSerializable()
 
 class _PaymentDataModel implements PaymentDataModel {
-  const _PaymentDataModel({@JsonKey(name: 'package_amount') this.packageAmount, @JsonKey(name: 'remaining_amount') this.remainingAmount, @JsonKey(name: 'payment_status') this.paymentStatus, @JsonKey(name: 'paid_amount') this.paidAmount});
+  const _PaymentDataModel({@JsonKey(name: 'package_amount') this.packageAmount, @JsonKey(name: 'remaining_amount') this.remainingAmount, @JsonKey(name: 'payment_status') this.paymentStatus, @JsonKey(name: 'paid_amount') this.paidAmount, @JsonKey(name: 'paid_date') this.paidDate});
   factory _PaymentDataModel.fromJson(Map<String, dynamic> json) => _$PaymentDataModelFromJson(json);
 
 @override@JsonKey(name: 'package_amount') final  int? packageAmount;
 @override@JsonKey(name: 'remaining_amount') final  int? remainingAmount;
 @override@JsonKey(name: 'payment_status') final  String? paymentStatus;
 @override@JsonKey(name: 'paid_amount') final  String? paidAmount;
+@override@JsonKey(name: 'paid_date') final  String? paidDate;
 
 /// Create a copy of PaymentDataModel
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentDataModel&&(identical(other.packageAmount, packageAmount) || other.packageAmount == packageAmount)&&(identical(other.remainingAmount, remainingAmount) || other.remainingAmount == remainingAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentDataModel&&(identical(other.packageAmount, packageAmount) || other.packageAmount == packageAmount)&&(identical(other.remainingAmount, remainingAmount) || other.remainingAmount == remainingAmount)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.paidDate, paidDate) || other.paidDate == paidDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,packageAmount,remainingAmount,paymentStatus,paidAmount);
+int get hashCode => Object.hash(runtimeType,packageAmount,remainingAmount,paymentStatus,paidAmount,paidDate);
 
 @override
 String toString() {
-  return 'PaymentDataModel(packageAmount: $packageAmount, remainingAmount: $remainingAmount, paymentStatus: $paymentStatus, paidAmount: $paidAmount)';
+  return 'PaymentDataModel(packageAmount: $packageAmount, remainingAmount: $remainingAmount, paymentStatus: $paymentStatus, paidAmount: $paidAmount, paidDate: $paidDate)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$PaymentDataModelCopyWith<$Res> implements $PaymentDataMod
   factory _$PaymentDataModelCopyWith(_PaymentDataModel value, $Res Function(_PaymentDataModel) _then) = __$PaymentDataModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'package_amount') int? packageAmount,@JsonKey(name: 'remaining_amount') int? remainingAmount,@JsonKey(name: 'payment_status') String? paymentStatus,@JsonKey(name: 'paid_amount') String? paidAmount
+@JsonKey(name: 'package_amount') int? packageAmount,@JsonKey(name: 'remaining_amount') int? remainingAmount,@JsonKey(name: 'payment_status') String? paymentStatus,@JsonKey(name: 'paid_amount') String? paidAmount,@JsonKey(name: 'paid_date') String? paidDate
 });
 
 
@@ -270,12 +272,13 @@ class __$PaymentDataModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentDataModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? packageAmount = freezed,Object? remainingAmount = freezed,Object? paymentStatus = freezed,Object? paidAmount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? packageAmount = freezed,Object? remainingAmount = freezed,Object? paymentStatus = freezed,Object? paidAmount = freezed,Object? paidDate = freezed,}) {
   return _then(_PaymentDataModel(
 packageAmount: freezed == packageAmount ? _self.packageAmount : packageAmount // ignore: cast_nullable_to_non_nullable
 as int?,remainingAmount: freezed == remainingAmount ? _self.remainingAmount : remainingAmount // ignore: cast_nullable_to_non_nullable
 as int?,paymentStatus: freezed == paymentStatus ? _self.paymentStatus : paymentStatus // ignore: cast_nullable_to_non_nullable
 as String?,paidAmount: freezed == paidAmount ? _self.paidAmount : paidAmount // ignore: cast_nullable_to_non_nullable
+as String?,paidDate: freezed == paidDate ? _self.paidDate : paidDate // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

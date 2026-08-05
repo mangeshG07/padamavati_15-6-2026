@@ -9,6 +9,7 @@ class PeopleController extends GetxController
   PeopleController(this._branchUsersUsecase, this._couponUsecase);
 
   final searchKeyword = TextEditingController();
+  final searchNode = FocusNode();
   final searchText = ''.obs;
 
   final debouncer = Debouncer(milliseconds: 500);

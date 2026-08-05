@@ -54,7 +54,7 @@ class AdminReqCtrl extends BaseController {
           foodPagination.handleSuccess(list);
 
         case Failure(:final message):
-          debugPrint(message);
+          debugPrint('');
         // CustomSnackbar.show(context: Get.context!, message: message);
       }
     } catch (e) {

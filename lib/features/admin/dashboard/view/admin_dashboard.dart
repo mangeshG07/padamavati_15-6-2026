@@ -7,14 +7,16 @@ class AdminDashboard extends StatefulWidget {
   State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _AdminDashboardState extends State<AdminDashboard> {
+class _AdminDashboardState extends State<AdminDashboard>
+    with SingleTickerProviderStateMixin {
   final data = Get.find<RequestsUserController>();
   final controller = Get.find<DashboardController>();
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-
+    _tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkInternetAndShowPopup();
       controller.getDashboard();
@@ -35,36 +37,89 @@ class _AdminDashboardState extends State<AdminDashboard> {
       body: Obx(
         () => controller.isLoading.isTrue
             ? AppLoader(strokeWidth: 2.5.w, color: AppColors.lightPrimary)
-            : SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 16.h,
-                  children: [
-                    _buildBranchData(theme, controller.dashboardData.value),
-                    _buildSectionTitle(theme),
-                    _buildOverviewCards(theme),
+            : NestedScrollView(
+                controller: ScrollController(),
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    /// 🔹 TOP CONTENT
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildBranchData(
+                              theme,
+                              controller.dashboardData.value,
+                            ),
 
-                    _buildSectionCard(controller.menuList, theme),
-                    SizedBox(height: 0.02.h),
-                    _buildScanButton(),
+                            SizedBox(height: 12.h),
 
-                    _paymentTable(context),
-                    SizedBox(height: 0.03.h),
-                  ],
-                ),
+                            _buildPremiumSearchBar(),
+
+                            SizedBox(height: 16.h),
+
+                            _buildSectionTitle(theme),
+
+                            SizedBox(height: 12.h),
+
+                            _buildOverviewCards(theme),
+
+                            SizedBox(height: 16.h),
+
+                            _buildSectionCard(controller.menuList, theme),
+
+                            SizedBox(height: 12.h),
+
+                            _buildScanButton(),
+
+                            SizedBox(height: 20.h),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    /// 🔥 STICKY TAB BAR
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: _TabBarDelegate(_buildTabs()),
+                    ),
+                  ];
+                },
+
+                /// 🔥 TAB VIEWS (SCROLLABLE LIST)
+                body: _buildTabViews(),
               ),
       ),
     );
   }
 
-  Widget _paymentTable(BuildContext context) {
-    final payData = data.paymentPagination;
+  TabBar _buildTabs() {
+    return TabBar(
+      controller: _tabController,
+      labelColor: AppColors.lightPrimary,
+      unselectedLabelColor: Colors.grey,
+      indicatorColor: AppColors.lightPrimary,
+      tabs: const [
+        Tab(text: "Pending"),
+        Tab(text: "Partial"),
+        Tab(text: "Completed"),
+      ],
+    );
+  }
 
-    if (payData.items.isEmpty) {
-      return const SizedBox.shrink();
-    }
+  Widget _buildTabViews() {
+    return TabBarView(
+      controller: _tabController,
+      children: [
+        _paymentList("Not Paid"),
+        _paymentList("Partial"),
+        _paymentList("Complete"),
+      ],
+    );
+  }
 
+  Widget _paymentTabs() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,95 +130,293 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ),
         SizedBox(height: 10.h),
 
-        /// 🔥 SAME PAGINATION LISTENER
-        NotificationListener<ScrollNotification>(
-          onNotification: (scroll) {
-            if (scroll is ScrollEndNotification &&
-                scroll.metrics.pixels >= scroll.metrics.maxScrollExtent - 50 &&
-                payData.hasMore &&
-                !payData.isLoadMore.value &&
-                !payData.isLoading.value) {
-              data.getUsersPaymentList(showLoading: false);
-            }
-            return false;
-          },
+        /// 🔥 TAB BAR
+        TabBar(
+          controller: _tabController,
+          labelColor: AppColors.lightPrimary,
+          unselectedLabelColor: Colors.grey,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorColor: AppColors.lightPrimary,
+          tabs: const [
+            Tab(text: "Pending"),
+            Tab(text: "Partial"),
+            Tab(text: "Completed"),
+          ],
+        ),
 
-          /// 🔥 IMPORTANT: vertical scroll
-          child: SizedBox(
-            height: payData.items.length * 60.0,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  /// 🔥 horizontal scroll inside
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      showBottomBorder: true,
-                      dataRowMaxHeight: 50,
-                      headingRowHeight: 40,
-                      columnSpacing: 20,
-                      horizontalMargin: 10,
-                      border: TableBorder.all(
-                        borderRadius: BorderRadius.circular(8),
-                        color: AppColors.grey200,
-                      ),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      columns: [
-                        _columnTitle('Id'),
-                        _columnTitle('Name'),
-                        _columnTitle('Mess'),
-                        _columnTitle('Food'),
-                        _columnTitle('Mobile'),
-                        _columnTitle('Total'),
-                        _columnTitle('Paid'),
-                        _columnTitle('Pending'),
-                        _columnTitle('Status'),
-                      ],
-                      rows: List.generate(payData.items.length, (index) {
-                        final pay = payData.items[index];
-
-                        return DataRow(
-                          cells: [
-                            _cell(pay.id, isId: true),
-                            _cell(pay.name),
-                            _cell(pay.messTime),
-                            _cell(pay.messType),
-                            _cell(pay.mobileNo),
-                            _cell(pay.totalAmount),
-                            _cell(pay.paidAmount),
-                            _cell(pay.pendingAmount),
-                            _statusCell(pay.paymentStatusText),
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
-
-                  /// 🔄 SAME loader as your QR screen
-                  Obx(() {
-                    if (payData.isLoadMore.value) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  }),
-                ],
-              ),
-            ),
+        SizedBox(
+          height: 500,
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              _paymentList("Not Paid"),
+              _paymentList("Partial"),
+              _paymentList("Complete"),
+            ],
           ),
         ),
       ],
     );
   }
 
+  Widget _buildPremiumSearchBar() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(colors: [Colors.white, Colors.grey.shade100]),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextField(
+        onTap: () {
+          Get.find<AdminNavController>().changePage(2);
+          Get.find<PeopleController>().searchNode.requestFocus();
+        },
+        readOnly: true,
+        onChanged: (value) => controller.searchQuery.value = value,
+        decoration: InputDecoration(
+          hintText: "Search users, mobile...",
+          prefixIcon: Icon(Icons.search, color: Colors.grey),
+          suffixIcon: Obx(
+            () => controller.searchQuery.value.isNotEmpty
+                ? IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => controller.searchQuery.value = '',
+                  )
+                : SizedBox(),
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(vertical: 14),
+        ),
+      ),
+    );
+  }
+
+  Widget _paymentList(String status) {
+    return Obx(() {
+      final payData = data.paymentPagination;
+
+      /// 🔥 FILTER DATA
+      final filteredList = payData.items
+          .where((e) => e.paymentStatusText == status)
+          .toList();
+
+      if (filteredList.isEmpty) {
+        return Center(child: Text("No Data"));
+      }
+
+      return NotificationListener<ScrollNotification>(
+        onNotification: (scroll) {
+          if (scroll is ScrollEndNotification &&
+              scroll.metrics.pixels >= scroll.metrics.maxScrollExtent - 50 &&
+              payData.hasMore &&
+              !payData.isLoadMore.value &&
+              !payData.isLoading.value) {
+            data.getUsersPaymentList(showLoading: false);
+          }
+          return false;
+        },
+        child: ListView.builder(
+          itemCount: filteredList.length + 1,
+          itemBuilder: (context, index) {
+            if (index == filteredList.length) {
+              return Obx(
+                () => payData.isLoadMore.value
+                    ? Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: CircularProgressIndicator(),
+                      )
+                    : const SizedBox(),
+              );
+            }
+
+            final pay = filteredList[index];
+
+            return _buildStudentCard(pay);
+
+            //   Card(
+            //   color: Colors.white,
+            //   surfaceTintColor: Colors.white,
+            //   margin: EdgeInsets.symmetric(vertical: 6.h),
+            //   child: ListTile(
+            //     onTap: () {
+            //       Get.toNamed(
+            //         Routes.scannedUsersDetails,
+            //         arguments: {'id': pay.id.toString()},
+            //       );
+            //     },
+            //     title: AppText(text: pay.name ?? '', fontSize: 14.sp),
+            //     subtitle: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         AppText(text: "Mobile: ${pay.mobileNo}", fontSize: 14.sp),
+            //         AppText(text: "Mess: ${pay.messTime}", fontSize: 14.sp),
+            //         AppText(text: "Food: ${pay.messType}", fontSize: 14.sp),
+            //       ],
+            //     ),
+            //     trailing: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.end,
+            //       children: [
+            //         AppText(text: "₹${pay.totalAmount}", fontSize: 14.sp),
+            //         _statusChip(pay.paymentStatusText),
+            //       ],
+            //     ),
+            //   ),
+            // );
+          },
+        ),
+      );
+    });
+  }
+
+  Widget _buildStudentCard(UserPaymentModel pay) {
+    return Card(
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+      elevation: 3,
+      shadowColor: Colors.grey.withValues(alpha: 0.15),
+      child: InkWell(
+        onTap: () {
+          Get.toNamed(
+            Routes.scannedUsersDetails,
+            arguments: {'id': pay.id.toString()},
+          );
+        },
+        borderRadius: BorderRadius.circular(16.r),
+        child: Container(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Row with Name and Amount
+              Row(
+                children: [
+                  // Avatar with initials
+                  Container(
+                    width: 44.w,
+                    height: 44.w,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.lightPrimary.withValues(alpha: 0.2),
+                          AppColors.lightSecondary.withValues(alpha: 0.4),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Center(
+                      child: AppText(
+                        text: _getInitials(pay.name),
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                          text: pay.name ?? '',
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade900,
+                        ),
+                        AppText(
+                          text: "₹${pay.totalAmount}",
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.green.shade700,
+                        ),
+                      ],
+                    ),
+                  ),
+                  _statusChip(pay.paymentStatusText),
+                ],
+              ),
+              SizedBox(height: 12.h),
+              // Details Row
+              Row(
+                children: [
+                  _buildDetailChip(Icons.phone, pay.mobileNo ?? ''),
+                  SizedBox(width: 8.w),
+                  _buildDetailChip(Icons.access_time, pay.messTime ?? ''),
+                  SizedBox(width: 8.w),
+                  _buildDetailChip(Icons.restaurant, pay.messType ?? ''),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper methods for alternative version
+  Widget _buildDetailChip(IconData icon, String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12.sp, color: Colors.grey.shade600),
+          SizedBox(width: 4.w),
+          AppText(text: text, fontSize: 11.sp, color: Colors.grey.shade700),
+        ],
+      ),
+    );
+  }
+
+  String _getInitials(String? name) {
+    if (name == null || name.isEmpty) return '';
+    List<String> nameParts = name.trim().split(' ');
+    if (nameParts.length == 1) return nameParts[0][0].toUpperCase();
+    return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+  }
+
+  Widget _statusChip(String? status) {
+    final color = status == 'Complete'
+        ? Colors.green
+        : status == 'Not Paid'
+        ? Colors.red
+        : Colors.orange;
+
+    return Container(
+      margin: EdgeInsets.only(top: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: AppText(
+        text: status ?? '-',
+        fontSize: 12.sp,
+        color: color,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
   // Widget _paymentTable(BuildContext context) {
   //   final payData = data.paymentPagination;
+  //
   //   if (payData.items.isEmpty) {
   //     return const SizedBox.shrink();
   //   }
+  //
   //   return Column(
   //     crossAxisAlignment: CrossAxisAlignment.start,
   //     children: [
@@ -173,121 +426,156 @@ class _AdminDashboardState extends State<AdminDashboard> {
   //         fontWeight: FontWeight.w600,
   //       ),
   //       SizedBox(height: 10.h),
-  //       SingleChildScrollView(
-  //         scrollDirection: Axis.horizontal,
-  //         child: DataTable(
-  //           headingRowHeight: 40,
-  //           dataRowMaxHeight: 50,
-  //           horizontalMargin: 5,
-  //           columnSpacing: 10,
-  //           showBottomBorder: true,
-  //           border: TableBorder.all(
-  //             borderRadius: BorderRadius.circular(8),
-  //             color: AppColors.grey200,
-  //           ),
-  //           clipBehavior: Clip.antiAliasWithSaveLayer,
-  //           columns: [
-  //             _columnTitle('id'),
-  //             _columnTitle('Name'),
-  //             _columnTitle('Mess'),
-  //             _columnTitle('Food'),
-  //             _columnTitle('Mobile'),
-  //             _columnTitle('Total'),
-  //             _columnTitle('Paid'),
-  //             _columnTitle('Pending'),
-  //             _columnTitle('Status'),
-  //           ],
-  //           rows: List.generate(payData.items.length, (index) {
-  //             final pay = payData.items[index];
-  //             return DataRow(
-  //               color: WidgetStateProperty.resolveWith<Color?>(
-  //                 (states) =>
-  //                     index.isEven ? Colors.grey.withValues(alpha: 0.03) : null,
-  //               ),
-  //               cells: [
-  //                 _cell(pay.id, isId: true),
-  //                 _cell(pay.name),
-  //                 _cell(pay.messTime),
-  //                 _cell(pay.messType),
-  //                 _cell(pay.mobileNo),
-  //                 _cell(pay.totalAmount),
-  //                 _cell(pay.paidAmount),
-  //                 _cell(pay.pendingAmount),
-  //                 _statusCell(pay.paymentStatusText),
+  //
+  //       /// 🔥 SAME PAGINATION LISTENER
+  //       NotificationListener<ScrollNotification>(
+  //         onNotification: (scroll) {
+  //           if (scroll is ScrollEndNotification &&
+  //               scroll.metrics.pixels >= scroll.metrics.maxScrollExtent - 50 &&
+  //               payData.hasMore &&
+  //               !payData.isLoadMore.value &&
+  //               !payData.isLoading.value) {
+  //             data.getUsersPaymentList(showLoading: false);
+  //           }
+  //           return false;
+  //         },
+  //
+  //         /// 🔥 IMPORTANT: vertical scroll
+  //         child: SizedBox(
+  //           height: payData.items.length * 60.0,
+  //           child: SingleChildScrollView(
+  //             child: Column(
+  //               children: [
+  //                 /// 🔥 horizontal scroll inside
+  //                 SingleChildScrollView(
+  //                   scrollDirection: Axis.horizontal,
+  //                   child: DataTable(
+  //                     showBottomBorder: true,
+  //                     dataRowMaxHeight: 50,
+  //                     headingRowHeight: 40,
+  //                     columnSpacing: 20,
+  //                     horizontalMargin: 10,
+  //                     border: TableBorder.all(
+  //                       borderRadius: BorderRadius.circular(8),
+  //                       color: AppColors.grey200,
+  //                     ),
+  //                     clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                     columns: [
+  //                       _columnTitle('Id'),
+  //                       _columnTitle('Name'),
+  //                       _columnTitle('Mess'),
+  //                       _columnTitle('Food'),
+  //                       _columnTitle('Mobile'),
+  //                       _columnTitle('Total'),
+  //                       _columnTitle('Paid'),
+  //                       _columnTitle('Pending'),
+  //                       _columnTitle('Status'),
+  //                     ],
+  //                     rows: List.generate(payData.items.length, (index) {
+  //                       final pay = payData.items[index];
+  //
+  //                       return DataRow(
+  //                         cells: [
+  //                           _cell(pay.id, isId: true),
+  //                           _cell(pay.name),
+  //                           _cell(pay.messTime),
+  //                           _cell(pay.messType),
+  //                           _cell(pay.mobileNo),
+  //                           _cell(pay.totalAmount),
+  //                           _cell(pay.paidAmount),
+  //                           _cell(pay.pendingAmount),
+  //                           _statusCell(pay.paymentStatusText),
+  //                         ],
+  //                       );
+  //                     }),
+  //                   ),
+  //                 ),
+  //
+  //                 /// 🔄 SAME loader as your QR screen
+  //                 Obx(() {
+  //                   if (payData.isLoadMore.value) {
+  //                     return Padding(
+  //                       padding: const EdgeInsets.all(16),
+  //                       child: CircularProgressIndicator(),
+  //                     );
+  //                   } else {
+  //                     return SizedBox();
+  //                   }
+  //                 }),
   //               ],
-  //             );
-  //           }).toList(),
+  //             ),
+  //           ),
   //         ),
   //       ),
   //     ],
   //   );
   // }
 
-  DataColumn _columnTitle(dynamic value) {
-    return DataColumn(
-      headingRowAlignment: MainAxisAlignment.center,
-      label: Center(
-        child: AppText(
-          text: value?.toString() ?? '-',
-          fontSize: 13.sp,
-          textAlign: TextAlign.center,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  DataCell _cell(dynamic value, {bool isId = false}) {
-    return DataCell(
-      GestureDetector(
-        onTap: () {
-          if (isId) {
-            Get.toNamed(
-              Routes.scannedUsersDetails,
-              arguments: {'id': value.toString()},
-            );
-          }
-        },
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: isId ? 8.0 : 0),
-            child: AppText(
-              text: value?.toString() ?? '-',
-              fontSize: 13.sp,
-              color: isId ? Colors.blue : Colors.black,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  DataCell _statusCell(String? status) {
-    final color = status == 'Complete'
-        ? Colors.green
-        : status == 'Not Paid'
-        ? Colors.red
-        : Colors.orange;
-
-    return DataCell(
-      Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: AppText(
-            text: status ?? '-',
-            fontSize: 12.sp,
-            color: color,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
+  // DataColumn _columnTitle(dynamic value) {
+  //   return DataColumn(
+  //     headingRowAlignment: MainAxisAlignment.center,
+  //     label: Center(
+  //       child: AppText(
+  //         text: value?.toString() ?? '-',
+  //         fontSize: 13.sp,
+  //         textAlign: TextAlign.center,
+  //         fontWeight: FontWeight.bold,
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // DataCell _cell(dynamic value, {bool isId = false}) {
+  //   return DataCell(
+  //     GestureDetector(
+  //       onTap: () {
+  //         if (isId) {
+  //           Get.toNamed(
+  //             Routes.scannedUsersDetails,
+  //             arguments: {'id': value.toString()},
+  //           );
+  //         }
+  //       },
+  //       child: Center(
+  //         child: Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: isId ? 8.0 : 0),
+  //           child: AppText(
+  //             text: value?.toString() ?? '-',
+  //             fontSize: 13.sp,
+  //             color: isId ? Colors.blue : Colors.black,
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // DataCell _statusCell(String? status) {
+  //   final color = status == 'Complete'
+  //       ? Colors.green
+  //       : status == 'Not Paid'
+  //       ? Colors.red
+  //       : Colors.orange;
+  //
+  //   return DataCell(
+  //     Center(
+  //       child: Container(
+  //         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+  //         decoration: BoxDecoration(
+  //           color: color.withValues(alpha: 0.1),
+  //           borderRadius: BorderRadius.circular(6),
+  //         ),
+  //         child: AppText(
+  //           text: status ?? '-',
+  //           fontSize: 12.sp,
+  //           color: color,
+  //           fontWeight: FontWeight.w600,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildBranchData(ThemeData theme, DashboardModel data) {
     return Card(
@@ -513,10 +801,28 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 }
 
-// class AdminDashboard extends GetView<DashboardController> {
-//   AdminDashboard({super.key});
-//
-//   final data = Get.find<RequestsUserController>();
-//
-//
-// }
+class _TabBarDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar tabBar;
+
+  _TabBarDelegate(this.tabBar);
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Container(color: Colors.white, child: tabBar);
+  }
+
+  @override
+  bool shouldRebuild(_TabBarDelegate oldDelegate) {
+    return false;
+  }
+}

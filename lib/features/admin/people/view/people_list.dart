@@ -225,6 +225,7 @@ class _PeopleListState extends State<PeopleList> {
   Widget _buildSearchField() {
     return TextFormField(
       controller: controller.searchKeyword,
+      focusNode: controller.searchNode,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,

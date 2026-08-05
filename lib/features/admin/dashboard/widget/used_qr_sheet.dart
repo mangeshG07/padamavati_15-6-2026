@@ -194,11 +194,8 @@ class _UsedQrSheetState extends State<UsedQrSheet> {
               );
             }),
           ),
-
         ],
       ),
     );
   }
-
-
 }

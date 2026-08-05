@@ -260,3 +260,4 @@ export 'package:padmavatiupdated/domain/usecase/expire_coupon_usecase.dart';
 export 'package:padmavatiupdated/data/models/dashboard/user_payment_model.dart';
 export 'package:padmavatiupdated/data/models/dashboard/pay_response_model.dart';
 export 'package:padmavatiupdated/data/models/home/banner_model.dart';
+export 'package:padmavatiupdated/data/models/dashboard/qr_data_model.dart';

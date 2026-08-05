@@ -10,6 +10,7 @@ _QRUserDataModel _$QRUserDataModelFromJson(Map<String, dynamic> json) =>
     _QRUserDataModel(
       userId: (json['user_id'] as num?)?.toInt(),
       name: json['name'] as String?,
+      branch: json['branch'] as String?,
       profileImage: json['profile_image'] as String?,
       gender: json['gender'] as String?,
       messType: json['mess_type'] as String?,
@@ -22,6 +23,7 @@ Map<String, dynamic> _$QRUserDataModelToJson(_QRUserDataModel instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'name': instance.name,
+      'branch': instance.branch,
       'profile_image': instance.profileImage,
       'gender': instance.gender,
       'mess_type': instance.messType,

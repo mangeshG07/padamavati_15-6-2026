@@ -42,7 +42,9 @@ abstract class ApiService {
     @Part(name: "per_address") String perAddress,
     @Part(name: "degree_id") String degreeId,
     @Part(name: "branch_id") String branchId,
-    @Part(name: "mess_type") String messType, {
+    @Part(name: "mess_type") String messType,
+    @Part(name: "register_from") String registerFrom,
+      {
     @Part(name: 'profile_image') File? profilePicture,
   });
 

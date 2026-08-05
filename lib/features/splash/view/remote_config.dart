@@ -11,18 +11,17 @@ class RemoteConfigServiceNew {
   bool isLoggedIn = false;
 
   Future<void> init() async {
-    final res = await _apiService.getSplash();
+    try {
+      final res = await _apiService.getSplash().timeout(
+        const Duration(seconds: 5),
+      ); // ✅ timeout
 
-    // /// Android config
-    // isForceUpdate = res.android?.forceUpdate ?? false;
-    // isMaintenance = res.android?.isMaintenance ?? false;
-
-    /// Splash
-    // splashImage = res.data?.splashImage;
-    splashImage = res['data']['splash_image'] ?? '';
-
-
-    /// Login
-    // isLoggedIn = res.userLogin ?? false;
+      splashImage = res['data']['splash_image'] ?? '';
+    } catch (e) {
+      /// ✅ fallback (VERY IMPORTANT)
+      splashImage = '';
+      isForceUpdate = false;
+      isMaintenance = false;
+    }
   }
 }

@@ -197,7 +197,8 @@ class _ApiService implements ApiService {
     String perAddress,
     String degreeId,
     String branchId,
-    String messType, {
+    String messType,
+    String registerFrom, {
     File? profilePicture,
   }) async {
     final _extra = <String, dynamic>{};
@@ -214,6 +215,7 @@ class _ApiService implements ApiService {
     _data.fields.add(MapEntry('degree_id', degreeId));
     _data.fields.add(MapEntry('branch_id', branchId));
     _data.fields.add(MapEntry('mess_type', messType));
+    _data.fields.add(MapEntry('register_from', registerFrom));
     if (profilePicture != null) {
       _data.files.add(
         MapEntry(

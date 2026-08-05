@@ -16,6 +16,9 @@ _QRResponseModel _$QRResponseModelFromJson(Map<String, dynamic> json) =>
           : PaymentDataModel.fromJson(
               json['payment_data'] as Map<String, dynamic>,
             ),
+      qrData: json['qr_data'] == null
+          ? null
+          : QRDataModel.fromJson(json['qr_data'] as Map<String, dynamic>),
       scanData: json['scan_data'] == null
           ? null
           : ScanDataModel.fromJson(json['scan_data'] as Map<String, dynamic>),
@@ -25,5 +28,6 @@ Map<String, dynamic> _$QRResponseModelToJson(_QRResponseModel instance) =>
     <String, dynamic>{
       'user_data': instance.userData,
       'payment_data': instance.paymentData,
+      'qr_data': instance.qrData,
       'scan_data': instance.scanData,
     };

@@ -16,7 +16,7 @@ class DashboardController extends BaseController {
   );
 
   final controller = Get.find<RequestsUserController>();
-
+  final searchQuery = ''.obs;
   final overview = OverViewModel().obs;
   final dashboardData = DashboardModel().obs;
   final menuList = <DashboardMenuItem>[].obs;
@@ -24,6 +24,7 @@ class DashboardController extends BaseController {
   final userData = QRUserDataModel().obs;
   final paymentData = PaymentDataModel().obs;
   final scanData = ScanDataModel().obs;
+  final scanQrData = QRDataModel().obs;
 
   final isScanning = false.obs;
   final selectedType = 0.obs;
@@ -75,6 +76,7 @@ class DashboardController extends BaseController {
         isToday: true,
         count: data.todayFoodCount ?? 0,
         onTap: () {
+          Get.find<AdminReqCtrl>().selectedType.value = 0;
           Get.find<AdminNavController>().changePage(1);
         },
       ),
@@ -84,6 +86,7 @@ class DashboardController extends BaseController {
         isToday: true,
         count: data.todayLeaveCount ?? 0,
         onTap: () {
+          Get.find<AdminReqCtrl>().selectedType.value = 1;
           Get.find<AdminNavController>().changePage(1);
         },
       ),
@@ -118,6 +121,7 @@ class DashboardController extends BaseController {
         userData.value = data.data!.userData!;
         paymentData.value = data.data!.paymentData!;
         scanData.value = data.data!.scanData!;
+        scanQrData.value = data.data!.qrData!;
       },
       onError: (msg) {
         CustomSnackbar.show(

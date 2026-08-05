@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$QRResponseModel {
 
-@JsonKey(name: 'user_data') QRUserDataModel? get userData;@JsonKey(name: 'payment_data') PaymentDataModel? get paymentData;@JsonKey(name: 'scan_data') ScanDataModel? get scanData;
+@JsonKey(name: 'user_data') QRUserDataModel? get userData;@JsonKey(name: 'payment_data') PaymentDataModel? get paymentData;@JsonKey(name: 'qr_data') QRDataModel? get qrData;@JsonKey(name: 'scan_data') ScanDataModel? get scanData;
 /// Create a copy of QRResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $QRResponseModelCopyWith<QRResponseModel> get copyWith => _$QRResponseModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QRResponseModel&&(identical(other.userData, userData) || other.userData == userData)&&(identical(other.paymentData, paymentData) || other.paymentData == paymentData)&&(identical(other.scanData, scanData) || other.scanData == scanData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QRResponseModel&&(identical(other.userData, userData) || other.userData == userData)&&(identical(other.paymentData, paymentData) || other.paymentData == paymentData)&&(identical(other.qrData, qrData) || other.qrData == qrData)&&(identical(other.scanData, scanData) || other.scanData == scanData));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userData,paymentData,scanData);
+int get hashCode => Object.hash(runtimeType,userData,paymentData,qrData,scanData);
 
 @override
 String toString() {
-  return 'QRResponseModel(userData: $userData, paymentData: $paymentData, scanData: $scanData)';
+  return 'QRResponseModel(userData: $userData, paymentData: $paymentData, qrData: $qrData, scanData: $scanData)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $QRResponseModelCopyWith<$Res>  {
   factory $QRResponseModelCopyWith(QRResponseModel value, $Res Function(QRResponseModel) _then) = _$QRResponseModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_data') QRUserDataModel? userData,@JsonKey(name: 'payment_data') PaymentDataModel? paymentData,@JsonKey(name: 'scan_data') ScanDataModel? scanData
+@JsonKey(name: 'user_data') QRUserDataModel? userData,@JsonKey(name: 'payment_data') PaymentDataModel? paymentData,@JsonKey(name: 'qr_data') QRDataModel? qrData,@JsonKey(name: 'scan_data') ScanDataModel? scanData
 });
 
 
-$QRUserDataModelCopyWith<$Res>? get userData;$PaymentDataModelCopyWith<$Res>? get paymentData;$ScanDataModelCopyWith<$Res>? get scanData;
+$QRUserDataModelCopyWith<$Res>? get userData;$PaymentDataModelCopyWith<$Res>? get paymentData;$QRDataModelCopyWith<$Res>? get qrData;$ScanDataModelCopyWith<$Res>? get scanData;
 
 }
 /// @nodoc
@@ -65,11 +65,12 @@ class _$QRResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of QRResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userData = freezed,Object? paymentData = freezed,Object? scanData = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userData = freezed,Object? paymentData = freezed,Object? qrData = freezed,Object? scanData = freezed,}) {
   return _then(_self.copyWith(
 userData: freezed == userData ? _self.userData : userData // ignore: cast_nullable_to_non_nullable
 as QRUserDataModel?,paymentData: freezed == paymentData ? _self.paymentData : paymentData // ignore: cast_nullable_to_non_nullable
-as PaymentDataModel?,scanData: freezed == scanData ? _self.scanData : scanData // ignore: cast_nullable_to_non_nullable
+as PaymentDataModel?,qrData: freezed == qrData ? _self.qrData : qrData // ignore: cast_nullable_to_non_nullable
+as QRDataModel?,scanData: freezed == scanData ? _self.scanData : scanData // ignore: cast_nullable_to_non_nullable
 as ScanDataModel?,
   ));
 }
@@ -96,6 +97,18 @@ $PaymentDataModelCopyWith<$Res>? get paymentData {
 
   return $PaymentDataModelCopyWith<$Res>(_self.paymentData!, (value) {
     return _then(_self.copyWith(paymentData: value));
+  });
+}/// Create a copy of QRResponseModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QRDataModelCopyWith<$Res>? get qrData {
+    if (_self.qrData == null) {
+    return null;
+  }
+
+  return $QRDataModelCopyWith<$Res>(_self.qrData!, (value) {
+    return _then(_self.copyWith(qrData: value));
   });
 }/// Create a copy of QRResponseModel
 /// with the given fields replaced by the non-null parameter values.
@@ -191,10 +204,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'qr_data')  QRDataModel? qrData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _QRResponseModel() when $default != null:
-return $default(_that.userData,_that.paymentData,_that.scanData);case _:
+return $default(_that.userData,_that.paymentData,_that.qrData,_that.scanData);case _:
   return orElse();
 
 }
@@ -212,10 +225,10 @@ return $default(_that.userData,_that.paymentData,_that.scanData);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'qr_data')  QRDataModel? qrData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)  $default,) {final _that = this;
 switch (_that) {
 case _QRResponseModel():
-return $default(_that.userData,_that.paymentData,_that.scanData);case _:
+return $default(_that.userData,_that.paymentData,_that.qrData,_that.scanData);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -232,10 +245,10 @@ return $default(_that.userData,_that.paymentData,_that.scanData);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_data')  QRUserDataModel? userData, @JsonKey(name: 'payment_data')  PaymentDataModel? paymentData, @JsonKey(name: 'qr_data')  QRDataModel? qrData, @JsonKey(name: 'scan_data')  ScanDataModel? scanData)?  $default,) {final _that = this;
 switch (_that) {
 case _QRResponseModel() when $default != null:
-return $default(_that.userData,_that.paymentData,_that.scanData);case _:
+return $default(_that.userData,_that.paymentData,_that.qrData,_that.scanData);case _:
   return null;
 
 }
@@ -247,11 +260,12 @@ return $default(_that.userData,_that.paymentData,_that.scanData);case _:
 @JsonSerializable()
 
 class _QRResponseModel implements QRResponseModel {
-  const _QRResponseModel({@JsonKey(name: 'user_data') this.userData, @JsonKey(name: 'payment_data') this.paymentData, @JsonKey(name: 'scan_data') this.scanData});
+  const _QRResponseModel({@JsonKey(name: 'user_data') this.userData, @JsonKey(name: 'payment_data') this.paymentData, @JsonKey(name: 'qr_data') this.qrData, @JsonKey(name: 'scan_data') this.scanData});
   factory _QRResponseModel.fromJson(Map<String, dynamic> json) => _$QRResponseModelFromJson(json);
 
 @override@JsonKey(name: 'user_data') final  QRUserDataModel? userData;
 @override@JsonKey(name: 'payment_data') final  PaymentDataModel? paymentData;
+@override@JsonKey(name: 'qr_data') final  QRDataModel? qrData;
 @override@JsonKey(name: 'scan_data') final  ScanDataModel? scanData;
 
 /// Create a copy of QRResponseModel
@@ -267,16 +281,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QRResponseModel&&(identical(other.userData, userData) || other.userData == userData)&&(identical(other.paymentData, paymentData) || other.paymentData == paymentData)&&(identical(other.scanData, scanData) || other.scanData == scanData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QRResponseModel&&(identical(other.userData, userData) || other.userData == userData)&&(identical(other.paymentData, paymentData) || other.paymentData == paymentData)&&(identical(other.qrData, qrData) || other.qrData == qrData)&&(identical(other.scanData, scanData) || other.scanData == scanData));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userData,paymentData,scanData);
+int get hashCode => Object.hash(runtimeType,userData,paymentData,qrData,scanData);
 
 @override
 String toString() {
-  return 'QRResponseModel(userData: $userData, paymentData: $paymentData, scanData: $scanData)';
+  return 'QRResponseModel(userData: $userData, paymentData: $paymentData, qrData: $qrData, scanData: $scanData)';
 }
 
 
@@ -287,11 +301,11 @@ abstract mixin class _$QRResponseModelCopyWith<$Res> implements $QRResponseModel
   factory _$QRResponseModelCopyWith(_QRResponseModel value, $Res Function(_QRResponseModel) _then) = __$QRResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_data') QRUserDataModel? userData,@JsonKey(name: 'payment_data') PaymentDataModel? paymentData,@JsonKey(name: 'scan_data') ScanDataModel? scanData
+@JsonKey(name: 'user_data') QRUserDataModel? userData,@JsonKey(name: 'payment_data') PaymentDataModel? paymentData,@JsonKey(name: 'qr_data') QRDataModel? qrData,@JsonKey(name: 'scan_data') ScanDataModel? scanData
 });
 
 
-@override $QRUserDataModelCopyWith<$Res>? get userData;@override $PaymentDataModelCopyWith<$Res>? get paymentData;@override $ScanDataModelCopyWith<$Res>? get scanData;
+@override $QRUserDataModelCopyWith<$Res>? get userData;@override $PaymentDataModelCopyWith<$Res>? get paymentData;@override $QRDataModelCopyWith<$Res>? get qrData;@override $ScanDataModelCopyWith<$Res>? get scanData;
 
 }
 /// @nodoc
@@ -304,11 +318,12 @@ class __$QRResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of QRResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userData = freezed,Object? paymentData = freezed,Object? scanData = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userData = freezed,Object? paymentData = freezed,Object? qrData = freezed,Object? scanData = freezed,}) {
   return _then(_QRResponseModel(
 userData: freezed == userData ? _self.userData : userData // ignore: cast_nullable_to_non_nullable
 as QRUserDataModel?,paymentData: freezed == paymentData ? _self.paymentData : paymentData // ignore: cast_nullable_to_non_nullable
-as PaymentDataModel?,scanData: freezed == scanData ? _self.scanData : scanData // ignore: cast_nullable_to_non_nullable
+as PaymentDataModel?,qrData: freezed == qrData ? _self.qrData : qrData // ignore: cast_nullable_to_non_nullable
+as QRDataModel?,scanData: freezed == scanData ? _self.scanData : scanData // ignore: cast_nullable_to_non_nullable
 as ScanDataModel?,
   ));
 }
@@ -336,6 +351,18 @@ $PaymentDataModelCopyWith<$Res>? get paymentData {
 
   return $PaymentDataModelCopyWith<$Res>(_self.paymentData!, (value) {
     return _then(_self.copyWith(paymentData: value));
+  });
+}/// Create a copy of QRResponseModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QRDataModelCopyWith<$Res>? get qrData {
+    if (_self.qrData == null) {
+    return null;
+  }
+
+  return $QRDataModelCopyWith<$Res>(_self.qrData!, (value) {
+    return _then(_self.copyWith(qrData: value));
   });
 }/// Create a copy of QRResponseModel
 /// with the given fields replaced by the non-null parameter values.
