@@ -213,7 +213,7 @@ return $default(_that.totalCount,_that.totalPages,_that.currentPage,_that.perPag
 @JsonSerializable()
 
 class _FoodResponseModel implements FoodResponseModel {
-  const _FoodResponseModel({@JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'special_food_requests') final  List<FoodRequestModel>? foodRequests}): _foodRequests = foodRequests;
+  const _FoodResponseModel({@JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'special_food_requests')   List<FoodRequestModel>? foodRequests}): _foodRequests = foodRequests;
   factory _FoodResponseModel.fromJson(Map<String, dynamic> json) => _$FoodResponseModelFromJson(json);
 
 @override@JsonKey(name: 'total_count') final  int? totalCount;

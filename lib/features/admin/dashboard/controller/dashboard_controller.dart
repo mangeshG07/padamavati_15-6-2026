@@ -1,4 +1,5 @@
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
+import 'package:padmavatiupdated/data/models/dashboard/payment_overview.dart';
 
 class DashboardController extends BaseController {
   final GetDashboardUsecase _dashboardUsecase;
@@ -18,6 +19,7 @@ class DashboardController extends BaseController {
   final controller = Get.find<RequestsUserController>();
   final searchQuery = ''.obs;
   final overview = OverViewModel().obs;
+  final paymentOverview = PaymentOverview().obs;
   final dashboardData = DashboardModel().obs;
   final menuList = <DashboardMenuItem>[].obs;
 
@@ -37,8 +39,11 @@ class DashboardController extends BaseController {
       request: () => _dashboardUsecase.call(UserRequest(userId)),
       loader: isLoading,
       onSuccess: (data) async {
+        print('data');
+        print(data);
         dashboardData.value = data.data!;
         overview.value = data.data!.todayOverview!;
+        paymentOverview.value = data.data!.paymentOverview!;
         _buildMenu();
         AppConfigModel platformData = Platform.isAndroid
             ? data.android

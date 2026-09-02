@@ -214,7 +214,7 @@ return $default(_that.studentName,_that.totalCount,_that.totalPages,_that.curren
 @JsonSerializable()
 
 class _UsedQRResponseModel implements UsedQRResponseModel {
-  const _UsedQRResponseModel({@JsonKey(name: 'student_name') this.studentName, @JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'used_qrs') final  List<UsedQr>? usedQrs}): _usedQrs = usedQrs;
+  const _UsedQRResponseModel({@JsonKey(name: 'student_name') this.studentName, @JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'used_qrs')   List<UsedQr>? usedQrs}): _usedQrs = usedQrs;
   factory _UsedQRResponseModel.fromJson(Map<String, dynamic> json) => _$UsedQRResponseModelFromJson(json);
 
 @override@JsonKey(name: 'student_name') final  String? studentName;

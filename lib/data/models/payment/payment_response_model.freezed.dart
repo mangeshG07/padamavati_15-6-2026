@@ -209,7 +209,7 @@ return $default(_that.payments);case _:
 @JsonSerializable()
 
 class _PaymentData implements PaymentData {
-  const _PaymentData({final  List<PaymentModel> payments = const []}): _payments = payments;
+  const _PaymentData({  List<PaymentModel> payments = const []}): _payments = payments;
   factory _PaymentData.fromJson(Map<String, dynamic> json) => _$PaymentDataFromJson(json);
 
  final  List<PaymentModel> _payments;

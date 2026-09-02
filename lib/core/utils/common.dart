@@ -24,7 +24,7 @@ String convertToLocalTime(String time) {
 Widget buildHeadingWithButton({
   required String title,
   required String rightText,
-  required var onTap,
+  required dynamic onTap,
   bool showRight = true,
   required ThemeData theme,
 }) {

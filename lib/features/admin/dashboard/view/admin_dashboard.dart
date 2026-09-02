@@ -72,8 +72,9 @@ class _AdminDashboardState extends State<AdminDashboard>
                             SizedBox(height: 12.h),
 
                             _buildScanButton(),
-
-                            SizedBox(height: 20.h),
+                            SizedBox(height: 12.h),
+                            _buildPaymentOverview(theme),
+                            // SizedBox(height: 20.h),
                           ],
                         ),
                       ),
@@ -195,6 +196,76 @@ class _AdminDashboardState extends State<AdminDashboard>
         ),
       ),
     );
+  }
+
+  Widget _buildPaymentOverview(ThemeData theme) {
+    final model = controller.paymentOverview.value;
+    final total = model.totalPayment ?? 0;
+    final received = model.receivedPayment ?? 0;
+    final pending = model.pendingPayment ?? 0;
+
+    final receivedPercentage = total > 0 ? (received / total) * 100 : 0;
+
+    final pendingPercentage = total > 0 ? (pending / total) * 100 : 0;
+
+    return Column(
+      spacing: 8.h,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AppText(text: "Payment Summary", fontSize: 18.sp, maxLines: 2),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18.r),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Row(
+            children: [
+              /// Total Payment
+              Expanded(
+                child: _PaymentItem(
+                  title: 'Total Payment',
+                  amount: formatAmount(total),
+                  icon: HugeIcons.strokeRoundedWallet01,
+                  iconColor: Colors.deepPurple,
+                ),
+              ),
+
+              Container(height: 90, width: 1, color: Colors.grey.shade200),
+              SizedBox(width: 8),
+
+              /// Received
+              Expanded(
+                child: _PaymentItem(
+                  title: 'Received',
+                  amount: formatAmount(received),
+                  percentage: receivedPercentage.toDouble(),
+                  color: Colors.green,
+                ),
+              ),
+              SizedBox(width: 8),
+              Container(height: 90, width: 1, color: Colors.grey.shade200),
+              SizedBox(width: 8),
+
+              /// Pending
+              Expanded(
+                child: _PaymentItem(
+                  title: 'Pending',
+                  amount: formatAmount(pending),
+                  percentage: pendingPercentage.toDouble(),
+                  color: Colors.orange,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  String formatAmount(int amount) {
+    return '₹${amount.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (match) => '${match[1]},')}';
   }
 
   Widget _paymentList(String status) {
@@ -600,9 +671,9 @@ class _AdminDashboardState extends State<AdminDashboard>
   Widget _buildSectionTitle(ThemeData theme) {
     return AppText(
       text: "Today's Overview",
-      fontSize: 22.sp,
+      fontSize: 18.sp,
       maxLines: 2,
-      style: theme.textTheme.titleLarge,
+      // style: theme.textTheme.titleLarge,
     );
   }
 
@@ -824,5 +895,80 @@ class _TabBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(_TabBarDelegate oldDelegate) {
     return false;
+  }
+}
+
+class _PaymentItem extends StatelessWidget {
+  final String title;
+  final String amount;
+  final dynamic icon;
+  final Color? iconColor;
+  final double? percentage;
+  final Color? color;
+
+  const _PaymentItem({
+    required this.title,
+    required this.amount,
+    this.icon,
+    this.iconColor,
+    this.percentage,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (percentage != null) ...[
+          SizedBox(
+            width: 42,
+            height: 42,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  value: percentage! / 100,
+                  strokeWidth: 5,
+                  backgroundColor: color!.withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation<Color>(color!),
+                ),
+
+                Text(
+                  '${percentage!.toStringAsFixed(1)}%',
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: color,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+
+        if (icon != null) ...[
+          AppIconButton(
+            icon: icon,
+            iconColor: iconColor,
+            backgroundColor: iconColor?.withValues(alpha: 0.1),
+          ),
+          const SizedBox(height: 8),
+        ],
+        Text(
+          title,
+          style: const TextStyle(fontSize: 12, color: Colors.black54),
+        ),
+
+        // const SizedBox(height: 4),
+        AppText(
+          text: amount,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w700,
+          color: color ?? Colors.black,
+        ),
+      ],
+    );
   }
 }

@@ -227,7 +227,7 @@ return $default(_that.branchName,_that.popup,_that.sliders,_that.messRequest,_th
 @JsonSerializable()
 
 class _HomeResponseModel implements HomeResponseModel {
-  const _HomeResponseModel({@JsonKey(name: 'branch_name') this.branchName, @JsonKey(name: 'popup_banner') this.popup, final  List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request') this.messRequest, @JsonKey(name: 'mess_request_accepted') this.messRequestAccepted, @JsonKey(name: 'payment_transaction_details') final  List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes') final  List<QRModel>? todayQr}): _sliders = sliders,_payTransactionDetails = payTransactionDetails,_todayQr = todayQr;
+  const _HomeResponseModel({@JsonKey(name: 'branch_name') this.branchName, @JsonKey(name: 'popup_banner') this.popup,   List<MasterDataModel>? sliders, @JsonKey(name: 'mess_request') this.messRequest, @JsonKey(name: 'mess_request_accepted') this.messRequestAccepted, @JsonKey(name: 'payment_transaction_details')   List<PaymentDetailsModel>? payTransactionDetails, @JsonKey(name: 'today_qr_codes')   List<QRModel>? todayQr}): _sliders = sliders,_payTransactionDetails = payTransactionDetails,_todayQr = todayQr;
   factory _HomeResponseModel.fromJson(Map<String, dynamic> json) => _$HomeResponseModelFromJson(json);
 
 @override@JsonKey(name: 'branch_name') final  String? branchName;

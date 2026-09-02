@@ -1,20 +1,21 @@
 // core/network/interceptors/logger_interceptor.dart
-// import 'dart:developer';
+import 'dart:developer';
+
 import 'package:padmavatiupdated/core/exporters/app_export.dart';
 
 class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(options, handler) {
-    // log("➡️ REQUEST: ${options.method} ${options.uri}");
-    // log("Headers: ${options.headers}");
-    // log("Body: ${options.data}");
+    log("➡️ REQUEST: ${options.method} ${options.uri}");
+    log("Headers: ${options.headers}");
+    log("Body: ${options.data}");
     handler.next(options);
   }
 
   @override
   void onResponse(response, handler) {
     // log("✅ RESPONSE: ${response.statusCode} ${response.requestOptions.uri}");
-    // log("Data: ${response.data}");
+    log("Data: ${response.data}");
     final isLoggedOut = response.data['user_login'] == false;
     final requestPath = response.requestOptions.path;
     final isAuthOrLegal =

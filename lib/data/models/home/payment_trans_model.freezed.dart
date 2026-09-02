@@ -221,7 +221,7 @@ return $default(_that.transactionId,_that.messType,_that.messTypeName,_that.mess
 @JsonSerializable()
 
 class _PaymentDetailsModel implements PaymentDetailsModel {
-  const _PaymentDetailsModel({@JsonKey(name: 'transaction_id') this.transactionId, @JsonKey(name: 'mess_type') this.messType, @JsonKey(name: 'mess_type_name') this.messTypeName, @JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'start_month') this.startMonth, @JsonKey(name: 'end_month') this.endMonth, this.duration, @JsonKey(name: 'start_date') this.startDate, @JsonKey(name: 'end_date') this.endDate, @JsonKey(name: 'paid_amount') this.paidAmount, @JsonKey(name: 'due_amount') this.dueAmount, @JsonKey(name: 'payment_status') this.paymentStatus, final  List<PaymentModel>? payments}): _payments = payments;
+  const _PaymentDetailsModel({@JsonKey(name: 'transaction_id') this.transactionId, @JsonKey(name: 'mess_type') this.messType, @JsonKey(name: 'mess_type_name') this.messTypeName, @JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'start_month') this.startMonth, @JsonKey(name: 'end_month') this.endMonth, this.duration, @JsonKey(name: 'start_date') this.startDate, @JsonKey(name: 'end_date') this.endDate, @JsonKey(name: 'paid_amount') this.paidAmount, @JsonKey(name: 'due_amount') this.dueAmount, @JsonKey(name: 'payment_status') this.paymentStatus,   List<PaymentModel>? payments}): _payments = payments;
   factory _PaymentDetailsModel.fromJson(Map<String, dynamic> json) => _$PaymentDetailsModelFromJson(json);
 
 @override@JsonKey(name: 'transaction_id') final  int? transactionId;

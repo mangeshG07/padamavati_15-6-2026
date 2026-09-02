@@ -223,7 +223,7 @@ return $default(_that.couponSummary,_that.todayQr,_that.scannedQr);case _:
 @JsonSerializable()
 
 class _CouponResponseModel implements CouponResponseModel {
-  const _CouponResponseModel({@JsonKey(name: 'coupon_summary') this.couponSummary, @JsonKey(name: 'today_qr_codes') final  List<QRModel>? todayQr, @JsonKey(name: 'scanned_qr_codes') final  List<QRModel>? scannedQr}): _todayQr = todayQr,_scannedQr = scannedQr;
+  const _CouponResponseModel({@JsonKey(name: 'coupon_summary') this.couponSummary, @JsonKey(name: 'today_qr_codes')   List<QRModel>? todayQr, @JsonKey(name: 'scanned_qr_codes')   List<QRModel>? scannedQr}): _todayQr = todayQr,_scannedQr = scannedQr;
   factory _CouponResponseModel.fromJson(Map<String, dynamic> json) => _$CouponResponseModelFromJson(json);
 
 @override@JsonKey(name: 'coupon_summary') final  CouponSummaryModel? couponSummary;

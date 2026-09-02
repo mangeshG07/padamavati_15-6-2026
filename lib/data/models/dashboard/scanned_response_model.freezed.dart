@@ -214,7 +214,7 @@ return $default(_that.messTime,_that.totalCount,_that.totalPages,_that.currentPa
 @JsonSerializable()
 
 class _ScannedResponseModel implements ScannedResponseModel {
-  const _ScannedResponseModel({@JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'scanned_users') final  List<ScannedUserModel>? scannedUsers}): _scannedUsers = scannedUsers;
+  const _ScannedResponseModel({@JsonKey(name: 'mess_time') this.messTime, @JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'scanned_users')   List<ScannedUserModel>? scannedUsers}): _scannedUsers = scannedUsers;
   factory _ScannedResponseModel.fromJson(Map<String, dynamic> json) => _$ScannedResponseModelFromJson(json);
 
 @override@JsonKey(name: 'mess_time') final  String? messTime;

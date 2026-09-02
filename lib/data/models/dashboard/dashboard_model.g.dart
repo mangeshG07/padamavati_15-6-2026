@@ -17,6 +17,11 @@ _DashboardModel _$DashboardModelFromJson(Map<String, dynamic> json) =>
           : OverViewModel.fromJson(
               json['today_overview'] as Map<String, dynamic>,
             ),
+      paymentOverview: json['payment_overview'] == null
+          ? null
+          : PaymentOverview.fromJson(
+              json['payment_overview'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$DashboardModelToJson(_DashboardModel instance) =>
@@ -26,4 +31,5 @@ Map<String, dynamic> _$DashboardModelToJson(_DashboardModel instance) =>
       'branch_id': instance.branchId,
       'branch_name': instance.branchName,
       'today_overview': instance.todayOverview,
+      'payment_overview': instance.paymentOverview,
     };

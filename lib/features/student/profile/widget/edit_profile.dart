@@ -13,6 +13,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
+
     /// ✅ CLEAN UI (no business logic)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkInternetAndShowPopup();

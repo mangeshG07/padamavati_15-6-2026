@@ -213,7 +213,7 @@ return $default(_that.totalCount,_that.totalPages,_that.currentPage,_that.perPag
 @JsonSerializable()
 
 class _LeaveResponseModel implements LeaveResponseModel {
-  const _LeaveResponseModel({@JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'leave_requests') final  List<LeaveRequestModel>? leaveRequests}): _leaveRequests = leaveRequests;
+  const _LeaveResponseModel({@JsonKey(name: 'total_count') this.totalCount, @JsonKey(name: 'total_pages') this.totalPages, @JsonKey(name: 'current_page') this.currentPage, @JsonKey(name: 'per_page') this.perPage, @JsonKey(name: 'leave_requests')   List<LeaveRequestModel>? leaveRequests}): _leaveRequests = leaveRequests;
   factory _LeaveResponseModel.fromJson(Map<String, dynamic> json) => _$LeaveResponseModelFromJson(json);
 
 @override@JsonKey(name: 'total_count') final  int? totalCount;
